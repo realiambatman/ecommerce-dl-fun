@@ -56,7 +56,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
           <div className="absolute bottom-2 right-2 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
             <button 
               onClick={handleAddToCart}
-              className="bg-white rounded-full p-2 shadow-sm hover:bg-yellow-500 transition-colors"
+              className="bg-white rounded-full p-2 shadow-sm hover:bg-accent-600 hover:text-white transition-colors"
               aria-label="Add to cart"
             >
               <ShoppingCart className="h-5 w-5" />
@@ -88,7 +88,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
                 <span className="ml-2 text-gray-500 line-through text-sm">
                   {formatPrice(product.originalPrice)}
                 </span>
-                <span className="ml-2 text-green-600 text-sm font-medium">
+                <span className="ml-2 text-accent-700 text-sm font-medium">
                   Save {discountPercentage}%
                 </span>
               </>

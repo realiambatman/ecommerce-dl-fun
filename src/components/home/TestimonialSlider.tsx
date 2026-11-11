@@ -55,7 +55,7 @@ const TestimonialSlider = () => {
             <img 
               src={testimonials[currentIndex].image} 
               alt={testimonials[currentIndex].name} 
-              className="w-24 h-24 rounded-full object-cover border-4 border-yellow-500"
+              className="w-24 h-24 rounded-full object-cover border-4 border-accent-600"
             />
           </div>
           <div className="md:w-2/3 md:pl-8">
@@ -63,13 +63,13 @@ const TestimonialSlider = () => {
               {[...Array(5)].map((_, i) => (
                 <Star 
                   key={i}
-                  className={`h-5 w-5 ${i < testimonials[currentIndex].rating ? 'text-yellow-500 fill-yellow-500' : 'text-gray-300'}`}
+                  className={`h-5 w-5 ${i < testimonials[currentIndex].rating ? 'text-accent-600 fill-accent-600' : 'text-gray-300'}`}
                 />
               ))}
             </div>
             <p className="text-gray-700 italic mb-4">{testimonials[currentIndex].text}</p>
             <div>
-              <h4 className="font-bold text-navy-900">{testimonials[currentIndex].name}</h4>
+              <h4 className="font-bold text-ink-900">{testimonials[currentIndex].name}</h4>
               <p className="text-gray-600">{testimonials[currentIndex].role}</p>
             </div>
           </div>
@@ -83,7 +83,7 @@ const TestimonialSlider = () => {
           className="bg-white rounded-full p-2 shadow-md hover:bg-gray-100 transition-colors"
           aria-label="Previous testimonial"
         >
-          <ChevronLeft className="h-6 w-6 text-navy-900" />
+          <ChevronLeft className="h-6 w-6 text-ink-900" />
         </button>
       </div>
       <div className="absolute top-1/2 transform -translate-y-1/2 right-0 -mr-4">
@@ -92,7 +92,7 @@ const TestimonialSlider = () => {
           className="bg-white rounded-full p-2 shadow-md hover:bg-gray-100 transition-colors"
           aria-label="Next testimonial"
         >
-          <ChevronRight className="h-6 w-6 text-navy-900" />
+          <ChevronRight className="h-6 w-6 text-ink-900" />
         </button>
       </div>
 
@@ -102,7 +102,7 @@ const TestimonialSlider = () => {
           <button
             key={index}
             onClick={() => goToTestimonial(index)}
-            className={`h-3 w-3 rounded-full transition-all ${currentIndex === index ? 'bg-yellow-500 w-6' : 'bg-gray-300'}`}
+            className={`h-3 w-3 rounded-full transition-all ${currentIndex === index ? 'bg-accent-600 w-6' : 'bg-gray-300'}`}
             aria-label={`Go to testimonial ${index + 1}`}
           />
         ))}

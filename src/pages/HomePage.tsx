@@ -9,7 +9,7 @@ const HomePage = () => {
   return (
     <div className="flex flex-col">
       {/* Hero Section */}
-      <section className="relative min-h-[85vh] flex items-center bg-gradient-to-br from-navy-900 via-navy-800 to-navy-900">
+      <section className="relative min-h-[85vh] flex items-center bg-gradient-to-br from-ink-900 via-ink-800 to-ink-900">
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-10">
           <div className="absolute inset-0" style={{ 
@@ -24,7 +24,7 @@ const HomePage = () => {
             <div className="text-center lg:text-left">
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
                 Premium Phones,
-                <span className="text-yellow-500"> Renewed</span> for You
+                <span className="text-accent-600"> Renewed</span> for You
               </h1>
               <p className="text-lg md:text-xl mb-8 text-gray-300">
                 Discover certified pre-owned smartphones that look and perform like new, backed by our 12-month warranty and 30-day money-back guarantee.
@@ -32,7 +32,7 @@ const HomePage = () => {
               <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
                 <Link 
                   to="/products" 
-                  className="btn bg-yellow-500 hover:bg-yellow-600 text-navy-900 px-8 py-3 text-lg font-medium rounded-full transition-all transform hover:scale-105"
+                  className="btn bg-accent-600 hover:bg-accent-700 text-white px-8 py-3 text-lg font-medium rounded-full transition-all"
                 >
                   Shop Now
                   <ChevronRight className="ml-2 h-5 w-5 inline-block" />
@@ -49,25 +49,25 @@ const HomePage = () => {
               <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-6">
                 <div className="flex flex-col items-center text-center">
                   <div className="bg-white/10 rounded-full p-3 mb-3">
-                    <Shield className="h-6 w-6 text-yellow-500" />
+                    <Shield className="h-6 w-6 text-accent-600" />
                   </div>
                   <span className="text-white text-sm">12-Month Warranty</span>
                 </div>
                 <div className="flex flex-col items-center text-center">
                   <div className="bg-white/10 rounded-full p-3 mb-3">
-                    <Truck className="h-6 w-6 text-yellow-500" />
+                    <Truck className="h-6 w-6 text-accent-600" />
                   </div>
                   <span className="text-white text-sm">Free Shipping over ₹15,000</span>
                 </div>
                 <div className="flex flex-col items-center text-center">
                   <div className="bg-white/10 rounded-full p-3 mb-3">
-                    <Star className="h-6 w-6 text-yellow-500" />
+                    <Star className="h-6 w-6 text-accent-600" />
                   </div>
                   <span className="text-white text-sm">30-Day Returns</span>
                 </div>
                 <div className="flex flex-col items-center text-center">
                   <div className="bg-white/10 rounded-full p-3 mb-3">
-                    <CreditCard className="h-6 w-6 text-yellow-500" />
+                    <CreditCard className="h-6 w-6 text-accent-600" />
                   </div>
                   <span className="text-white text-sm">Secure Payment</span>
                 </div>
@@ -108,7 +108,7 @@ const HomePage = () => {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="flex items-center p-6 rounded-xl bg-gray-50 hover:bg-gray-100 transition-colors">
-              <Shield className="h-12 w-12 text-yellow-500 flex-shrink-0" />
+              <Shield className="h-12 w-12 text-accent-600 flex-shrink-0" />
               <div className="ml-4">
                 <h3 className="font-medium text-lg">12-Month Warranty</h3>
                 <p className="text-gray-600">Full coverage on all devices</p>
@@ -116,7 +116,7 @@ const HomePage = () => {
             </div>
             
             <div className="flex items-center p-6 rounded-xl bg-gray-50 hover:bg-gray-100 transition-colors">
-              <Truck className="h-12 w-12 text-yellow-500 flex-shrink-0" />
+              <Truck className="h-12 w-12 text-accent-600 flex-shrink-0" />
               <div className="ml-4">
                 <h3 className="font-medium text-lg">Free Shipping</h3>
                 <p className="text-gray-600">On orders over ₹15,000</p>
@@ -124,7 +124,7 @@ const HomePage = () => {
             </div>
             
             <div className="flex items-center p-6 rounded-xl bg-gray-50 hover:bg-gray-100 transition-colors">
-              <CreditCard className="h-12 w-12 text-yellow-500 flex-shrink-0" />
+              <CreditCard className="h-12 w-12 text-accent-600 flex-shrink-0" />
               <div className="ml-4">
                 <h3 className="font-medium text-lg">Secure Payment</h3>
                 <p className="text-gray-600">100% secure checkout</p>
@@ -132,7 +132,7 @@ const HomePage = () => {
             </div>
             
             <div className="flex items-center p-6 rounded-xl bg-gray-50 hover:bg-gray-100 transition-colors">
-              <Star className="h-12 w-12 text-yellow-500 flex-shrink-0" />
+              <Star className="h-12 w-12 text-accent-600 flex-shrink-0" />
               <div className="ml-4">
                 <h3 className="font-medium text-lg">Quality Assured</h3>
                 <p className="text-gray-600">30-day satisfaction guarantee</p>
@@ -163,7 +163,7 @@ const HomePage = () => {
       </section>
       
       {/* Banner */}
-      <section className="py-20 bg-navy-900 text-white">
+      <section className="py-20 bg-ink-900 text-white">
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row items-center justify-between">
             <div className="mb-12 md:mb-0 md:mr-12 max-w-2xl">
@@ -173,23 +173,23 @@ const HomePage = () => {
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
                 <div className="flex items-start">
-                  <div className="h-8 w-8 rounded-full bg-yellow-500 text-navy-900 flex items-center justify-center font-bold flex-shrink-0 mt-1">1</div>
+                  <div className="h-8 w-8 rounded-full bg-accent-600 text-white flex items-center justify-center font-bold flex-shrink-0 mt-1">1</div>
                   <p className="ml-4 text-gray-300">Save up to 70% compared to buying new</p>
                 </div>
                 <div className="flex items-start">
-                  <div className="h-8 w-8 rounded-full bg-yellow-500 text-navy-900 flex items-center justify-center font-bold flex-shrink-0 mt-1">2</div>
+                  <div className="h-8 w-8 rounded-full bg-accent-600 text-white flex items-center justify-center font-bold flex-shrink-0 mt-1">2</div>
                   <p className="ml-4 text-gray-300">Reduce electronic waste and help the environment</p>
                 </div>
                 <div className="flex items-start">
-                  <div className="h-8 w-8 rounded-full bg-yellow-500 text-navy-900 flex items-center justify-center font-bold flex-shrink-0 mt-1">3</div>
+                  <div className="h-8 w-8 rounded-full bg-accent-600 text-white flex items-center justify-center font-bold flex-shrink-0 mt-1">3</div>
                   <p className="ml-4 text-gray-300">Get flagship features without the flagship price</p>
                 </div>
                 <div className="flex items-start">
-                  <div className="h-8 w-8 rounded-full bg-yellow-500 text-navy-900 flex items-center justify-center font-bold flex-shrink-0 mt-1">4</div>
+                  <div className="h-8 w-8 rounded-full bg-accent-600 text-white flex items-center justify-center font-bold flex-shrink-0 mt-1">4</div>
                   <p className="ml-4 text-gray-300">All devices thoroughly tested and certified</p>
                 </div>
               </div>
-              <Link to="/products" className="btn bg-yellow-500 hover:bg-yellow-600 text-navy-900 px-8 py-3 text-lg font-medium rounded-full transition-all transform hover:scale-105">
+              <Link to="/products" className="btn bg-accent-600 hover:bg-accent-700 text-white px-8 py-3 text-lg font-medium rounded-full transition-all">
                 Browse Our Selection
                 <ChevronRight className="ml-2 h-5 w-5 inline-block" />
               </Link>
@@ -201,7 +201,7 @@ const HomePage = () => {
                   alt="Refurbished Phone" 
                   className="rounded-lg shadow-2xl"
                 />
-                <div className="absolute -bottom-4 -right-4 bg-yellow-500 text-navy-900 rounded-lg p-4 shadow-lg">
+                <div className="absolute -bottom-4 -right-4 bg-accent-600 text-white rounded-lg p-4 shadow-lg">
                   <p className="font-bold text-xl">Save up to</p>
                   <p className="text-4xl font-bold">70%</p>
                 </div>
@@ -271,7 +271,7 @@ const HomePage = () => {
           <div className="max-w-3xl mx-auto text-center">
             <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">
               Ready to Make a
-              <span className="text-yellow-500"> Smart Choice</span>?
+              <span className="text-accent-600"> Smart Choice</span>?
             </h2>
             <p className="text-xl text-gray-200 mb-8 leading-relaxed">
               Join thousands of satisfied customers who've discovered premium quality at unbeatable prices. 
@@ -280,16 +280,16 @@ const HomePage = () => {
             
             {/* Benefits */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 transform hover:scale-105 transition-transform">
-                <div className="text-yellow-500 text-2xl font-bold mb-2">30+</div>
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 transition-transform">
+                <div className="text-accent-600 text-2xl font-bold mb-2">30+</div>
                 <p className="text-white">Quality Checks</p>
               </div>
-              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 transform hover:scale-105 transition-transform">
-                <div className="text-yellow-500 text-2xl font-bold mb-2">12</div>
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 transition-transform">
+                <div className="text-accent-600 text-2xl font-bold mb-2">12</div>
                 <p className="text-white">Months Warranty</p>
               </div>
-              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 transform hover:scale-105 transition-transform">
-                <div className="text-yellow-500 text-2xl font-bold mb-2">40%</div>
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 transition-transform">
+                <div className="text-accent-600 text-2xl font-bold mb-2">40%</div>
                 <p className="text-white">Average Savings</p>
               </div>
             </div>
@@ -298,7 +298,7 @@ const HomePage = () => {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link 
                 to="/products" 
-                className="btn bg-yellow-500 hover:bg-yellow-600 text-navy-900 px-8 py-4 text-lg font-medium rounded-full transition-all transform hover:scale-105 hover:shadow-lg"
+                className="btn bg-accent-600 hover:bg-accent-700 text-white px-8 py-4 text-lg font-medium rounded-full transition-all hover:shadow-lg"
               >
                 Shop Now
                 <ChevronRight className="ml-2 h-5 w-5 inline-block" />

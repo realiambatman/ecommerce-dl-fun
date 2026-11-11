@@ -40,8 +40,8 @@ const ContactPage = () => {
           
           <div className="space-y-6 mb-8">
             <div className="flex items-start">
-              <div className="bg-yellow-500 rounded-lg p-3 mr-4">
-                <Phone className="h-6 w-6 text-navy-900" />
+              <div className="bg-accent-600 rounded-lg p-3 mr-4">
+                <Phone className="h-6 w-6 text-ink-900" />
               </div>
               <div>
                 <h3 className="font-medium text-lg">Phone</h3>
@@ -51,8 +51,8 @@ const ContactPage = () => {
             </div>
 
             <div className="flex items-start">
-              <div className="bg-yellow-500 rounded-lg p-3 mr-4">
-                <Mail className="h-6 w-6 text-navy-900" />
+              <div className="bg-accent-600 rounded-lg p-3 mr-4">
+                <Mail className="h-6 w-6 text-ink-900" />
               </div>
               <div>
                 <h3 className="font-medium text-lg">Email</h3>
@@ -62,8 +62,8 @@ const ContactPage = () => {
             </div>
 
             <div className="flex items-start">
-              <div className="bg-yellow-500 rounded-lg p-3 mr-4">
-                <MapPin className="h-6 w-6 text-navy-900" />
+              <div className="bg-accent-600 rounded-lg p-3 mr-4">
+                <MapPin className="h-6 w-6 text-ink-900" />
               </div>
               <div>
                 <h3 className="font-medium text-lg">Address</h3>
@@ -72,8 +72,8 @@ const ContactPage = () => {
             </div>
 
             <div className="flex items-start">
-              <div className="bg-yellow-500 rounded-lg p-3 mr-4">
-                <Clock className="h-6 w-6 text-navy-900" />
+              <div className="bg-accent-600 rounded-lg p-3 mr-4">
+                <Clock className="h-6 w-6 text-ink-900" />
               </div>
               <div>
                 <h3 className="font-medium text-lg">Business Hours</h3>
@@ -123,7 +123,7 @@ const ContactPage = () => {
                   value={formData.name}
                   onChange={handleChange}
                   required
-                  className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                  className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-accent-600"
                 />
               </div>
 
@@ -138,7 +138,7 @@ const ContactPage = () => {
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                  className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-accent-600"
                 />
               </div>
 
@@ -152,7 +152,7 @@ const ContactPage = () => {
                   value={formData.subject}
                   onChange={handleChange}
                   required
-                  className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                  className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-accent-600"
                 >
                   <option value="">Select a subject</option>
                   <option value="general">General Inquiry</option>
@@ -175,7 +175,7 @@ const ContactPage = () => {
                   onChange={handleChange}
                   required
                   rows={5}
-                  className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                  className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-accent-600"
                   placeholder="Please describe your inquiry in detail..."
                 />
               </div>

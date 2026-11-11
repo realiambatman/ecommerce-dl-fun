@@ -13,12 +13,12 @@ const ShippingPage = () => {
       {/* Shipping Options */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
         <div className="bg-white rounded-lg shadow-sm p-6 text-center">
-          <div className="bg-yellow-500 rounded-full p-3 w-16 h-16 mx-auto mb-4 flex items-center justify-center">
-            <Truck className="h-8 w-8 text-navy-900" />
+          <div className="bg-accent-600 rounded-full p-3 w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+            <Truck className="h-8 w-8 text-ink-900" />
           </div>
           <h3 className="font-bold text-lg mb-2">Standard Shipping</h3>
           <p className="text-gray-600 mb-3">5-7 business days</p>
-          <p className="text-2xl font-bold text-yellow-600 mb-2">FREE</p>
+          <p className="text-2xl font-bold text-accent-700 mb-2">FREE</p>
           <p className="text-sm text-gray-500">On orders over ₹15,000</p>
         </div>
 
@@ -33,12 +33,12 @@ const ShippingPage = () => {
         </div>
 
         <div className="bg-white rounded-lg shadow-sm p-6 text-center">
-          <div className="bg-green-500 rounded-full p-3 w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+          <div className="bg-accent-600 rounded-full p-3 w-16 h-16 mx-auto mb-4 flex items-center justify-center">
             <Shield className="h-8 w-8 text-white" />
           </div>
           <h3 className="font-bold text-lg mb-2">Priority Shipping</h3>
           <p className="text-gray-600 mb-3">1-2 business days</p>
-          <p className="text-2xl font-bold text-green-600 mb-2">₹599</p>
+          <p className="text-2xl font-bold text-accent-700 mb-2">₹599</p>
           <p className="text-sm text-gray-500">Fastest delivery option</p>
         </div>
       </div>

@@ -133,9 +133,9 @@ const ProductDetailPage = () => {
     <div className="container mx-auto px-4 py-8">
       {/* Breadcrumbs */}
       <div className="flex items-center text-sm mb-8 text-gray-500">
-        <Link to="/" className="hover:text-yellow-500">Home</Link>
+        <Link to="/" className="hover:text-accent-600">Home</Link>
         <ChevronRight className="h-4 w-4 mx-2" />
-        <Link to="/products" className="hover:text-yellow-500">Products</Link>
+        <Link to="/products" className="hover:text-accent-600">Products</Link>
         <ChevronRight className="h-4 w-4 mx-2" />
         <span className="text-gray-700">{product.name}</span>
       </div>
@@ -160,7 +160,7 @@ const ProductDetailPage = () => {
                   onClick={() => setActiveImage(index)}
                   aria-label={`Show image ${index + 1}`}
                   className={`w-16 h-16 rounded-md overflow-hidden border-2 ${
-                    activeImage === index ? 'border-yellow-500' : 'border-gray-200'
+                    activeImage === index ? 'border-accent-600' : 'border-gray-200'
                   }`}
                 >
                   <img 
@@ -203,7 +203,7 @@ const ProductDetailPage = () => {
                   <span className="ml-3 text-gray-500 line-through text-lg">
                     {formatPrice(product.originalPrice)}
                   </span>
-                  <span className="ml-3 text-green-600 font-medium">
+                  <span className="ml-3 text-accent-700 font-medium">
                     Save {discountPercentage}%
                   </span>
                 </>
@@ -211,7 +211,7 @@ const ProductDetailPage = () => {
             </div>
             
             {/* Stock status */}
-            <p className="text-green-600 flex items-center">
+            <p className="text-accent-700 flex items-center">
               <Check className="h-5 w-5 mr-1" />
               In Stock - Ready to Ship
             </p>
@@ -223,7 +223,7 @@ const ProductDetailPage = () => {
             <ul className="space-y-2">
               {product.features && product.features.map((feature, index) => (
                 <li key={index} className="flex items-start">
-                  <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
+                  <Check className="h-5 w-5 text-accent-600 mr-2 flex-shrink-0 mt-0.5" />
                   <span>{feature}</span>
                 </li>
               ))}
@@ -274,28 +274,28 @@ const ProductDetailPage = () => {
           <div className="border-t border-b border-gray-200 py-4 mb-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="flex items-start">
-                <Shield className="h-5 w-5 text-yellow-500 mr-2 flex-shrink-0 mt-1" />
+                <Shield className="h-5 w-5 text-accent-600 mr-2 flex-shrink-0 mt-1" />
                 <div>
                   <h4 className="font-medium">12-Month Warranty</h4>
                   <p className="text-sm text-gray-600">Full coverage included</p>
                 </div>
               </div>
               <div className="flex items-start">
-                <BatteryFull className="h-5 w-5 text-yellow-500 mr-2 flex-shrink-0 mt-1" />
+                <BatteryFull className="h-5 w-5 text-accent-600 mr-2 flex-shrink-0 mt-1" />
                 <div>
                   <h4 className="font-medium">Battery Health</h4>
                   <p className="text-sm text-gray-600">Minimum 85% capacity</p>
                 </div>
               </div>
               <div className="flex items-start">
-                <Truck className="h-5 w-5 text-yellow-500 mr-2 flex-shrink-0 mt-1" />
+                <Truck className="h-5 w-5 text-accent-600 mr-2 flex-shrink-0 mt-1" />
                 <div>
                   <h4 className="font-medium">Free Shipping</h4>
                   <p className="text-sm text-gray-600">2-3 business days</p>
                 </div>
               </div>
               <div className="flex items-start">
-                <Star className="h-5 w-5 text-yellow-500 mr-2 flex-shrink-0 mt-1" />
+                <Star className="h-5 w-5 text-accent-600 mr-2 flex-shrink-0 mt-1" />
                 <div>
                   <h4 className="font-medium">30-Day Returns</h4>
                   <p className="text-sm text-gray-600">Hassle-free process</p>
@@ -313,8 +313,8 @@ const ProductDetailPage = () => {
             <button 
               className={`py-3 px-6 font-medium text-sm whitespace-nowrap ${
                 activeTab === 'description' 
-                  ? 'border-b-2 border-yellow-500 text-navy-900' 
-                  : 'text-gray-500 hover:text-navy-900'
+                  ? 'border-b-2 border-accent-600 text-ink-900' 
+                  : 'text-gray-500 hover:text-ink-900'
               }`}
               onClick={() => setActiveTab('description')}
             >
@@ -323,8 +323,8 @@ const ProductDetailPage = () => {
             <button 
               className={`py-3 px-6 font-medium text-sm whitespace-nowrap ${
                 activeTab === 'specifications' 
-                  ? 'border-b-2 border-yellow-500 text-navy-900' 
-                  : 'text-gray-500 hover:text-navy-900'
+                  ? 'border-b-2 border-accent-600 text-ink-900' 
+                  : 'text-gray-500 hover:text-ink-900'
               }`}
               onClick={() => setActiveTab('specifications')}
             >
@@ -333,8 +333,8 @@ const ProductDetailPage = () => {
             <button 
               className={`py-3 px-6 font-medium text-sm whitespace-nowrap ${
                 activeTab === 'warranty' 
-                  ? 'border-b-2 border-yellow-500 text-navy-900' 
-                  : 'text-gray-500 hover:text-navy-900'
+                  ? 'border-b-2 border-accent-600 text-ink-900' 
+                  : 'text-gray-500 hover:text-ink-900'
               }`}
               onClick={() => setActiveTab('warranty')}
             >
@@ -343,8 +343,8 @@ const ProductDetailPage = () => {
             <button 
               className={`py-3 px-6 font-medium text-sm whitespace-nowrap ${
                 activeTab === 'reviews' 
-                  ? 'border-b-2 border-yellow-500 text-navy-900' 
-                  : 'text-gray-500 hover:text-navy-900'
+                  ? 'border-b-2 border-accent-600 text-ink-900' 
+                  : 'text-gray-500 hover:text-ink-900'
               }`}
               onClick={() => setActiveTab('reviews')}
             >
@@ -403,19 +403,19 @@ const ProductDetailPage = () => {
                 <h4 className="font-medium mb-2">What's Covered:</h4>
                 <ul className="space-y-2">
                   <li className="flex items-start">
-                    <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
+                    <Check className="h-5 w-5 text-accent-600 mr-2 flex-shrink-0 mt-0.5" />
                     <span>Hardware malfunctions and defects</span>
                   </li>
                   <li className="flex items-start">
-                    <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
+                    <Check className="h-5 w-5 text-accent-600 mr-2 flex-shrink-0 mt-0.5" />
                     <span>Battery issues (if capacity falls below 80%)</span>
                   </li>
                   <li className="flex items-start">
-                    <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
+                    <Check className="h-5 w-5 text-accent-600 mr-2 flex-shrink-0 mt-0.5" />
                     <span>Display and touch screen functionality</span>
                   </li>
                   <li className="flex items-start">
-                    <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
+                    <Check className="h-5 w-5 text-accent-600 mr-2 flex-shrink-0 mt-0.5" />
                     <span>Camera, speaker, and microphone defects</span>
                   </li>
                 </ul>
@@ -440,7 +440,7 @@ const ProductDetailPage = () => {
                     {[...Array(5)].map((_, i) => (
                       <Star 
                         key={i} 
-                        className="h-5 w-5 text-yellow-500 fill-yellow-500"
+                        className="h-5 w-5 text-accent-600 fill-accent-600"
                       />
                     ))}
                   </div>
@@ -458,7 +458,7 @@ const ProductDetailPage = () => {
                         {[...Array(5)].map((_, i) => (
                           <Star 
                             key={i} 
-                            className={`h-4 w-4 ${i < (6 - review) ? 'text-yellow-500 fill-yellow-500' : 'text-gray-300'}`}
+                            className={`h-4 w-4 ${i < (6 - review) ? 'text-accent-600 fill-accent-600' : 'text-gray-300'}`}
                           />
                         ))}
                       </div>
@@ -473,7 +473,7 @@ const ProductDetailPage = () => {
                 ))}
               </div>
               
-              <button className="mt-6 text-yellow-600 hover:text-yellow-700 font-medium">
+              <button className="mt-6 text-accent-700 hover:text-accent-800 font-medium">
                 Load More Reviews
               </button>
             </div>

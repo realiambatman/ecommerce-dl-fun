@@ -24,10 +24,10 @@ const BrandLogos = () => {
           onMouseEnter={() => setHoveredBrand(brand.id)}
           onMouseLeave={() => setHoveredBrand(null)}
         >
-          <div className={`transition-colors duration-300 ${hoveredBrand === brand.id ? 'text-yellow-500' : 'text-gray-700'}`}>
+          <div className={`transition-colors duration-300 ${hoveredBrand === brand.id ? 'text-accent-600' : 'text-gray-700'}`}>
             {brand.icon}
           </div>
-          <span className="mt-2 font-medium text-navy-900">{brand.name}</span>
+          <span className="mt-2 font-medium text-ink-900">{brand.name}</span>
         </Link>
       ))}
     </div>

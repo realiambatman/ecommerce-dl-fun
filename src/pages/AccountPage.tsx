@@ -53,11 +53,11 @@ const AccountPage = () => {
                 onClick={() => setActiveTab('profile')}
                 className={`w-full flex items-center p-3 rounded-md transition-colors ${
                   activeTab === 'profile' 
-                    ? 'bg-yellow-50 text-yellow-700' 
+                    ? 'bg-accent-50 text-accent-800' 
                     : 'hover:bg-gray-50'
                 }`}
               >
-                <User className={`h-5 w-5 mr-3 ${activeTab === 'profile' ? 'text-yellow-500' : 'text-gray-500'}`} />
+                <User className={`h-5 w-5 mr-3 ${activeTab === 'profile' ? 'text-accent-600' : 'text-gray-500'}`} />
                 Profile
               </button>
               
@@ -65,11 +65,11 @@ const AccountPage = () => {
                 onClick={() => setActiveTab('orders')}
                 className={`w-full flex items-center p-3 rounded-md transition-colors ${
                   activeTab === 'orders' 
-                    ? 'bg-yellow-50 text-yellow-700' 
+                    ? 'bg-accent-50 text-accent-800' 
                     : 'hover:bg-gray-50'
                 }`}
               >
-                <ShoppingBag className={`h-5 w-5 mr-3 ${activeTab === 'orders' ? 'text-yellow-500' : 'text-gray-500'}`} />
+                <ShoppingBag className={`h-5 w-5 mr-3 ${activeTab === 'orders' ? 'text-accent-600' : 'text-gray-500'}`} />
                 Orders
               </button>
               
@@ -77,11 +77,11 @@ const AccountPage = () => {
                 onClick={() => setActiveTab('wishlist')}
                 className={`w-full flex items-center p-3 rounded-md transition-colors ${
                   activeTab === 'wishlist' 
-                    ? 'bg-yellow-50 text-yellow-700' 
+                    ? 'bg-accent-50 text-accent-800' 
                     : 'hover:bg-gray-50'
                 }`}
               >
-                <Heart className={`h-5 w-5 mr-3 ${activeTab === 'wishlist' ? 'text-yellow-500' : 'text-gray-500'}`} />
+                <Heart className={`h-5 w-5 mr-3 ${activeTab === 'wishlist' ? 'text-accent-600' : 'text-gray-500'}`} />
                 Wishlist
               </button>
               
@@ -89,11 +89,11 @@ const AccountPage = () => {
                 onClick={() => setActiveTab('payment')}
                 className={`w-full flex items-center p-3 rounded-md transition-colors ${
                   activeTab === 'payment' 
-                    ? 'bg-yellow-50 text-yellow-700' 
+                    ? 'bg-accent-50 text-accent-800' 
                     : 'hover:bg-gray-50'
                 }`}
               >
-                <CreditCard className={`h-5 w-5 mr-3 ${activeTab === 'payment' ? 'text-yellow-500' : 'text-gray-500'}`} />
+                <CreditCard className={`h-5 w-5 mr-3 ${activeTab === 'payment' ? 'text-accent-600' : 'text-gray-500'}`} />
                 Payment Methods
               </button>
               
@@ -101,11 +101,11 @@ const AccountPage = () => {
                 onClick={() => setActiveTab('notifications')}
                 className={`w-full flex items-center p-3 rounded-md transition-colors ${
                   activeTab === 'notifications' 
-                    ? 'bg-yellow-50 text-yellow-700' 
+                    ? 'bg-accent-50 text-accent-800' 
                     : 'hover:bg-gray-50'
                 }`}
               >
-                <Bell className={`h-5 w-5 mr-3 ${activeTab === 'notifications' ? 'text-yellow-500' : 'text-gray-500'}`} />
+                <Bell className={`h-5 w-5 mr-3 ${activeTab === 'notifications' ? 'text-accent-600' : 'text-gray-500'}`} />
                 Notifications
               </button>
               
@@ -113,11 +113,11 @@ const AccountPage = () => {
                 onClick={() => setActiveTab('settings')}
                 className={`w-full flex items-center p-3 rounded-md transition-colors ${
                   activeTab === 'settings' 
-                    ? 'bg-yellow-50 text-yellow-700' 
+                    ? 'bg-accent-50 text-accent-800' 
                     : 'hover:bg-gray-50'
                 }`}
               >
-                <Settings className={`h-5 w-5 mr-3 ${activeTab === 'settings' ? 'text-yellow-500' : 'text-gray-500'}`} />
+                <Settings className={`h-5 w-5 mr-3 ${activeTab === 'settings' ? 'text-accent-600' : 'text-gray-500'}`} />
                 Settings
               </button>
               
@@ -267,10 +267,10 @@ const AccountPage = () => {
                             <td className="py-4 px-4">
                               <span className={`inline-block px-2 py-1 rounded-full text-xs font-medium ${
                                 order.status === 'Delivered' 
-                                  ? 'bg-green-100 text-green-800' 
+                                  ? 'bg-accent-100 text-accent-800' 
                                   : order.status === 'Shipped'
                                   ? 'bg-blue-100 text-blue-800'
-                                  : 'bg-yellow-100 text-yellow-800'
+                                  : 'bg-accent-100 text-accent-800'
                               }`}>
                                 {order.status}
                               </span>
@@ -279,7 +279,7 @@ const AccountPage = () => {
                               {formatPrice(order.total)}
                             </td>
                             <td className="py-4 px-4">
-                              <button className="text-yellow-600 hover:text-yellow-700 font-medium">
+                              <button className="text-accent-700 hover:text-accent-800 font-medium">
                                 View Details
                               </button>
                             </td>

@@ -68,14 +68,14 @@ const TrackOrderPage = () => {
     switch (status.toLowerCase()) {
       case 'order placed':
       case 'payment confirmed':
-        return <CheckCircle className="h-5 w-5 text-green-500" />;
+        return <CheckCircle className="h-5 w-5 text-accent-600" />;
       case 'processing':
         return <Package className="h-5 w-5 text-blue-500" />;
       case 'shipped':
       case 'out for delivery':
-        return <Truck className="h-5 w-5 text-yellow-500" />;
+        return <Truck className="h-5 w-5 text-accent-600" />;
       case 'delivered':
-        return <CheckCircle className="h-5 w-5 text-green-500" />;
+        return <CheckCircle className="h-5 w-5 text-accent-600" />;
       default:
         return <Clock className="h-5 w-5 text-gray-400" />;
     }
@@ -105,7 +105,7 @@ const TrackOrderPage = () => {
                 onChange={(e) => setOrderNumber(e.target.value)}
                 placeholder="e.g., DG12345"
                 required
-                className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-accent-600"
               />
             </div>
 
@@ -120,7 +120,7 @@ const TrackOrderPage = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="your@email.com"
                 required
-                className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-accent-600"
               />
             </div>
 
@@ -131,7 +131,7 @@ const TrackOrderPage = () => {
             >
               {isLoading ? (
                 <div className="flex items-center justify-center">
-                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-navy-900 mr-2"></div>
+                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-ink-900 mr-2"></div>
                   Tracking...
                 </div>
               ) : (
@@ -174,9 +174,9 @@ const TrackOrderPage = () => {
               </div>
               <div className="mt-4 md:mt-0">
                 <span className={`inline-block px-4 py-2 rounded-full text-sm font-medium ${
-                  trackingData.status === 'delivered' ? 'bg-green-100 text-green-800' :
+                  trackingData.status === 'delivered' ? 'bg-accent-100 text-accent-800' :
                   trackingData.status === 'shipped' ? 'bg-blue-100 text-blue-800' :
-                  'bg-yellow-100 text-yellow-800'
+                  'bg-accent-100 text-accent-800'
                 }`}>
                   {trackingData.status.charAt(0).toUpperCase() + trackingData.status.slice(1)}
                 </span>

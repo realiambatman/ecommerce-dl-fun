@@ -162,7 +162,7 @@ const ProductsPage = () => {
                 <h3 className="font-medium">Active Filters</h3>
                 <button 
                   onClick={clearFilters}
-                  className="text-sm text-yellow-600 hover:text-yellow-700"
+                  className="text-sm text-accent-700 hover:text-accent-800"
                 >
                   Clear all
                 </button>
@@ -244,7 +244,7 @@ const ProductsPage = () => {
                     name="category"
                     checked={categoryParam === category.value}
                     onChange={() => updateFilters('category', category.value)}
-                    className="mr-2 accent-yellow-500"
+                    className="mr-2 accent-accent-600"
                   />
                   <label htmlFor={`category-${category.value}`} className="text-sm cursor-pointer">
                     {category.label}
@@ -266,7 +266,7 @@ const ProductsPage = () => {
                     name="brand"
                     checked={brandParam === brand.value}
                     onChange={() => updateFilters('brand', brand.value)}
-                    className="mr-2 accent-yellow-500"
+                    className="mr-2 accent-accent-600"
                   />
                   <label htmlFor={`brand-${brand.value}`} className="text-sm cursor-pointer">
                     {brand.label}
@@ -288,7 +288,7 @@ const ProductsPage = () => {
                     name="condition"
                     checked={conditionParam === condition.value}
                     onChange={() => updateFilters('condition', condition.value)}
-                    className="mr-2 accent-yellow-500"
+                    className="mr-2 accent-accent-600"
                   />
                   <label htmlFor={`condition-${condition.value}`} className="text-sm cursor-pointer">
                     {condition.label}
@@ -310,7 +310,7 @@ const ProductsPage = () => {
                     name="priceRange"
                     checked={priceRangeParam === range.value}
                     onChange={() => updateFilters('priceRange', range.value)}
-                    className="mr-2 accent-yellow-500"
+                    className="mr-2 accent-accent-600"
                   />
                   <label htmlFor={`price-${range.value}`} className="text-sm cursor-pointer">
                     {range.label}

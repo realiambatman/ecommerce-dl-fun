@@ -51,7 +51,7 @@ const ProductSlider = ({ products }: ProductSliderProps) => {
           className="absolute left-0 top-1/2 transform -translate-y-1/2 -ml-4 z-10 bg-white rounded-full p-2 shadow-md hover:bg-gray-100 transition-colors"
           aria-label="Scroll left"
         >
-          <ChevronLeft className="h-6 w-6 text-navy-900" />
+          <ChevronLeft className="h-6 w-6 text-ink-900" />
         </button>
       )}
       
@@ -61,7 +61,7 @@ const ProductSlider = ({ products }: ProductSliderProps) => {
           className="absolute right-0 top-1/2 transform -translate-y-1/2 -mr-4 z-10 bg-white rounded-full p-2 shadow-md hover:bg-gray-100 transition-colors"
           aria-label="Scroll right"
         >
-          <ChevronRight className="h-6 w-6 text-navy-900" />
+          <ChevronRight className="h-6 w-6 text-ink-900" />
         </button>
       )}
       

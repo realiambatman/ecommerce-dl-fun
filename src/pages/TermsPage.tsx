@@ -22,7 +22,7 @@ const TermsPage = () => {
         </div>
 
         <div className="bg-white rounded-lg shadow-sm p-6 text-center">
-          <div className="bg-green-500 rounded-full p-3 w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+          <div className="bg-accent-600 rounded-full p-3 w-16 h-16 mx-auto mb-4 flex items-center justify-center">
             <Scale className="h-8 w-8 text-white" />
           </div>
           <h3 className="font-bold text-lg mb-2">Fair Policies</h3>
@@ -30,8 +30,8 @@ const TermsPage = () => {
         </div>
 
         <div className="bg-white rounded-lg shadow-sm p-6 text-center">
-          <div className="bg-yellow-500 rounded-full p-3 w-16 h-16 mx-auto mb-4 flex items-center justify-center">
-            <AlertTriangle className="h-8 w-8 text-navy-900" />
+          <div className="bg-accent-600 rounded-full p-3 w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+            <AlertTriangle className="h-8 w-8 text-ink-900" />
           </div>
           <h3 className="font-bold text-lg mb-2">Important Info</h3>
           <p className="text-gray-600">Key limitations and disclaimers</p>

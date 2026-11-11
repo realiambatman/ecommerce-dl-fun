@@ -14,7 +14,7 @@ const PrivacyPage = () => {
       {/* Privacy Highlights */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
         <div className="bg-white rounded-lg shadow-sm p-6 text-center">
-          <div className="bg-green-500 rounded-full p-3 w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+          <div className="bg-accent-600 rounded-full p-3 w-16 h-16 mx-auto mb-4 flex items-center justify-center">
             <Shield className="h-8 w-8 text-white" />
           </div>
           <h3 className="font-bold text-lg mb-2">Data Protection</h3>
@@ -38,8 +38,8 @@ const PrivacyPage = () => {
         </div>
 
         <div className="bg-white rounded-lg shadow-sm p-6 text-center">
-          <div className="bg-yellow-500 rounded-full p-3 w-16 h-16 mx-auto mb-4 flex items-center justify-center">
-            <UserCheck className="h-8 w-8 text-navy-900" />
+          <div className="bg-accent-600 rounded-full p-3 w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+            <UserCheck className="h-8 w-8 text-ink-900" />
           </div>
           <h3 className="font-bold text-lg mb-2">Your Control</h3>
           <p className="text-gray-600">Manage your privacy preferences</p>

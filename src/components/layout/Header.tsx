@@ -69,7 +69,7 @@ const Header = () => {
   return (
     <>
       {/* Top banner */}
-      <div className="bg-navy-900 text-white py-2 px-4 text-center text-sm">
+      <div className="bg-ink-900 text-white py-2 px-4 text-center text-sm">
         <p>
           Free shipping on orders over ₹15,000 | 12-month warranty on all devices
         </p>
@@ -85,10 +85,10 @@ const Header = () => {
           <div className="flex items-center justify-between">
             <Link 
               to="/" 
-              className="flex items-center gap-2 text-navy-900 transition-opacity hover:opacity-80"
+              className="flex items-center gap-2 text-ink-900 transition-opacity hover:opacity-80"
             >
-              <div className="bg-yellow-500 rounded-lg p-2">
-                <Smartphone className="h-6 w-6 text-navy-900" />
+              <div className="bg-accent-600 rounded-lg p-2">
+                <Smartphone className="h-6 w-6 text-ink-900" />
               </div>
               <div>
                 <span className="font-bold text-xl hidden sm:block">Dreamland Gadgets</span>
@@ -119,7 +119,7 @@ const Header = () => {
                   <Link to="/products?category=google" className="block px-4 py-2 hover:bg-gray-50">Google Pixel</Link>
                   <Link to="/products?category=oneplus" className="block px-4 py-2 hover:bg-gray-50">OnePlus</Link>
                   <div className="border-t border-gray-100 my-2"></div>
-                  <Link to="/products" className="block px-4 py-2 hover:bg-gray-50 text-yellow-600">View All Phones</Link>
+                  <Link to="/products" className="block px-4 py-2 hover:bg-gray-50 text-accent-700">View All Phones</Link>
                 </div>
               </div>
               
@@ -149,7 +149,7 @@ const Header = () => {
               <Link to="/cart" className="icon-button relative" aria-label="Cart">
                 <ShoppingCart className="h-5 w-5" />
                 {cartItemsCount > 0 && (
-                  <span className="absolute -top-2 -right-2 bg-yellow-500 text-navy-900 text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+                  <span className="absolute -top-2 -right-2 bg-accent-600 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
                     {cartItemsCount}
                   </span>
                 )}
@@ -193,7 +193,7 @@ const Header = () => {
                 placeholder="Search for phones..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full p-3 pl-10 pr-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 bg-gray-50"
+                className="w-full p-3 pl-10 pr-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-600 bg-gray-50"
                 autoFocus
               />
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />

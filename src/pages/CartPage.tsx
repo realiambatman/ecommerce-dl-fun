@@ -142,7 +142,7 @@ const CartPage = () => {
                   </span>
                 </div>
                 {discount > 0 && (
-                  <div className="flex justify-between text-green-600">
+                  <div className="flex justify-between text-accent-700">
                     <span>Discount ({promoCode})</span>
                     <span>-{formatPrice(discount)}</span>
                   </div>
@@ -161,13 +161,13 @@ const CartPage = () => {
                     type="text" 
                     placeholder="Enter code" 
                     aria-label="Promo code" 
-                    className="flex-grow border border-gray-300 rounded-l-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                    className="flex-grow border border-gray-300 rounded-l-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-accent-600"
                     value={couponCode}
                     onChange={(e) => setCouponCode(e.target.value)}
                   />
                   <button 
                     type="submit"
-                    className="bg-navy-900 text-white px-4 py-2 rounded-r-md hover:bg-navy-800 transition-colors"
+                    className="bg-ink-900 text-white px-4 py-2 rounded-r-md hover:bg-ink-800 transition-colors"
                   >
                     Apply
                   </button>
@@ -175,20 +175,20 @@ const CartPage = () => {
                 {couponError ? (
                   <p className="mt-1 text-sm text-red-500">{couponError}</p>
                 ) : promoCode && (
-                  <p className="mt-1 text-sm text-green-600">Coupon {promoCode} applied successfully!</p>
+                  <p className="mt-1 text-sm text-accent-700">Coupon {promoCode} applied successfully!</p>
                 )}
               </form>
               
               {/* Benefits */}
               <div className="mb-6 bg-gray-50 p-4 rounded-md">
                 <div className="flex items-start mb-3">
-                  <Truck className="h-5 w-5 text-yellow-500 mr-2 flex-shrink-0 mt-0.5" />
+                  <Truck className="h-5 w-5 text-accent-600 mr-2 flex-shrink-0 mt-0.5" />
                   <p className="text-sm">
                     <span className="font-medium">Free shipping</span> on orders over ₹{FREE_SHIPPING_THRESHOLD.toLocaleString('en-IN')}
                   </p>
                 </div>
                 <div className="flex items-start">
-                  <Shield className="h-5 w-5 text-yellow-500 mr-2 flex-shrink-0 mt-0.5" />
+                  <Shield className="h-5 w-5 text-accent-600 mr-2 flex-shrink-0 mt-0.5" />
                   <p className="text-sm">
                     <span className="font-medium">12-month warranty</span> on all purchases
                   </p>

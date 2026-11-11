@@ -28,7 +28,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-navy-900 text-white">
+    <footer className="bg-ink-900 text-white">
       {/* Newsletter Section */}
       <div className="border-b border-white/10">
         <div className="container mx-auto px-4 py-12">
@@ -51,14 +51,14 @@ const Footer = () => {
                     setIsSubscribed(false);
                   }}
                   placeholder="Enter your email" 
-                  className="flex-1 bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                  className="flex-1 bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-accent-600"
                 />
-                <button type="submit" className="bg-yellow-500 hover:bg-yellow-600 text-navy-900 px-6 py-3 rounded-lg font-medium transition-colors">
+                <button type="submit" className="bg-accent-600 hover:bg-accent-700 text-white px-6 py-3 rounded-lg font-medium transition-colors">
                   Subscribe
                 </button>
               </form>
               {isSubscribed && (
-                <p className="mt-2 text-sm text-yellow-500" role="status">
+                <p className="mt-2 text-sm text-accent-600" role="status">
                   Thanks for subscribing!
                 </p>
               )}
@@ -73,8 +73,8 @@ const Footer = () => {
           {/* Company Info */}
           <div>
             <div className="flex items-center gap-3 mb-6">
-              <div className="bg-yellow-500 rounded-lg p-2">
-                <Smartphone className="h-6 w-6 text-navy-900" />
+              <div className="bg-accent-600 rounded-lg p-2">
+                <Smartphone className="h-6 w-6 text-ink-900" />
               </div>
               <div>
                 <h4 className="font-bold text-xl">Dreamland Gadgets</h4>
@@ -89,19 +89,19 @@ const Footer = () => {
             {/* Contact Info */}
             <div className="space-y-4">
               <div className="flex items-center gap-3 text-gray-300">
-                <MapPin className="h-5 w-5 text-yellow-500" />
+                <MapPin className="h-5 w-5 text-accent-600" />
                 <span>123 Tech Street, Digital City, 12345</span>
               </div>
               <div className="flex items-center gap-3 text-gray-300">
-                <Phone className="h-5 w-5 text-yellow-500" />
+                <Phone className="h-5 w-5 text-accent-600" />
                 <span>+1 (555) 123-4567</span>
               </div>
               <div className="flex items-center gap-3 text-gray-300">
-                <Mail className="h-5 w-5 text-yellow-500" />
+                <Mail className="h-5 w-5 text-accent-600" />
                 <span>support@dreamlandgadgets.com</span>
               </div>
               <div className="flex items-center gap-3 text-gray-300">
-                <Clock className="h-5 w-5 text-yellow-500" />
+                <Clock className="h-5 w-5 text-accent-600" />
                 <span>Mon - Fri: 9:00 AM - 6:00 PM EST</span>
               </div>
             </div>
@@ -112,32 +112,32 @@ const Footer = () => {
             <h4 className="text-lg font-bold mb-6">Quick Links</h4>
             <ul className="space-y-3">
               <li>
-                <Link to="/products" className="text-gray-300 hover:text-yellow-500 transition-colors">
+                <Link to="/products" className="text-gray-300 hover:text-accent-600 transition-colors">
                   Shop All Phones
                 </Link>
               </li>
               <li>
-                <Link to="/products?category=iphone" className="text-gray-300 hover:text-yellow-500 transition-colors">
+                <Link to="/products?category=iphone" className="text-gray-300 hover:text-accent-600 transition-colors">
                   iPhones
                 </Link>
               </li>
               <li>
-                <Link to="/products?category=samsung" className="text-gray-300 hover:text-yellow-500 transition-colors">
+                <Link to="/products?category=samsung" className="text-gray-300 hover:text-accent-600 transition-colors">
                   Samsung Phones
                 </Link>
               </li>
               <li>
-                <Link to="/products?category=google" className="text-gray-300 hover:text-yellow-500 transition-colors">
+                <Link to="/products?category=google" className="text-gray-300 hover:text-accent-600 transition-colors">
                   Google Pixels
                 </Link>
               </li>
               <li>
-                <Link to="/products?category=oneplus" className="text-gray-300 hover:text-yellow-500 transition-colors">
+                <Link to="/products?category=oneplus" className="text-gray-300 hover:text-accent-600 transition-colors">
                   OnePlus Phones
                 </Link>
               </li>
               <li>
-                <Link to="/products?category=deals" className="text-gray-300 hover:text-yellow-500 transition-colors">
+                <Link to="/products?category=deals" className="text-gray-300 hover:text-accent-600 transition-colors">
                   Special Deals
                 </Link>
               </li>
@@ -149,32 +149,32 @@ const Footer = () => {
             <h4 className="text-lg font-bold mb-6">Customer Service</h4>
             <ul className="space-y-3">
               <li>
-                <Link to="/account" className="text-gray-300 hover:text-yellow-500 transition-colors">
+                <Link to="/account" className="text-gray-300 hover:text-accent-600 transition-colors">
                   My Account
                 </Link>
               </li>
               <li>
-                <Link to="/track-order" className="text-gray-300 hover:text-yellow-500 transition-colors">
+                <Link to="/track-order" className="text-gray-300 hover:text-accent-600 transition-colors">
                   Track Your Order
                 </Link>
               </li>
               <li>
-                <Link to="/shipping" className="text-gray-300 hover:text-yellow-500 transition-colors">
+                <Link to="/shipping" className="text-gray-300 hover:text-accent-600 transition-colors">
                   Shipping Information
                 </Link>
               </li>
               <li>
-                <Link to="/returns" className="text-gray-300 hover:text-yellow-500 transition-colors">
+                <Link to="/returns" className="text-gray-300 hover:text-accent-600 transition-colors">
                   Returns & Warranty
                 </Link>
               </li>
               <li>
-                <Link to="/faq" className="text-gray-300 hover:text-yellow-500 transition-colors">
+                <Link to="/faq" className="text-gray-300 hover:text-accent-600 transition-colors">
                   FAQ
                 </Link>
               </li>
               <li>
-                <Link to="/contact" className="text-gray-300 hover:text-yellow-500 transition-colors">
+                <Link to="/contact" className="text-gray-300 hover:text-accent-600 transition-colors">
                   Contact Us
                 </Link>
               </li>
@@ -186,14 +186,14 @@ const Footer = () => {
             <h4 className="text-lg font-bold mb-6">Trust & Security</h4>
             <div className="space-y-4">
               <div className="flex items-start gap-3">
-                <Shield className="h-6 w-6 text-yellow-500 flex-shrink-0" />
+                <Shield className="h-6 w-6 text-accent-600 flex-shrink-0" />
                 <div>
                   <h5 className="font-medium mb-1">12-Month Warranty</h5>
                   <p className="text-sm text-gray-300">Comprehensive coverage on all devices</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
-                <CreditCard className="h-6 w-6 text-yellow-500 flex-shrink-0" />
+                <CreditCard className="h-6 w-6 text-accent-600 flex-shrink-0" />
                 <div>
                   <h5 className="font-medium mb-1">Secure Payments</h5>
                   <p className="text-sm text-gray-300">SSL encrypted checkout</p>
@@ -234,32 +234,32 @@ const Footer = () => {
 
             {/* Social Links */}
             <div className="flex space-x-4">
-              <a href="#" aria-label="Facebook" className="text-gray-400 hover:text-yellow-500 transition-colors">
+              <a href="#" aria-label="Facebook" className="text-gray-400 hover:text-accent-600 transition-colors">
                 <Facebook className="h-5 w-5" />
               </a>
-              <a href="#" aria-label="Instagram" className="text-gray-400 hover:text-yellow-500 transition-colors">
+              <a href="#" aria-label="Instagram" className="text-gray-400 hover:text-accent-600 transition-colors">
                 <Instagram className="h-5 w-5" />
               </a>
-              <a href="#" aria-label="Twitter" className="text-gray-400 hover:text-yellow-500 transition-colors">
+              <a href="#" aria-label="Twitter" className="text-gray-400 hover:text-accent-600 transition-colors">
                 <Twitter className="h-5 w-5" />
               </a>
-              <a href="#" aria-label="YouTube" className="text-gray-400 hover:text-yellow-500 transition-colors">
+              <a href="#" aria-label="YouTube" className="text-gray-400 hover:text-accent-600 transition-colors">
                 <Youtube className="h-5 w-5" />
               </a>
-              <a href="#" aria-label="LinkedIn" className="text-gray-400 hover:text-yellow-500 transition-colors">
+              <a href="#" aria-label="LinkedIn" className="text-gray-400 hover:text-accent-600 transition-colors">
                 <Linkedin className="h-5 w-5" />
               </a>
             </div>
 
             {/* Legal Links */}
             <div className="flex space-x-4 text-sm">
-              <Link to="/privacy" className="text-gray-400 hover:text-yellow-500 transition-colors">
+              <Link to="/privacy" className="text-gray-400 hover:text-accent-600 transition-colors">
                 Privacy Policy
               </Link>
-              <Link to="/terms" className="text-gray-400 hover:text-yellow-500 transition-colors">
+              <Link to="/terms" className="text-gray-400 hover:text-accent-600 transition-colors">
                 Terms of Service
               </Link>
-              <Link to="/sitemap" className="text-gray-400 hover:text-yellow-500 transition-colors">
+              <Link to="/sitemap" className="text-gray-400 hover:text-accent-600 transition-colors">
                 Sitemap
               </Link>
             </div>

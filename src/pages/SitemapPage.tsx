@@ -62,7 +62,7 @@ const SitemapPage = () => {
         {siteStructure.map((section, index) => (
           <div key={index} className="bg-white rounded-lg shadow-sm p-6">
             <div className="flex items-center mb-4">
-              <div className="bg-yellow-500 rounded-lg p-2 mr-3">
+              <div className="bg-accent-600 rounded-lg p-2 mr-3">
                 {section.icon}
               </div>
               <h2 className="text-xl font-bold">{section.title}</h2>
@@ -73,7 +73,7 @@ const SitemapPage = () => {
                 <li key={linkIndex}>
                   <Link 
                     to={link.path}
-                    className="text-gray-600 hover:text-yellow-600 transition-colors flex items-center"
+                    className="text-gray-600 hover:text-accent-700 transition-colors flex items-center"
                   >
                     <span className="mr-2">•</span>
                     {link.name}
@@ -91,7 +91,7 @@ const SitemapPage = () => {
           <h2 className="text-2xl font-bold mb-4">Website Features</h2>
           <div className="space-y-3">
             <div className="flex items-start">
-              <div className="w-2 h-2 bg-yellow-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+              <div className="w-2 h-2 bg-accent-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
               <div>
                 <h3 className="font-medium">Responsive Design</h3>
                 <p className="text-gray-600 text-sm">Optimized for desktop, tablet, and mobile devices</p>
@@ -99,7 +99,7 @@ const SitemapPage = () => {
             </div>
             
             <div className="flex items-start">
-              <div className="w-2 h-2 bg-yellow-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+              <div className="w-2 h-2 bg-accent-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
               <div>
                 <h3 className="font-medium">Search Functionality</h3>
                 <p className="text-gray-600 text-sm">Find products quickly with our search feature</p>
@@ -107,7 +107,7 @@ const SitemapPage = () => {
             </div>
             
             <div className="flex items-start">
-              <div className="w-2 h-2 bg-yellow-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+              <div className="w-2 h-2 bg-accent-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
               <div>
                 <h3 className="font-medium">Product Filtering</h3>
                 <p className="text-gray-600 text-sm">Filter by brand, condition, price, and category</p>
@@ -115,7 +115,7 @@ const SitemapPage = () => {
             </div>
             
             <div className="flex items-start">
-              <div className="w-2 h-2 bg-yellow-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+              <div className="w-2 h-2 bg-accent-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
               <div>
                 <h3 className="font-medium">Secure Checkout</h3>
                 <p className="text-gray-600 text-sm">SSL encrypted payment processing</p>
@@ -123,7 +123,7 @@ const SitemapPage = () => {
             </div>
             
             <div className="flex items-start">
-              <div className="w-2 h-2 bg-yellow-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+              <div className="w-2 h-2 bg-accent-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
               <div>
                 <h3 className="font-medium">Order Tracking</h3>
                 <p className="text-gray-600 text-sm">Real-time tracking of your orders</p>
@@ -138,18 +138,18 @@ const SitemapPage = () => {
             <div>
               <h3 className="font-medium mb-2">Popular Categories</h3>
               <ul className="space-y-1 text-sm">
-                <li><Link to="/products?category=iphone" className="text-gray-600 hover:text-yellow-600">iPhone</Link></li>
-                <li><Link to="/products?category=samsung" className="text-gray-600 hover:text-yellow-600">Samsung</Link></li>
-                <li><Link to="/products?category=deals" className="text-gray-600 hover:text-yellow-600">Deals</Link></li>
+                <li><Link to="/products?category=iphone" className="text-gray-600 hover:text-accent-700">iPhone</Link></li>
+                <li><Link to="/products?category=samsung" className="text-gray-600 hover:text-accent-700">Samsung</Link></li>
+                <li><Link to="/products?category=deals" className="text-gray-600 hover:text-accent-700">Deals</Link></li>
               </ul>
             </div>
             
             <div>
               <h3 className="font-medium mb-2">Support</h3>
               <ul className="space-y-1 text-sm">
-                <li><Link to="/contact" className="text-gray-600 hover:text-yellow-600">Contact</Link></li>
-                <li><Link to="/faq" className="text-gray-600 hover:text-yellow-600">FAQ</Link></li>
-                <li><Link to="/returns" className="text-gray-600 hover:text-yellow-600">Returns</Link></li>
+                <li><Link to="/contact" className="text-gray-600 hover:text-accent-700">Contact</Link></li>
+                <li><Link to="/faq" className="text-gray-600 hover:text-accent-700">FAQ</Link></li>
+                <li><Link to="/returns" className="text-gray-600 hover:text-accent-700">Returns</Link></li>
               </ul>
             </div>
           </div>
@@ -159,14 +159,14 @@ const SitemapPage = () => {
             <div className="space-y-2">
               <a 
                 href="mailto:support@dreamlandgadgets.com" 
-                className="text-gray-600 hover:text-yellow-600 text-sm flex items-center"
+                className="text-gray-600 hover:text-accent-700 text-sm flex items-center"
               >
                 <ExternalLink className="h-4 w-4 mr-1" />
                 Email Support
               </a>
               <a 
                 href="tel:+15551234567" 
-                className="text-gray-600 hover:text-yellow-600 text-sm flex items-center"
+                className="text-gray-600 hover:text-accent-700 text-sm flex items-center"
               >
                 <ExternalLink className="h-4 w-4 mr-1" />
                 Phone Support

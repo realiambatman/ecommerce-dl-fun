@@ -69,7 +69,7 @@ const CheckoutPage = () => {
       <div className="container mx-auto px-4 py-8">
         <div className="bg-white rounded-lg shadow-sm p-8 text-center max-w-2xl mx-auto">
           <div className="flex justify-center mb-4">
-            <CheckCircle className="h-16 w-16 text-green-500" />
+            <CheckCircle className="h-16 w-16 text-accent-600" />
           </div>
           <h1 className="text-3xl font-bold mb-2">Thank you for your order!</h1>
           <p className="text-gray-600 mb-2">
@@ -108,7 +108,7 @@ const CheckoutPage = () => {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="flex items-center mb-8">
-        <Link to="/cart" className="flex items-center text-yellow-600 hover:text-yellow-700">
+        <Link to="/cart" className="flex items-center text-accent-700 hover:text-accent-800">
           <ChevronLeft className="h-5 w-5 mr-1" />
           Back to Cart
         </Link>
@@ -130,14 +130,14 @@ const CheckoutPage = () => {
             disabled={step > activeStep}
           >
             <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold ${
-              step < activeStep ? 'bg-green-500 text-white' : 
-              step === activeStep ? 'bg-yellow-500 text-navy-900' : 
+              step < activeStep ? 'bg-accent-600 text-white' : 
+              step === activeStep ? 'bg-accent-600 text-white' : 
               'bg-gray-200 text-gray-500'
             }`}>
               {step}
             </div>
             <span className={`mt-2 font-medium ${
-              step === activeStep ? 'text-navy-900' : 'text-gray-500'
+              step === activeStep ? 'text-ink-900' : 'text-gray-500'
             }`}>
               {step === 1 ? 'Shipping' : step === 2 ? 'Payment' : 'Review'}
             </span>
@@ -309,7 +309,7 @@ const CheckoutPage = () => {
                   <input 
                     type="checkbox" 
                     id="saveAddress" 
-                    className="mr-2 accent-yellow-500"
+                    className="mr-2 accent-accent-600"
                   />
                   <label htmlFor="saveAddress" className="text-sm text-gray-700">
                     Save this address for future orders
@@ -345,7 +345,7 @@ const CheckoutPage = () => {
                       name="payment-method"
                       checked={paymentMethod === 'credit-card'}
                       onChange={() => setPaymentMethod('credit-card')}
-                      className="mr-2 accent-yellow-500"
+                      className="mr-2 accent-accent-600"
                     />
                     <label htmlFor="credit-card" className="flex items-center">
                       <CreditCard className="h-5 w-5 mr-2 text-gray-700" />
@@ -360,7 +360,7 @@ const CheckoutPage = () => {
                       name="payment-method"
                       checked={paymentMethod === 'paypal'}
                       onChange={() => setPaymentMethod('paypal')}
-                      className="mr-2 accent-yellow-500"
+                      className="mr-2 accent-accent-600"
                     />
                     <label htmlFor="paypal">PayPal</label>
                   </div>
@@ -372,7 +372,7 @@ const CheckoutPage = () => {
                       name="payment-method"
                       checked={paymentMethod === 'apple-pay'}
                       onChange={() => setPaymentMethod('apple-pay')}
-                      className="mr-2 accent-yellow-500"
+                      className="mr-2 accent-accent-600"
                     />
                     <label htmlFor="apple-pay">Apple Pay</label>
                   </div>
@@ -555,7 +555,7 @@ const CheckoutPage = () => {
                 </span>
               </div>
               {discount > 0 && (
-                <div className="flex justify-between text-green-600">
+                <div className="flex justify-between text-accent-700">
                   <span>Discount ({promoCode})</span>
                   <span>-{formatPrice(discount)}</span>
                 </div>

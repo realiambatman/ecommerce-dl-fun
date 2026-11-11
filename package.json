@@ -1,11 +1,13 @@
 {
   "name": "dreamland-gadgets",
   "private": true,
+  "description": "Storefront UI prototype for a refurbished phone shop, built with React, TypeScript, Vite and Tailwind CSS (mock data, no backend).",
   "version": "0.1.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "tsc -b && vite build",
+    "typecheck": "tsc -b",
     "lint": "eslint .",
     "preview": "vite preview"
   },

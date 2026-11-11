@@ -64,20 +64,21 @@ const TrackOrderPage = () => {
     }, 1500);
   };
 
-  const getStatusIcon = (status: string) => {
+  // Completed steps take the accent; pending ones stay neutral
+  const getStatusIcon = (status: string, completed: boolean) => {
+    const className = `h-5 w-5 ${completed ? 'text-accent-600' : 'text-gray-300'}`;
     switch (status.toLowerCase()) {
       case 'order placed':
       case 'payment confirmed':
-        return <CheckCircle className="h-5 w-5 text-accent-600" />;
+      case 'delivered':
+        return <CheckCircle className={className} />;
       case 'processing':
-        return <Package className="h-5 w-5 text-accent-600" />;
+        return <Package className={className} />;
       case 'shipped':
       case 'out for delivery':
-        return <Truck className="h-5 w-5 text-accent-600" />;
-      case 'delivered':
-        return <CheckCircle className="h-5 w-5 text-accent-600" />;
+        return <Truck className={className} />;
       default:
-        return <Clock className="h-5 w-5 text-gray-400" />;
+        return <Clock className={className} />;
     }
   };
 
@@ -205,7 +206,7 @@ const TrackOrderPage = () => {
               {trackingData.timeline.map((event, index) => (
                 <div key={index} className="relative flex items-start">
                   <div className="flex-shrink-0 mr-4">
-                    {getStatusIcon(event.status)}
+                    {getStatusIcon(event.status, event.completed)}
                   </div>
                   <div className="flex-grow">
                     <div className="flex justify-between items-start">
@@ -213,7 +214,7 @@ const TrackOrderPage = () => {
                         <h4 className={`font-medium ${event.completed ? 'text-ink-900' : 'text-gray-500'}`}>
                           {event.status}
                         </h4>
-                        <p className={`text-sm ${event.completed ? 'text-gray-600' : 'text-gray-400'}`}>
+                        <p className={`text-sm ${event.completed ? 'text-gray-600' : 'text-gray-500'}`}>
                           {event.date} {event.time !== 'Pending' && `at ${event.time}`}
                         </p>
                       </div>

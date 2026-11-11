@@ -158,7 +158,7 @@ const CheckoutPage = () => {
 
       <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_24rem] lg:gap-12">
         {/* Main checkout form */}
-        <div>
+        <div className="min-w-0">
           <div className="panel">
             {/* Step 1: Shipping */}
             {activeStep === 1 && (
@@ -531,7 +531,7 @@ const CheckoutPage = () => {
         </div>
         
         {/* Order summary */}
-        <aside className="lg:sticky lg:top-28 lg:self-start">
+        <aside className="min-w-0 lg:sticky lg:top-28 lg:self-start">
           <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-md">
             <h2 className="mb-5 text-xl">Order Summary</h2>
 

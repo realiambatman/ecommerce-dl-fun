@@ -9,7 +9,7 @@ A front-end-only storefront design for a refurbished phone shop, built with Reac
 - Routing between all pages with React Router, including a 404 page and a "product not found" state
 - Product listing with filters for category, brand, condition and price range; filters are stored in the URL query string, so they can be linked to and survive a refresh
 - Header search box, which filters the product listing by name, brand, category or capacity
-- Product detail page with image gallery, quantity picker, tabs and related products
+- Product detail page with a three-view device gallery, condition report, quantity picker, tabs and related products
 - Cart: add, remove and change quantity; item count badge in the header; contents persisted in `localStorage`
 - Promo code `WELCOME10` (10% off), applied in the cart and carried into checkout for the current session
 - Order totals: free shipping from ₹15,000, otherwise a flat fee; 7% tax added at checkout
@@ -35,7 +35,15 @@ A front-end-only storefront design for a refurbished phone shop, built with Reac
 - Tailwind CSS 3 with PostCSS and Autoprefixer
 - React Router 6
 - lucide-react icons
+- Outfit (headings) and IBM Plex Sans (text), self-hosted through `@fontsource` packages
 - ESLint 9 with typescript-eslint
+
+## Design notes
+
+- Tokens live in `tailwind.config.js`: a warm grey canvas, an ink scale for text, and one petrol accent (`accent-*`). Tailwind's `gray` is remapped to the warm neutral scale
+- Shared component classes (`btn`, `field`, `card`, `panel`, `tile`, `spec-table`, `page-header`) are defined in `src/index.css`
+- Condition is always shown with `GradeBadge` (grade letter, three-step meter, name); the warranty, inspection, returns and shipping promises are always shown with `TrustStrip`
+- Motion is limited to one hero entrance and state changes, and is disabled under `prefers-reduced-motion`
 
 ## Prerequisites
 
@@ -84,12 +92,13 @@ src/
   App.tsx               Route table
   index.css             Tailwind layers and shared component classes
   components/
-    common/             ScrollToTop
+    common/             ScrollToTop, Logo, DeviceArt (SVG phone illustrations), GradeBadge, TrustStrip
     home/               Brand grid, testimonial slider
     layout/             Header, Footer, Layout (sets page titles)
     products/           ProductCard, ProductSlider
   context/              Cart provider, context and useCart hook
   data/products.ts      Mock product catalogue and lookup helpers
+  data/grades.ts        Condition grades (A, B, C) and their descriptions
   pages/                One component per route
   types/product.ts      Product type
   utils/pricing.ts      Price formatting, shipping, tax and promo rules
@@ -111,9 +120,8 @@ src/
 
 ## Known limitations
 
-- Product, testimonial and payment-logo images are hot-linked from Pexels and Wikimedia Commons, so they need an internet connection and depend on those URLs staying available
+- There are no product photos. Phones are drawn by `DeviceArt` as generic SVG illustrations with a finish per catalogue item, so they do not show the real device design
 - The catalogue has ten products in `src/data/products.ts`; some filter options (for example the Xiaomi and Huawei brands) have no matching products
 - The promo code is kept in memory only and is lost on refresh; the cart itself persists
-- The Inter font named in the Tailwind config is not bundled or loaded, so the system sans-serif font is used unless Inter is installed
 - There are no automated tests
 - `npm audit` still reports issues that can only be cleared with major-version upgrades (Vite, React Router, typescript-eslint); most affect development tooling only

@@ -55,20 +55,20 @@ const CartPage = () => {
       ) : (
         <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_24rem] lg:gap-12">
           {/* Cart items */}
-          <div>
+          <div className="min-w-0">
             <ul className="divide-y divide-gray-200 rounded-2xl border border-gray-200 bg-white">
               {cartItems.map((item) => (
-                <li key={item.id} className="flex gap-4 p-4 sm:gap-5 sm:p-5">
+                <li key={item.id} className="flex gap-3 p-3 sm:gap-5 sm:p-5">
                   <Link
                     to={`/products/${item.id}`}
-                    className="tile h-24 w-24 flex-shrink-0 sm:h-28 sm:w-28"
+                    className="tile h-20 w-20 flex-shrink-0 sm:h-28 sm:w-28"
                     aria-label={item.name}
                   >
                     <DeviceArt productId={item.id} className="h-full w-full p-1.5" />
                   </Link>
 
                   <div className="flex min-w-0 flex-1 flex-col">
-                    <div className="flex items-start justify-between gap-3">
+                    <div className="flex flex-wrap items-start justify-between gap-x-3 gap-y-1">
                       <div className="min-w-0">
                         <h3 className="text-lg leading-tight">
                           <Link to={`/products/${item.id}`} className="hover:underline">
@@ -104,11 +104,11 @@ const CartPage = () => {
 
                       <button
                         onClick={() => removeFromCart(item.id)}
-                        className="inline-flex h-10 items-center gap-1.5 rounded-full px-3 text-sm text-gray-600 transition-colors hover:bg-red-50 hover:text-red-700"
+                        className="inline-flex h-10 min-w-10 items-center justify-center gap-1.5 rounded-full px-3 text-sm text-gray-600 transition-colors hover:bg-red-50 hover:text-red-700"
                         aria-label={`Remove ${item.name}`}
                       >
                         <Trash2 className="h-4 w-4" />
-                        Remove
+                        <span className="hidden min-[400px]:inline">Remove</span>
                       </button>
                     </div>
                   </div>
@@ -123,7 +123,7 @@ const CartPage = () => {
           </div>
 
           {/* Order summary */}
-          <aside className="lg:sticky lg:top-28 lg:self-start">
+          <aside className="min-w-0 lg:sticky lg:top-28 lg:self-start">
             <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-md">
               <h2 className="mb-5 text-xl">Order Summary</h2>
 

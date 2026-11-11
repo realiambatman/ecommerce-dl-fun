@@ -61,7 +61,7 @@ const HomePage = () => {
 
           {/* Featured device with its inspection sheet */}
           <div className="settle relative">
-            <div className="tile aspect-[4/3.5] rounded-3xl sm:aspect-[4/3.1] lg:aspect-[4/3.6]">
+            <div className="tile aspect-[4/4.2] rounded-3xl sm:aspect-[4/3.1] lg:aspect-[4/3.6]">
               <DeviceArt
                 productId={heroProduct.id}
                 view="pair"
@@ -174,16 +174,16 @@ const HomePage = () => {
               Browse Our Selection
             </Link>
           </div>
-          <div className="relative flex min-h-[15rem] items-end bg-accent-700 p-7 sm:p-12">
+          <div className="flex flex-row items-start justify-between gap-4 overflow-hidden bg-accent-700 px-7 pt-7 sm:px-12 sm:pt-12 lg:flex-col lg:items-stretch">
+            <p className="pb-7">
+              <span className="block text-accent-100">Save up to</span>
+              <span className="block font-display text-[4.5rem] font-medium leading-none tracking-[-0.04em] sm:text-[5.5rem]">70%</span>
+            </p>
             <DeviceArt
               productId="6"
               view="front"
-              className="absolute -right-10 top-8 h-[125%] w-auto sm:right-0 lg:-right-10"
+              className="-mb-24 h-56 w-auto flex-shrink-0 self-end sm:h-64 lg:-mb-60 lg:mt-auto lg:h-[26rem] lg:self-center"
             />
-            <p className="relative">
-              <span className="block text-accent-100">Save up to</span>
-              <span className="block font-display text-[5.5rem] font-medium leading-none tracking-[-0.04em]">70%</span>
-            </p>
           </div>
         </div>
       </section>

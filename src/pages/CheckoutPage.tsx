@@ -1,32 +1,109 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ChevronLeft, CreditCard, Lock } from 'lucide-react';
-import { useCart } from '../context/CartContext';
+import { ChevronLeft, CheckCircle, CreditCard, Lock, ShoppingCart } from 'lucide-react';
+import { useCart } from '../context/cart';
+import { TAX_RATE, formatPrice, getDiscount, getShippingFee } from '../utils/pricing';
+
+const COUNTRIES: Record<string, string> = {
+  IN: 'India',
+  US: 'United States',
+  CA: 'Canada',
+  UK: 'United Kingdom',
+  AU: 'Australia',
+};
+
+const PAYMENT_METHODS: Record<string, string> = {
+  'credit-card': 'Credit / Debit Card',
+  paypal: 'PayPal',
+  'apple-pay': 'Apple Pay',
+};
+
+const emptyShippingInfo = {
+  firstName: '',
+  lastName: '',
+  email: '',
+  phone: '',
+  address: '',
+  addressLine2: '',
+  city: '',
+  state: '',
+  zip: '',
+  country: 'IN',
+};
 
 const CheckoutPage = () => {
-  const { cartItems, getTotalPrice } = useCart();
+  const { cartItems, promoCode, clearCart, getTotalPrice } = useCart();
   const [activeStep, setActiveStep] = useState(1);
   const [paymentMethod, setPaymentMethod] = useState('credit-card');
-  
-  // Format price with currency
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('en-IN', { 
-      style: 'currency', 
-      currency: 'INR' 
-    }).format(price);
-  };
+  const [shippingInfo, setShippingInfo] = useState(emptyShippingInfo);
+  const [placedOrder, setPlacedOrder] = useState<{ orderNumber: string; total: number } | null>(null);
   
   // Calculate order summary
   const subtotal = getTotalPrice();
-  const shipping = subtotal > 200 ? 0 : 15;
-  const tax = Math.round(subtotal * 0.07 * 100) / 100;
-  const total = subtotal + shipping + tax;
+  const shipping = getShippingFee(subtotal);
+  const discount = getDiscount(subtotal, promoCode);
+  const tax = Math.round((subtotal - discount) * TAX_RATE * 100) / 100;
+  const total = subtotal - discount + shipping + tax;
   
+  // Completed steps can be revisited; later steps are reached by submitting the current one
   const goToStep = (step: number) => {
-    if (step <= activeStep + 1) {
+    if (step <= activeStep) {
       setActiveStep(step);
     }
   };
+
+  const handleShippingChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    setShippingInfo(prev => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  // Demo only: no payment is taken and nothing is sent to a server
+  const handlePlaceOrder = () => {
+    const orderNumber = `DG${Math.floor(10000 + Math.random() * 90000)}`;
+    setPlacedOrder({ orderNumber, total });
+    clearCart();
+    window.scrollTo(0, 0);
+  };
+
+  if (placedOrder) {
+    return (
+      <div className="container mx-auto px-4 py-8">
+        <div className="bg-white rounded-lg shadow-sm p-8 text-center max-w-2xl mx-auto">
+          <div className="flex justify-center mb-4">
+            <CheckCircle className="h-16 w-16 text-green-500" />
+          </div>
+          <h1 className="text-3xl font-bold mb-2">Thank you for your order!</h1>
+          <p className="text-gray-600 mb-2">
+            Order <span className="font-mono bg-gray-100 px-2 py-1 rounded">#{placedOrder.orderNumber}</span> for{' '}
+            <span className="font-medium">{formatPrice(placedOrder.total)}</span> has been placed.
+          </p>
+          <p className="text-sm text-gray-500 mb-6">
+            This is a demo storefront: no payment was taken and no order was actually created.
+          </p>
+          <Link to="/products" className="btn btn-primary">
+            Continue Shopping
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  if (cartItems.length === 0) {
+    return (
+      <div className="container mx-auto px-4 py-8">
+        <h1 className="text-3xl font-bold mb-8">Checkout</h1>
+        <div className="bg-white rounded-lg shadow-sm p-8 text-center">
+          <div className="flex justify-center mb-4">
+            <ShoppingCart className="h-16 w-16 text-gray-300" />
+          </div>
+          <h2 className="text-2xl font-medium mb-2">Your cart is empty</h2>
+          <p className="text-gray-600 mb-6">Add a phone to your cart before checking out.</p>
+          <Link to="/products" className="btn btn-primary">
+            Start Shopping
+          </Link>
+        </div>
+      </div>
+    );
+  }
   
   return (
     <div className="container mx-auto px-4 py-8">
@@ -48,8 +125,9 @@ const CheckoutPage = () => {
             className={`relative z-10 flex flex-col items-center ${
               step <= activeStep ? 'cursor-pointer' : 'cursor-not-allowed'
             }`}
+            type="button"
             onClick={() => goToStep(step)}
-            disabled={step > activeStep + 1}
+            disabled={step > activeStep}
           >
             <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold ${
               step < activeStep ? 'bg-green-500 text-white' : 
@@ -73,7 +151,12 @@ const CheckoutPage = () => {
           <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
             {/* Step 1: Shipping */}
             {activeStep === 1 && (
-              <div>
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  setActiveStep(2);
+                }}
+              >
                 <h2 className="text-xl font-bold mb-6">Shipping Information</h2>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
@@ -84,6 +167,9 @@ const CheckoutPage = () => {
                     <input 
                       type="text" 
                       id="firstName" 
+                      name="firstName"
+                      value={shippingInfo.firstName}
+                      onChange={handleShippingChange}
                       className="w-full border border-gray-300 rounded-md px-3 py-2"
                       required
                     />
@@ -95,6 +181,9 @@ const CheckoutPage = () => {
                     <input 
                       type="text" 
                       id="lastName" 
+                      name="lastName"
+                      value={shippingInfo.lastName}
+                      onChange={handleShippingChange}
                       className="w-full border border-gray-300 rounded-md px-3 py-2"
                       required
                     />
@@ -106,6 +195,9 @@ const CheckoutPage = () => {
                     <input 
                       type="email" 
                       id="email" 
+                      name="email"
+                      value={shippingInfo.email}
+                      onChange={handleShippingChange}
                       className="w-full border border-gray-300 rounded-md px-3 py-2"
                       required
                     />
@@ -117,6 +209,9 @@ const CheckoutPage = () => {
                     <input 
                       type="tel" 
                       id="phone" 
+                      name="phone"
+                      value={shippingInfo.phone}
+                      onChange={handleShippingChange}
                       className="w-full border border-gray-300 rounded-md px-3 py-2"
                       required
                     />
@@ -130,12 +225,18 @@ const CheckoutPage = () => {
                   <input 
                     type="text" 
                     id="address" 
+                    name="address"
+                    value={shippingInfo.address}
+                    onChange={handleShippingChange}
                     className="w-full border border-gray-300 rounded-md px-3 py-2 mb-2"
                     required
                   />
                   <input 
                     type="text" 
                     id="addressLine2" 
+                    name="addressLine2"
+                    value={shippingInfo.addressLine2}
+                    onChange={handleShippingChange}
                     className="w-full border border-gray-300 rounded-md px-3 py-2"
                     placeholder="Apartment, suite, etc. (optional)"
                   />
@@ -149,6 +250,9 @@ const CheckoutPage = () => {
                     <input 
                       type="text" 
                       id="city" 
+                      name="city"
+                      value={shippingInfo.city}
+                      onChange={handleShippingChange}
                       className="w-full border border-gray-300 rounded-md px-3 py-2"
                       required
                     />
@@ -160,6 +264,9 @@ const CheckoutPage = () => {
                     <input 
                       type="text" 
                       id="state" 
+                      name="state"
+                      value={shippingInfo.state}
+                      onChange={handleShippingChange}
                       className="w-full border border-gray-300 rounded-md px-3 py-2"
                       required
                     />
@@ -171,6 +278,9 @@ const CheckoutPage = () => {
                     <input 
                       type="text" 
                       id="zip" 
+                      name="zip"
+                      value={shippingInfo.zip}
+                      onChange={handleShippingChange}
                       className="w-full border border-gray-300 rounded-md px-3 py-2"
                       required
                     />
@@ -183,13 +293,15 @@ const CheckoutPage = () => {
                   </label>
                   <select 
                     id="country" 
+                    name="country"
+                    value={shippingInfo.country}
+                    onChange={handleShippingChange}
                     className="w-full border border-gray-300 rounded-md px-3 py-2"
                     required
                   >
-                    <option value="US">United States</option>
-                    <option value="CA">Canada</option>
-                    <option value="UK">United Kingdom</option>
-                    <option value="AU">Australia</option>
+                    {Object.entries(COUNTRIES).map(([code, name]) => (
+                      <option key={code} value={code}>{name}</option>
+                    ))}
                   </select>
                 </div>
                 
@@ -206,18 +318,23 @@ const CheckoutPage = () => {
                 
                 <div className="flex justify-end">
                   <button 
-                    onClick={() => setActiveStep(2)}
+                    type="submit"
                     className="btn btn-primary"
                   >
                     Continue to Payment
                   </button>
                 </div>
-              </div>
+              </form>
             )}
             
             {/* Step 2: Payment */}
             {activeStep === 2 && (
-              <div>
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  setActiveStep(3);
+                }}
+              >
                 <h2 className="text-xl font-bold mb-6">Payment Method</h2>
                 
                 <div className="mb-6">
@@ -282,6 +399,8 @@ const CheckoutPage = () => {
                       <input 
                         type="text" 
                         id="cardNumber" 
+                        inputMode="numeric"
+                        autoComplete="off"
                         className="w-full border border-gray-300 rounded-md px-3 py-2"
                         placeholder="XXXX XXXX XXXX XXXX"
                         required
@@ -308,6 +427,9 @@ const CheckoutPage = () => {
                         <input 
                           type="text" 
                           id="cvv" 
+                          inputMode="numeric"
+                          autoComplete="off"
+                          maxLength={4}
                           className="w-full border border-gray-300 rounded-md px-3 py-2"
                           placeholder="123"
                           required
@@ -319,19 +441,20 @@ const CheckoutPage = () => {
                 
                 <div className="flex justify-between">
                   <button 
+                    type="button"
                     onClick={() => setActiveStep(1)}
                     className="btn btn-outline"
                   >
                     Back
                   </button>
                   <button 
-                    onClick={() => setActiveStep(3)}
+                    type="submit"
                     className="btn btn-primary"
                   >
                     Continue to Review
                   </button>
                 </div>
-              </div>
+              </form>
             )}
             
             {/* Step 3: Review */}
@@ -342,11 +465,19 @@ const CheckoutPage = () => {
                 <div className="bg-gray-50 p-4 rounded-lg mb-6">
                   <h3 className="font-medium mb-2">Shipping Address</h3>
                   <p className="text-gray-700">
-                    John Doe<br />
-                    123 Main Street<br />
-                    Apt 4B<br />
-                    New York, NY 10001<br />
-                    United States
+                    {shippingInfo.firstName} {shippingInfo.lastName}<br />
+                    {shippingInfo.address}<br />
+                    {shippingInfo.addressLine2 && (
+                      <>
+                        {shippingInfo.addressLine2}<br />
+                      </>
+                    )}
+                    {shippingInfo.city}, {shippingInfo.state} {shippingInfo.zip}<br />
+                    {COUNTRIES[shippingInfo.country]}
+                  </p>
+                  <p className="text-gray-700 mt-2">
+                    {shippingInfo.email}<br />
+                    {shippingInfo.phone}
                   </p>
                 </div>
                 
@@ -354,7 +485,7 @@ const CheckoutPage = () => {
                   <h3 className="font-medium mb-2">Payment Method</h3>
                   <p className="text-gray-700 flex items-center">
                     <CreditCard className="h-5 w-5 mr-2 text-gray-700" />
-                    Credit Card ending in 1234
+                    {PAYMENT_METHODS[paymentMethod]}
                   </p>
                 </div>
                 
@@ -396,6 +527,7 @@ const CheckoutPage = () => {
                     Back
                   </button>
                   <button 
+                    onClick={handlePlaceOrder}
                     className="btn btn-primary"
                   >
                     Place Order
@@ -422,6 +554,12 @@ const CheckoutPage = () => {
                   {shipping === 0 ? 'Free' : formatPrice(shipping)}
                 </span>
               </div>
+              {discount > 0 && (
+                <div className="flex justify-between text-green-600">
+                  <span>Discount ({promoCode})</span>
+                  <span>-{formatPrice(discount)}</span>
+                </div>
+              )}
               <div className="flex justify-between">
                 <span className="text-gray-600">Tax</span>
                 <span className="font-medium">{formatPrice(tax)}</span>

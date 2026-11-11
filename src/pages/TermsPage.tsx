@@ -88,7 +88,7 @@ const TermsPage = () => {
             <ul className="list-disc pl-6 mb-6 space-y-1">
               <li>Payment is due at the time of order</li>
               <li>We accept major credit cards, PayPal, and other specified payment methods</li>
-              <li>All prices are in USD unless otherwise specified</li>
+              <li>All prices are in Indian Rupees (INR) unless otherwise specified</li>
               <li>You are responsible for any applicable taxes</li>
             </ul>
 

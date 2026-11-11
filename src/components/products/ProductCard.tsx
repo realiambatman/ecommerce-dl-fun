@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom';
 import { ShoppingCart, Heart } from 'lucide-react';
 import { Product } from '../../types/product';
-import { useCart } from '../../context/CartContext';
+import { useCart } from '../../context/cart';
+import { formatPrice } from '../../utils/pricing';
 
 interface ProductCardProps {
   product: Product;
@@ -9,14 +10,6 @@ interface ProductCardProps {
 
 const ProductCard = ({ product }: ProductCardProps) => {
   const { addToCart } = useCart();
-
-  // Format price with currency
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('en-IN', { 
-      style: 'currency', 
-      currency: 'INR' 
-    }).format(price);
-  };
 
   // Calculate discount percentage
   const discountPercentage = product.originalPrice
@@ -29,6 +22,12 @@ const ProductCard = ({ product }: ProductCardProps) => {
     addToCart(product);
   };
 
+  // The wishlist is not implemented; keep the click from following the card link
+  const handleWishlistClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+  };
+
   return (
     <div className="product-card group">
       <Link to={`/products/${product.id}`} className="block">
@@ -36,25 +35,22 @@ const ProductCard = ({ product }: ProductCardProps) => {
           <img 
             src={product.image} 
             alt={product.name} 
+            loading="lazy"
             className="product-card-img"
           />
           
           {/* Badges */}
-          {product.badges && product.badges.length > 0 && (
-            <div className="absolute top-2 left-2 flex flex-col gap-1">
-              {product.badges.includes('sale') && (
-                <span className="badge badge-sale">Sale</span>
-              )}
-              {product.badges.includes('new') && (
-                <span className="badge badge-new">New</span>
-              )}
-              {product.condition && (
-                <span className={`condition-badge condition-${product.condition.toLowerCase()}`}>
-                  {product.condition}
-                </span>
-              )}
-            </div>
-          )}
+          <div className="absolute top-2 left-2 flex flex-col gap-1">
+            {product.badges?.includes('sale') && (
+              <span className="badge badge-sale">Sale</span>
+            )}
+            {product.badges?.includes('new') && (
+              <span className="badge badge-new">New</span>
+            )}
+            <span className={`condition-badge condition-${product.condition.toLowerCase()}`}>
+              {product.condition}
+            </span>
+          </div>
           
           {/* Quick actions */}
           <div className="absolute bottom-2 right-2 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
@@ -66,6 +62,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
               <ShoppingCart className="h-5 w-5" />
             </button>
             <button 
+              onClick={handleWishlistClick}
               className="bg-white rounded-full p-2 shadow-sm hover:bg-red-500 hover:text-white transition-colors"
               aria-label="Add to wishlist"
             >

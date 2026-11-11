@@ -1,19 +1,44 @@
 import { useState } from 'react';
 import { Search, Package, Truck, CheckCircle, Clock } from 'lucide-react';
+import { formatPrice } from '../utils/pricing';
+
+interface TrackingItem {
+  name: string;
+  quantity: number;
+  price: number;
+}
+
+interface TrackingEvent {
+  status: string;
+  date: string;
+  time: string;
+  completed: boolean;
+}
+
+interface TrackingData {
+  orderNumber: string;
+  status: string;
+  estimatedDelivery: string;
+  trackingNumber: string;
+  items: TrackingItem[];
+  timeline: TrackingEvent[];
+}
 
 const TrackOrderPage = () => {
   const [orderNumber, setOrderNumber] = useState('');
   const [email, setEmail] = useState('');
-  const [trackingData, setTrackingData] = useState<any>(null);
+  const [trackingData, setTrackingData] = useState<TrackingData | null>(null);
+  const [notFound, setNotFound] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
+    setNotFound(false);
     
-    // Simulate API call
+    // Simulate an API call. Only the demo order number DG12345 returns a result.
     setTimeout(() => {
-      if (orderNumber.toLowerCase() === 'dg12345') {
+      if (orderNumber.trim().toLowerCase() === 'dg12345') {
         setTrackingData({
           orderNumber: 'DG12345',
           status: 'shipped',
@@ -33,17 +58,10 @@ const TrackOrderPage = () => {
         });
       } else {
         setTrackingData(null);
-        alert('Order not found. Please check your order number and email.');
+        setNotFound(true);
       }
       setIsLoading(false);
     }, 1500);
-  };
-
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('en-IN', { 
-      style: 'currency', 
-      currency: 'INR' 
-    }).format(price);
   };
 
   const getStatusIcon = (status: string) => {
@@ -125,6 +143,12 @@ const TrackOrderPage = () => {
             </button>
           </form>
 
+          {notFound && (
+            <p className="mt-4 text-sm text-red-500 text-center" role="alert">
+              Order not found. Please check your order number and email.
+            </p>
+          )}
+
           <div className="mt-4 text-center">
             <p className="text-sm text-gray-600">
               Try order number: <span className="font-mono bg-gray-100 px-2 py-1 rounded">DG12345</span>
@@ -162,7 +186,7 @@ const TrackOrderPage = () => {
             {/* Items */}
             <div className="border-t border-gray-200 pt-4">
               <h3 className="font-medium mb-3">Items in this order:</h3>
-              {trackingData.items.map((item: any, index: number) => (
+              {trackingData.items.map((item, index) => (
                 <div key={index} className="flex justify-between items-center py-2">
                   <div>
                     <span className="font-medium">{item.name}</span>
@@ -178,8 +202,8 @@ const TrackOrderPage = () => {
           <div className="bg-white rounded-lg shadow-sm p-6">
             <h3 className="text-xl font-bold mb-6">Tracking Timeline</h3>
             <div className="space-y-4">
-              {trackingData.timeline.map((event: any, index: number) => (
-                <div key={index} className="flex items-start">
+              {trackingData.timeline.map((event, index) => (
+                <div key={index} className="relative flex items-start">
                   <div className="flex-shrink-0 mr-4">
                     {getStatusIcon(event.status)}
                   </div>
@@ -196,7 +220,7 @@ const TrackOrderPage = () => {
                     </div>
                   </div>
                   {index < trackingData.timeline.length - 1 && (
-                    <div className="absolute left-[10px] mt-8 w-0.5 h-8 bg-gray-200"></div>
+                    <div className="absolute left-[9px] top-6 w-0.5 h-6 bg-gray-200"></div>
                   )}
                 </div>
               ))}

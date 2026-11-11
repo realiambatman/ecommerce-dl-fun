@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { 
   Search, 
   ShoppingCart, 
@@ -13,15 +13,17 @@ import {
   Bell,
   LogOut
 } from 'lucide-react';
-import { useCart } from '../../context/CartContext';
+import { useCart } from '../../context/cart';
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
   const { cartItems } = useCart();
   const location = useLocation();
+  const navigate = useNavigate();
   
   const cartItemsCount = cartItems.reduce((total, item) => total + item.quantity, 0);
 
@@ -51,6 +53,14 @@ const Header = () => {
       document.body.style.overflow = 'unset';
     };
   }, [isMobileMenuOpen]);
+
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const query = searchQuery.trim();
+    navigate(query ? `/products?search=${encodeURIComponent(query)}` : '/products');
+    setIsSearchOpen(false);
+    setSearchQuery('');
+  };
 
   const handleDropdown = (menu: string) => {
     setIsDropdownOpen(isDropdownOpen === menu ? '' : menu);
@@ -93,13 +103,17 @@ const Header = () => {
               <div className="relative group">
                 <button 
                   className="nav-link px-4 py-2 flex items-center"
+                  aria-haspopup="true"
+                  aria-expanded={isDropdownOpen === 'phones'}
                   onClick={() => handleDropdown('phones')}
                 >
                   <Phone className="h-4 w-4 mr-1" />
                   Phones
                   <ChevronDown className="h-4 w-4 ml-1" />
                 </button>
-                <div className="absolute top-full left-0 w-64 bg-white shadow-lg rounded-lg py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 -translate-y-2 group-hover:translate-y-0">
+                <div className={`absolute top-full left-0 w-64 bg-white shadow-lg rounded-lg py-2 group-hover:opacity-100 group-hover:visible transition-all duration-200 group-hover:translate-y-0 ${
+                  isDropdownOpen === 'phones' ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-2'
+                }`}>
                   <Link to="/products?category=iphone" className="block px-4 py-2 hover:bg-gray-50">iPhone</Link>
                   <Link to="/products?category=samsung" className="block px-4 py-2 hover:bg-gray-50">Samsung</Link>
                   <Link to="/products?category=google" className="block px-4 py-2 hover:bg-gray-50">Google Pixel</Link>
@@ -124,11 +138,11 @@ const Header = () => {
                 <Search className="h-5 w-5" />
               </button>
               
-              <Link to="/wishlist" className="icon-button hidden sm:flex" aria-label="Wishlist">
+              <Link to="/account?tab=wishlist" className="icon-button hidden sm:flex" aria-label="Wishlist">
                 <Heart className="h-5 w-5" />
               </Link>
               
-              <Link to="/notifications" className="icon-button hidden sm:flex" aria-label="Notifications">
+              <Link to="/account?tab=notifications" className="icon-button hidden sm:flex" aria-label="Notifications">
                 <Bell className="h-5 w-5" />
               </Link>
               
@@ -147,8 +161,8 @@ const Header = () => {
                 </Link>
                 <div className="absolute top-full right-0 w-48 bg-white shadow-lg rounded-lg py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 -translate-y-2 group-hover:translate-y-0">
                   <Link to="/account" className="block px-4 py-2 hover:bg-gray-50">My Account</Link>
-                  <Link to="/account/orders" className="block px-4 py-2 hover:bg-gray-50">Orders</Link>
-                  <Link to="/account/wishlist" className="block px-4 py-2 hover:bg-gray-50">Wishlist</Link>
+                  <Link to="/account?tab=orders" className="block px-4 py-2 hover:bg-gray-50">Orders</Link>
+                  <Link to="/account?tab=wishlist" className="block px-4 py-2 hover:bg-gray-50">Wishlist</Link>
                   <div className="border-t border-gray-100 my-2"></div>
                   <button className="block w-full text-left px-4 py-2 hover:bg-gray-50 text-red-600">
                     Sign Out
@@ -172,15 +186,18 @@ const Header = () => {
           
           {/* Search bar */}
           {isSearchOpen && (
-            <div className="mt-4 relative">
+            <form className="mt-4 relative" role="search" onSubmit={handleSearchSubmit}>
               <input
-                type="text"
+                type="search"
+                aria-label="Search for phones"
                 placeholder="Search for phones..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full p-3 pl-10 pr-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 bg-gray-50"
                 autoFocus
               />
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
-            </div>
+            </form>
           )}
         </div>
         
@@ -236,15 +253,15 @@ const Header = () => {
               <div className="border-t border-gray-200 my-4"></div>
 
               <div className="space-y-2">
-                <Link to="/account/orders" className="mobile-nav-link flex items-center" onClick={() => setIsMobileMenuOpen(false)}>
+                <Link to="/account?tab=orders" className="mobile-nav-link flex items-center" onClick={() => setIsMobileMenuOpen(false)}>
                   <ShoppingCart className="h-5 w-5 mr-3" />
                   My Orders
                 </Link>
-                <Link to="/account/wishlist" className="mobile-nav-link flex items-center" onClick={() => setIsMobileMenuOpen(false)}>
+                <Link to="/account?tab=wishlist" className="mobile-nav-link flex items-center" onClick={() => setIsMobileMenuOpen(false)}>
                   <Heart className="h-5 w-5 mr-3" />
                   Wishlist
                 </Link>
-                <Link to="/notifications" className="mobile-nav-link flex items-center" onClick={() => setIsMobileMenuOpen(false)}>
+                <Link to="/account?tab=notifications" className="mobile-nav-link flex items-center" onClick={() => setIsMobileMenuOpen(false)}>
                   <Bell className="h-5 w-5 mr-3" />
                   Notifications
                 </Link>

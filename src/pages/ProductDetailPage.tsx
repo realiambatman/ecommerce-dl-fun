@@ -12,12 +12,15 @@ import {
 } from 'lucide-react';
 import { getProductById, getRelatedProducts } from '../data/products';
 import { Product } from '../types/product';
-import { useCart } from '../context/CartContext';
+import { useCart } from '../context/cart';
+import { formatPrice } from '../utils/pricing';
 import ProductSlider from '../components/products/ProductSlider';
 
 const ProductDetailPage = () => {
   const { id } = useParams<{ id: string }>();
   const [product, setProduct] = useState<Product | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [justAdded, setJustAdded] = useState(false);
   const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
   const [quantity, setQuantity] = useState(1);
   const [activeImage, setActiveImage] = useState(0);
@@ -26,23 +29,43 @@ const ProductDetailPage = () => {
   
   // Fetch product data
   useEffect(() => {
+    let isCurrent = true;
+
     const loadProduct = async () => {
-      if (id) {
-        const productData = await getProductById(id);
-        setProduct(productData);
-        
-        if (productData) {
-          const related = await getRelatedProducts(productData.category);
-          setRelatedProducts(related.filter(p => p.id !== id));
-        }
-      }
+      setIsLoading(true);
+      const productData = id ? await getProductById(id) : null;
+      const related = productData ? await getRelatedProducts(productData.category) : [];
+      if (!isCurrent) return;
+
+      setProduct(productData);
+      setRelatedProducts(related.filter(p => p.id !== id));
+      setQuantity(1);
+      setActiveImage(0);
+      setActiveTab('description');
+      setJustAdded(false);
+      setIsLoading(false);
     };
     
     loadProduct();
-    window.scrollTo(0, 0);
+    return () => {
+      isCurrent = false;
+    };
   }, [id]);
+
+  // Reflect the product in the document title
+  useEffect(() => {
+    if (isLoading) return;
+    document.title = `Dreamland Gadgets | ${product ? product.name : 'Product Not Found'}`;
+  }, [product, isLoading]);
+
+  // Clear the "added to cart" confirmation after a short delay
+  useEffect(() => {
+    if (!justAdded) return;
+    const timer = setTimeout(() => setJustAdded(false), 2000);
+    return () => clearTimeout(timer);
+  }, [justAdded]);
   
-  if (!product) {
+  if (isLoading) {
     return (
       <div className="container mx-auto px-4 py-12">
         <div className="flex justify-center items-center h-64">
@@ -51,14 +74,22 @@ const ProductDetailPage = () => {
       </div>
     );
   }
-  
-  // Format price with currency
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('en-IN', { 
-      style: 'currency', 
-      currency: 'INR' 
-    }).format(price);
-  };
+
+  if (!product) {
+    return (
+      <div className="container mx-auto px-4 py-12">
+        <div className="flex flex-col justify-center items-center h-64 text-center">
+          <h1 className="text-2xl font-bold mb-2">Product not found</h1>
+          <p className="text-gray-600 mb-6">
+            The phone you are looking for does not exist or is no longer available.
+          </p>
+          <Link to="/products" className="btn btn-primary">
+            Browse All Phones
+          </Link>
+        </div>
+      </div>
+    );
+  }
   
   // Calculate discount percentage
   const discountPercentage = product.originalPrice
@@ -67,6 +98,7 @@ const ProductDetailPage = () => {
   
   const handleAddToCart = () => {
     addToCart(product, quantity);
+    setJustAdded(true);
   };
   
   // Get condition text and color
@@ -126,6 +158,7 @@ const ProductDetailPage = () => {
                 <button 
                   key={index}
                   onClick={() => setActiveImage(index)}
+                  aria-label={`Show image ${index + 1}`}
                   className={`w-16 h-16 rounded-md overflow-hidden border-2 ${
                     activeImage === index ? 'border-yellow-500' : 'border-gray-200'
                   }`}
@@ -203,6 +236,7 @@ const ProductDetailPage = () => {
               <div className="flex items-center border border-gray-300 rounded-md overflow-hidden mr-4">
                 <button 
                   onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                  aria-label="Decrease quantity"
                   className="px-3 py-2 bg-gray-100 hover:bg-gray-200 transition-colors"
                 >
                   -
@@ -210,6 +244,7 @@ const ProductDetailPage = () => {
                 <span className="px-6 py-2">{quantity}</span>
                 <button 
                   onClick={() => setQuantity(quantity + 1)}
+                  aria-label="Increase quantity"
                   className="px-3 py-2 bg-gray-100 hover:bg-gray-200 transition-colors"
                 >
                   +
@@ -220,8 +255,12 @@ const ProductDetailPage = () => {
                 onClick={handleAddToCart}
                 className="btn btn-primary flex-grow py-3"
               >
-                <ShoppingCart className="h-5 w-5 mr-2" />
-                Add to Cart
+                {justAdded ? (
+                  <Check className="h-5 w-5 mr-2" />
+                ) : (
+                  <ShoppingCart className="h-5 w-5 mr-2" />
+                )}
+                {justAdded ? 'Added to Cart' : 'Add to Cart'}
               </button>
             </div>
             
@@ -336,14 +375,20 @@ const ProductDetailPage = () => {
           {activeTab === 'specifications' && (
             <div>
               <h3 className="text-xl font-medium mb-4">Technical Specifications</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {product.specifications && Object.entries(product.specifications).map(([key, value]) => (
-                  <div key={key} className="border-b border-gray-100 pb-2">
-                    <span className="font-medium text-gray-700">{key}: </span>
-                    <span className="text-gray-600">{value}</span>
-                  </div>
-                ))}
-              </div>
+              {product.specifications ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {Object.entries(product.specifications).map(([key, value]) => (
+                    <div key={key} className="border-b border-gray-100 pb-2">
+                      <span className="font-medium text-gray-700">{key}: </span>
+                      <span className="text-gray-600">{value}</span>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-gray-600">
+                  Detailed specifications are not available for this phone yet.
+                </p>
+              )}
             </div>
           )}
           
@@ -437,10 +482,12 @@ const ProductDetailPage = () => {
       </div>
       
       {/* Related products */}
-      <div className="mb-16">
-        <h2 className="text-2xl font-bold mb-8">You Might Also Like</h2>
-        <ProductSlider products={relatedProducts} />
-      </div>
+      {relatedProducts.length > 0 && (
+        <div className="mb-16">
+          <h2 className="text-2xl font-bold mb-8">You Might Also Like</h2>
+          <ProductSlider products={relatedProducts} />
+        </div>
+      )}
     </div>
   );
 };

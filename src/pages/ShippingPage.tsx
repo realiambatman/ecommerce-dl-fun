@@ -1,4 +1,4 @@
-import { Truck, Clock, Shield, Globe } from 'lucide-react';
+import { Truck, Clock, Shield } from 'lucide-react';
 
 const ShippingPage = () => {
   return (

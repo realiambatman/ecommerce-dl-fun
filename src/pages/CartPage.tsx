@@ -1,25 +1,19 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { X, ShoppingCart, ChevronRight, Truck, Shield } from 'lucide-react';
-import { useCart } from '../context/CartContext';
+import { useCart } from '../context/cart';
+import { FREE_SHIPPING_THRESHOLD, formatPrice, getDiscount, getShippingFee } from '../utils/pricing';
 
 const CartPage = () => {
-  const { cartItems, removeFromCart, updateQuantity, getTotalPrice } = useCart();
+  const { cartItems, promoCode, removeFromCart, updateQuantity, applyPromoCode, getTotalPrice } = useCart();
   const [couponCode, setCouponCode] = useState('');
   const [couponError, setCouponError] = useState('');
   
-  // Format price with currency
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('en-IN', { 
-      style: 'currency', 
-      currency: 'INR' 
-    }).format(price);
-  };
-  
   const handleCouponSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (couponCode.toLowerCase() === 'welcome10') {
-      setCouponError('Coupon applied successfully!');
+    if (applyPromoCode(couponCode)) {
+      setCouponError('');
+      setCouponCode('');
     } else {
       setCouponError('Invalid coupon code');
     }
@@ -27,8 +21,8 @@ const CartPage = () => {
   
   // Calculate cart summary
   const subtotal = getTotalPrice();
-  const shipping = subtotal > 200 ? 0 : 15;
-  const discount = 0; // In a real app, this would be calculated based on applied coupons
+  const shipping = getShippingFee(subtotal);
+  const discount = getDiscount(subtotal, promoCode);
   const total = subtotal + shipping - discount;
   
   return (
@@ -50,7 +44,7 @@ const CartPage = () => {
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Cart items */}
           <div className="lg:w-2/3">
-            <div className="bg-white rounded-lg shadow-sm overflow-hidden">
+            <div className="bg-white rounded-lg shadow-sm overflow-x-auto">
               <table className="w-full">
                 <thead className="bg-gray-50 text-left">
                   <tr>
@@ -90,6 +84,7 @@ const CartPage = () => {
                         <div className="flex items-center border border-gray-300 rounded-md overflow-hidden w-24">
                           <button 
                             onClick={() => updateQuantity(item.id, Math.max(1, item.quantity - 1))}
+                            aria-label={`Decrease quantity of ${item.name}`}
                             className="px-2 py-1 bg-gray-100 hover:bg-gray-200 transition-colors"
                           >
                             -
@@ -97,6 +92,7 @@ const CartPage = () => {
                           <span className="px-3 py-1">{item.quantity}</span>
                           <button 
                             onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                            aria-label={`Increase quantity of ${item.name}`}
                             className="px-2 py-1 bg-gray-100 hover:bg-gray-200 transition-colors"
                           >
                             +
@@ -147,7 +143,7 @@ const CartPage = () => {
                 </div>
                 {discount > 0 && (
                   <div className="flex justify-between text-green-600">
-                    <span>Discount</span>
+                    <span>Discount ({promoCode})</span>
                     <span>-{formatPrice(discount)}</span>
                   </div>
                 )}
@@ -164,6 +160,7 @@ const CartPage = () => {
                   <input 
                     type="text" 
                     placeholder="Enter code" 
+                    aria-label="Promo code" 
                     className="flex-grow border border-gray-300 rounded-l-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-500"
                     value={couponCode}
                     onChange={(e) => setCouponCode(e.target.value)}
@@ -175,10 +172,10 @@ const CartPage = () => {
                     Apply
                   </button>
                 </div>
-                {couponError && (
-                  <p className={`mt-1 text-sm ${couponError.includes('success') ? 'text-green-600' : 'text-red-500'}`}>
-                    {couponError}
-                  </p>
+                {couponError ? (
+                  <p className="mt-1 text-sm text-red-500">{couponError}</p>
+                ) : promoCode && (
+                  <p className="mt-1 text-sm text-green-600">Coupon {promoCode} applied successfully!</p>
                 )}
               </form>
               
@@ -187,7 +184,7 @@ const CartPage = () => {
                 <div className="flex items-start mb-3">
                   <Truck className="h-5 w-5 text-yellow-500 mr-2 flex-shrink-0 mt-0.5" />
                   <p className="text-sm">
-                    <span className="font-medium">Free shipping</span> on orders over $200
+                    <span className="font-medium">Free shipping</span> on orders over ₹{FREE_SHIPPING_THRESHOLD.toLocaleString('en-IN')}
                   </p>
                 </div>
                 <div className="flex items-start">

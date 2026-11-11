@@ -1,20 +1,38 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { 
-  ShoppingCart, 
-  Heart, 
+import {
+  ShoppingCart,
+  Heart,
   ChevronRight,
   Check,
-  Shield,
+  ShieldCheck,
   BatteryFull,
+  RotateCcw,
   Star,
-  Truck
+  Truck,
+  Minus,
+  Plus,
 } from 'lucide-react';
 import { getProductById, getRelatedProducts } from '../data/products';
 import { Product } from '../types/product';
 import { useCart } from '../context/cart';
 import { formatPrice } from '../utils/pricing';
 import ProductSlider from '../components/products/ProductSlider';
+import DeviceArt from '../components/common/DeviceArt';
+import GradeBadge, { GRADES } from '../components/common/GradeBadge';
+
+const VIEWS = [
+  { id: 'pair', label: 'Front and back' },
+  { id: 'back', label: 'Back' },
+  { id: 'front', label: 'Front' },
+] as const;
+
+const TABS = [
+  { id: 'description', label: 'Description' },
+  { id: 'specifications', label: 'Specifications' },
+  { id: 'warranty', label: 'Warranty Info' },
+  { id: 'reviews', label: 'Reviews' },
+];
 
 const ProductDetailPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -67,9 +85,15 @@ const ProductDetailPage = () => {
   
   if (isLoading) {
     return (
-      <div className="container mx-auto px-4 py-12">
-        <div className="flex justify-center items-center h-64">
-          <p className="text-lg">Loading product...</p>
+      <div className="container py-12" aria-busy="true">
+        <div className="grid gap-10 lg:grid-cols-2">
+          <div className="tile aspect-square animate-pulse" />
+          <div className="space-y-4 pt-4">
+            <div className="h-6 w-32 animate-pulse rounded-full bg-gray-200" />
+            <div className="h-10 w-3/4 animate-pulse rounded-lg bg-gray-200" />
+            <div className="h-8 w-40 animate-pulse rounded-lg bg-gray-200" />
+            <p className="sr-only">Loading product...</p>
+          </div>
         </div>
       </div>
     );
@@ -77,10 +101,10 @@ const ProductDetailPage = () => {
 
   if (!product) {
     return (
-      <div className="container mx-auto px-4 py-12">
-        <div className="flex flex-col justify-center items-center h-64 text-center">
-          <h1 className="text-2xl font-bold mb-2">Product not found</h1>
-          <p className="text-gray-600 mb-6">
+      <div className="container py-20">
+        <div className="mx-auto max-w-md text-center">
+          <h1 className="page-title">Product not found</h1>
+          <p className="mb-8 mt-3 text-gray-600">
             The phone you are looking for does not exist or is no longer available.
           </p>
           <Link to="/products" className="btn btn-primary">
@@ -90,381 +114,333 @@ const ProductDetailPage = () => {
       </div>
     );
   }
-  
+
   // Calculate discount percentage
   const discountPercentage = product.originalPrice
     ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
     : 0;
-  
+
   const handleAddToCart = () => {
     addToCart(product, quantity);
     setJustAdded(true);
   };
-  
-  // Get condition text and color
-  const getConditionInfo = () => {
+
+  // Plain-language description of each condition
+  const getConditionText = () => {
     switch (product.condition) {
       case 'Excellent':
-        return {
-          text: 'Like New - 95%+ of original condition with minimal signs of use',
-          className: 'condition-excellent'
-        };
+        return 'Like New - 95%+ of original condition with minimal signs of use';
       case 'Good':
-        return {
-          text: 'Minor cosmetic imperfections only visible at close inspection',
-          className: 'condition-good'
-        };
+        return 'Minor cosmetic imperfections only visible at close inspection';
       case 'Fair':
-        return {
-          text: 'Noticeable scratches/marks but functions perfectly',
-          className: 'condition-fair'
-        };
+        return 'Noticeable scratches/marks but functions perfectly';
       default:
-        return {
-          text: 'Unknown condition',
-          className: 'text-gray-500'
-        };
+        return 'Unknown condition';
     }
   };
-  
-  const conditionInfo = getConditionInfo();
-  
+
+  const conditionText = getConditionText();
+  const grade = GRADES[product.condition];
+  const view = VIEWS[activeImage] ?? VIEWS[0];
+
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container py-6 sm:py-8">
       {/* Breadcrumbs */}
-      <div className="flex items-center text-sm mb-8 text-gray-500">
-        <Link to="/" className="hover:text-accent-600">Home</Link>
-        <ChevronRight className="h-4 w-4 mx-2" />
-        <Link to="/products" className="hover:text-accent-600">Products</Link>
-        <ChevronRight className="h-4 w-4 mx-2" />
-        <span className="text-gray-700">{product.name}</span>
-      </div>
-      
-      <div className="flex flex-col lg:flex-row gap-10 mb-16">
+      <nav className="mb-6 flex flex-wrap items-center gap-y-1 text-sm text-gray-500" aria-label="Breadcrumb">
+        <Link to="/" className="hover:text-ink-900 hover:underline">Home</Link>
+        <ChevronRight className="mx-1.5 h-4 w-4" aria-hidden="true" />
+        <Link to="/products" className="hover:text-ink-900 hover:underline">Products</Link>
+        <ChevronRight className="mx-1.5 h-4 w-4" aria-hidden="true" />
+        <span className="text-ink-900" aria-current="page">{product.name}</span>
+      </nav>
+
+      <div className="mb-16 grid gap-8 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] lg:gap-14">
         {/* Product images */}
-        <div className="lg:w-1/2">
-          <div className="bg-white rounded-lg overflow-hidden mb-4">
-            <img 
-              src={product.images ? product.images[activeImage] : product.image} 
-              alt={product.name} 
-              className="w-full h-auto object-contain aspect-square"
+        <div className="lg:sticky lg:top-28 lg:self-start">
+          <div className="tile aspect-[4/3.6] rounded-3xl sm:aspect-[4/3.4]">
+            <DeviceArt
+              productId={product.id}
+              view={view.id}
+              title={`${product.name}, ${view.label.toLowerCase()} view`}
+              className="h-full w-full p-6 sm:p-10"
             />
+            <span className="absolute bottom-4 left-4 rounded-full bg-white/80 px-3 py-1 text-xs text-gray-600">
+              Illustration. Finish may vary.
+            </span>
           </div>
-          
-          {/* Thumbnail images */}
-          {product.images && product.images.length > 1 && (
-            <div className="flex gap-2 overflow-x-auto">
-              {product.images.map((image, index) => (
-                <button 
-                  key={index}
-                  onClick={() => setActiveImage(index)}
-                  aria-label={`Show image ${index + 1}`}
-                  className={`w-16 h-16 rounded-md overflow-hidden border-2 ${
-                    activeImage === index ? 'border-accent-600' : 'border-gray-200'
-                  }`}
-                >
-                  <img 
-                    src={image} 
-                    alt={`${product.name} - view ${index + 1}`} 
-                    className="w-full h-full object-cover"
-                  />
-                </button>
-              ))}
+
+          {/* Thumbnail views */}
+          <div className="mt-3 flex gap-2.5">
+            {VIEWS.map((v, index) => (
+              <button
+                key={v.id}
+                onClick={() => setActiveImage(index)}
+                aria-label={`Show ${v.label.toLowerCase()} view`}
+                aria-pressed={activeImage === index}
+                className={`tile h-20 w-20 border-2 transition-colors ${
+                  activeImage === index ? 'border-accent-600' : 'border-transparent hover:border-gray-300'
+                }`}
+              >
+                <DeviceArt productId={product.id} view={v.id} className="h-full w-full p-1.5" />
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Product info */}
+        <div>
+          <div className="flex flex-wrap items-center gap-2">
+            <GradeBadge condition={product.condition} size="md" />
+            {product.badges?.includes('new') && <span className="badge badge-new">New</span>}
+          </div>
+
+          <h1 className="mt-4 font-display text-display-md font-medium sm:text-display-lg">{product.name}</h1>
+
+          {product.capacity && <p className="mt-2 text-lg text-gray-600">{product.capacity}</p>}
+
+          {/* Price */}
+          <div className="mt-6 flex flex-wrap items-baseline gap-x-3 gap-y-1">
+            <span className="font-display text-display-sm font-medium text-ink-900 sm:text-display-md">
+              {formatPrice(product.price)}
+            </span>
+
+            {product.originalPrice && (
+              <>
+                <span className="text-lg text-gray-500 line-through">{formatPrice(product.originalPrice)}</span>
+                <span className="badge badge-sale">Save {discountPercentage}%</span>
+              </>
+            )}
+          </div>
+
+          {/* Stock status */}
+          <p className="mt-3 flex items-center text-sm font-medium text-accent-700">
+            <span className="mr-2 h-2 w-2 rounded-full bg-accent-500" aria-hidden="true" />
+            In Stock - Ready to Ship
+          </p>
+
+          {/* Condition report */}
+          <div className="mt-6 rounded-2xl border border-gray-200 bg-white p-5">
+            <div className="flex items-start gap-4">
+              <span
+                className="inline-flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-accent-600 font-display text-2xl font-semibold text-white"
+                aria-hidden="true"
+              >
+                {grade.letter}
+              </span>
+              <div>
+                <h2 className="text-base">
+                  Grade {grade.letter}: {product.condition} condition
+                </h2>
+                <p className="mt-0.5 text-sm text-gray-600">{conditionText}</p>
+              </div>
+            </div>
+            <dl className="mt-4 grid grid-cols-3 gap-3 border-t border-gray-200 pt-4 text-sm">
+              <div>
+                <dt className="text-gray-500">Battery</dt>
+                <dd className="font-medium text-ink-900">85% or more</dd>
+              </div>
+              <div>
+                <dt className="text-gray-500">Inspection</dt>
+                <dd className="font-medium text-ink-900">30+ points</dd>
+              </div>
+              <div>
+                <dt className="text-gray-500">Warranty</dt>
+                <dd className="font-medium text-ink-900">12 months</dd>
+              </div>
+            </dl>
+          </div>
+
+          {/* Add to cart */}
+          <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+            <div className="inline-flex h-12 items-center self-start rounded-full border border-gray-300 bg-white">
+              <button
+                onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                aria-label="Decrease quantity"
+                disabled={quantity <= 1}
+                className="inline-flex h-12 w-12 items-center justify-center rounded-full text-ink-900 transition-colors hover:bg-gray-100 disabled:text-gray-300 disabled:hover:bg-transparent"
+              >
+                <Minus className="h-4 w-4" />
+              </button>
+              <span className="w-8 text-center font-medium text-ink-900" aria-live="polite">{quantity}</span>
+              <button
+                onClick={() => setQuantity(quantity + 1)}
+                aria-label="Increase quantity"
+                className="inline-flex h-12 w-12 items-center justify-center rounded-full text-ink-900 transition-colors hover:bg-gray-100"
+              >
+                <Plus className="h-4 w-4" />
+              </button>
+            </div>
+
+            <button onClick={handleAddToCart} className="btn btn-primary h-12 flex-1">
+              {justAdded ? <Check className="h-5 w-5" /> : <ShoppingCart className="h-5 w-5" />}
+              {justAdded ? 'Added to Cart' : 'Add to Cart'}
+            </button>
+          </div>
+
+          <button className="btn btn-outline mt-3 h-12 w-full">
+            <Heart className="h-5 w-5" />
+            Add to Wishlist
+          </button>
+
+          {/* Benefits */}
+          <ul className="mt-8 grid grid-cols-2 gap-x-6 gap-y-5 border-t border-gray-200 pt-6">
+            {[
+              { icon: ShieldCheck, title: '12-Month Warranty', text: 'Full coverage included' },
+              { icon: BatteryFull, title: 'Battery Health', text: 'Minimum 85% capacity' },
+              { icon: Truck, title: 'Free Shipping', text: '2-3 business days' },
+              { icon: RotateCcw, title: '30-Day Returns', text: 'Hassle-free process' },
+            ].map(({ icon: Icon, title, text }) => (
+              <li key={title} className="flex items-start gap-3">
+                <Icon className="mt-0.5 h-5 w-5 flex-shrink-0 text-accent-600" aria-hidden="true" />
+                <div>
+                  <h3 className="font-sans text-[0.95rem] font-medium tracking-normal">{title}</h3>
+                  <p className="text-sm text-gray-600">{text}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
+
+          {/* Key features */}
+          {product.features && product.features.length > 0 && (
+            <div className="mt-8 border-t border-gray-200 pt-6">
+              <h2 className="mb-3 text-lg">Key Features</h2>
+              <ul className="space-y-2.5">
+                {product.features.map((feature, index) => (
+                  <li key={index} className="flex items-start gap-2.5">
+                    <Check className="mt-0.5 h-5 w-5 flex-shrink-0 text-accent-600" aria-hidden="true" />
+                    <span>{feature}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
           )}
         </div>
-        
-        {/* Product info */}
-        <div className="lg:w-1/2">
-          {/* Product heading */}
-          <div className="mb-6">
-            <h1 className="text-3xl font-bold mb-2">{product.name}</h1>
-            
-            {product.capacity && (
-              <p className="text-gray-600 mb-2">{product.capacity}</p>
-            )}
-            
-            {/* Condition badge */}
-            <div className="mb-4">
-              <span className={`condition-badge ${conditionInfo.className}`}>
-                {product.condition}
-              </span>
-              <span className="ml-2 text-sm text-gray-600">
-                {conditionInfo.text}
-              </span>
-            </div>
-            
-            {/* Price */}
-            <div className="flex items-baseline mb-2">
-              <span className="text-3xl font-bold">{formatPrice(product.price)}</span>
-              
-              {product.originalPrice && (
-                <>
-                  <span className="ml-3 text-gray-500 line-through text-lg">
-                    {formatPrice(product.originalPrice)}
-                  </span>
-                  <span className="ml-3 text-accent-700 font-medium">
-                    Save {discountPercentage}%
-                  </span>
-                </>
-              )}
-            </div>
-            
-            {/* Stock status */}
-            <p className="text-accent-700 flex items-center">
-              <Check className="h-5 w-5 mr-1" />
-              In Stock - Ready to Ship
-            </p>
-          </div>
-          
-          {/* Key features */}
-          <div className="mb-6 bg-gray-50 p-4 rounded-lg">
-            <h3 className="font-medium mb-3">Key Features:</h3>
-            <ul className="space-y-2">
-              {product.features && product.features.map((feature, index) => (
-                <li key={index} className="flex items-start">
-                  <Check className="h-5 w-5 text-accent-600 mr-2 flex-shrink-0 mt-0.5" />
-                  <span>{feature}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-          
-          {/* Add to cart */}
-          <div className="mb-8">
-            <div className="flex items-center mb-6">
-              <div className="flex items-center border border-gray-300 rounded-md overflow-hidden mr-4">
-                <button 
-                  onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                  aria-label="Decrease quantity"
-                  className="px-3 py-2 bg-gray-100 hover:bg-gray-200 transition-colors"
-                >
-                  -
-                </button>
-                <span className="px-6 py-2">{quantity}</span>
-                <button 
-                  onClick={() => setQuantity(quantity + 1)}
-                  aria-label="Increase quantity"
-                  className="px-3 py-2 bg-gray-100 hover:bg-gray-200 transition-colors"
-                >
-                  +
-                </button>
-              </div>
-              
-              <button 
-                onClick={handleAddToCart}
-                className="btn btn-primary flex-grow py-3"
-              >
-                {justAdded ? (
-                  <Check className="h-5 w-5 mr-2" />
-                ) : (
-                  <ShoppingCart className="h-5 w-5 mr-2" />
-                )}
-                {justAdded ? 'Added to Cart' : 'Add to Cart'}
-              </button>
-            </div>
-            
-            <button className="btn btn-outline w-full py-3 mb-4">
-              <Heart className="h-5 w-5 mr-2" />
-              Add to Wishlist
-            </button>
-          </div>
-          
-          {/* Benefits */}
-          <div className="border-t border-b border-gray-200 py-4 mb-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="flex items-start">
-                <Shield className="h-5 w-5 text-accent-600 mr-2 flex-shrink-0 mt-1" />
-                <div>
-                  <h4 className="font-medium">12-Month Warranty</h4>
-                  <p className="text-sm text-gray-600">Full coverage included</p>
-                </div>
-              </div>
-              <div className="flex items-start">
-                <BatteryFull className="h-5 w-5 text-accent-600 mr-2 flex-shrink-0 mt-1" />
-                <div>
-                  <h4 className="font-medium">Battery Health</h4>
-                  <p className="text-sm text-gray-600">Minimum 85% capacity</p>
-                </div>
-              </div>
-              <div className="flex items-start">
-                <Truck className="h-5 w-5 text-accent-600 mr-2 flex-shrink-0 mt-1" />
-                <div>
-                  <h4 className="font-medium">Free Shipping</h4>
-                  <p className="text-sm text-gray-600">2-3 business days</p>
-                </div>
-              </div>
-              <div className="flex items-start">
-                <Star className="h-5 w-5 text-accent-600 mr-2 flex-shrink-0 mt-1" />
-                <div>
-                  <h4 className="font-medium">30-Day Returns</h4>
-                  <p className="text-sm text-gray-600">Hassle-free process</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
-      
+
       {/* Product details tabs */}
       <div className="mb-16">
-        <div className="border-b border-gray-200 mb-6">
-          <div className="flex overflow-x-auto hide-scrollbar">
-            <button 
-              className={`py-3 px-6 font-medium text-sm whitespace-nowrap ${
-                activeTab === 'description' 
-                  ? 'border-b-2 border-accent-600 text-ink-900' 
-                  : 'text-gray-500 hover:text-ink-900'
-              }`}
-              onClick={() => setActiveTab('description')}
-            >
-              Description
-            </button>
-            <button 
-              className={`py-3 px-6 font-medium text-sm whitespace-nowrap ${
-                activeTab === 'specifications' 
-                  ? 'border-b-2 border-accent-600 text-ink-900' 
-                  : 'text-gray-500 hover:text-ink-900'
-              }`}
-              onClick={() => setActiveTab('specifications')}
-            >
-              Specifications
-            </button>
-            <button 
-              className={`py-3 px-6 font-medium text-sm whitespace-nowrap ${
-                activeTab === 'warranty' 
-                  ? 'border-b-2 border-accent-600 text-ink-900' 
-                  : 'text-gray-500 hover:text-ink-900'
-              }`}
-              onClick={() => setActiveTab('warranty')}
-            >
-              Warranty Info
-            </button>
-            <button 
-              className={`py-3 px-6 font-medium text-sm whitespace-nowrap ${
-                activeTab === 'reviews' 
-                  ? 'border-b-2 border-accent-600 text-ink-900' 
-                  : 'text-gray-500 hover:text-ink-900'
-              }`}
-              onClick={() => setActiveTab('reviews')}
-            >
-              Reviews
-            </button>
+        <div className="hide-scrollbar -mx-5 mb-6 overflow-x-auto px-5 sm:mx-0 sm:px-0">
+          <div className="inline-flex gap-1 rounded-full bg-gray-200/70 p-1" role="tablist" aria-label="Product details">
+            {TABS.map((tab) => (
+              <button
+                key={tab.id}
+                role="tab"
+                aria-selected={activeTab === tab.id}
+                className={`whitespace-nowrap rounded-full px-4 py-2 text-sm font-medium transition-colors ${
+                  activeTab === tab.id ? 'bg-white text-ink-900 shadow-sm' : 'text-gray-600 hover:text-ink-900'
+                }`}
+                onClick={() => setActiveTab(tab.id)}
+              >
+                {tab.label}
+              </button>
+            ))}
           </div>
         </div>
-        
-        <div className="bg-white p-6 rounded-lg">
+
+        <div className="panel" role="tabpanel">
           {activeTab === 'description' && (
-            <div>
-              <h3 className="text-xl font-medium mb-4">Product Description</h3>
-              <p className="mb-4">
-                This {product.name} has been professionally refurbished to meet our exacting standards. 
+            <div className="max-w-[68ch] space-y-4 leading-relaxed">
+              <h3 className="text-xl">Product Description</h3>
+              <p>
+                This {product.name} has been professionally refurbished to meet our exacting standards.
                 Each device undergoes a rigorous 30+ point inspection to ensure it looks and works like new.
               </p>
-              <p className="mb-4">
-                Our certified technicians have thoroughly tested all functions, replaced any worn components, 
+              <p>
+                Our certified technicians have thoroughly tested all functions, replaced any worn components,
                 and ensured the battery health is at least 85% of its original capacity.
               </p>
               <p>
-                The device is in {product.condition.toLowerCase()} condition, meaning {conditionInfo.text.toLowerCase()}.
+                The device is in {product.condition.toLowerCase()} condition, meaning {conditionText.toLowerCase()}.
                 It comes with all necessary accessories, including a charger, cable, and SIM removal tool.
               </p>
             </div>
           )}
-          
+
           {activeTab === 'specifications' && (
             <div>
-              <h3 className="text-xl font-medium mb-4">Technical Specifications</h3>
+              <h3 className="mb-2 text-xl">Technical Specifications</h3>
               {product.specifications ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <dl className="spec-table max-w-2xl">
                   {Object.entries(product.specifications).map(([key, value]) => (
-                    <div key={key} className="border-b border-gray-100 pb-2">
-                      <span className="font-medium text-gray-700">{key}: </span>
-                      <span className="text-gray-600">{value}</span>
+                    <div key={key}>
+                      <dt>{key}</dt>
+                      <dd>{value}</dd>
                     </div>
                   ))}
-                </div>
+                </dl>
               ) : (
-                <p className="text-gray-600">
+                <p className="mt-2 text-gray-600">
                   Detailed specifications are not available for this phone yet.
                 </p>
               )}
             </div>
           )}
-          
+
           {activeTab === 'warranty' && (
-            <div>
-              <h3 className="text-xl font-medium mb-4">Warranty Information</h3>
-              <p className="mb-4">
-                All Dreamland Gadgets refurbished phones come with our comprehensive 12-month warranty, 
+            <div className="max-w-[68ch] leading-relaxed">
+              <h3 className="mb-4 text-xl">Warranty Information</h3>
+              <p className="mb-5">
+                All Dreamland Gadgets refurbished phones come with our comprehensive 12-month warranty,
                 covering manufacturing defects and hardware failures.
               </p>
-              <div className="bg-gray-50 p-4 rounded-lg mb-4">
-                <h4 className="font-medium mb-2">What's Covered:</h4>
+              <div className="mb-5 rounded-xl bg-accent-50 p-5">
+                <h4 className="mb-3 text-base">What's Covered:</h4>
                 <ul className="space-y-2">
-                  <li className="flex items-start">
-                    <Check className="h-5 w-5 text-accent-600 mr-2 flex-shrink-0 mt-0.5" />
-                    <span>Hardware malfunctions and defects</span>
-                  </li>
-                  <li className="flex items-start">
-                    <Check className="h-5 w-5 text-accent-600 mr-2 flex-shrink-0 mt-0.5" />
-                    <span>Battery issues (if capacity falls below 80%)</span>
-                  </li>
-                  <li className="flex items-start">
-                    <Check className="h-5 w-5 text-accent-600 mr-2 flex-shrink-0 mt-0.5" />
-                    <span>Display and touch screen functionality</span>
-                  </li>
-                  <li className="flex items-start">
-                    <Check className="h-5 w-5 text-accent-600 mr-2 flex-shrink-0 mt-0.5" />
-                    <span>Camera, speaker, and microphone defects</span>
-                  </li>
+                  {[
+                    'Hardware malfunctions and defects',
+                    'Battery issues (if capacity falls below 80%)',
+                    'Display and touch screen functionality',
+                    'Camera, speaker, and microphone defects',
+                  ].map((item) => (
+                    <li key={item} className="flex items-start gap-2.5 text-ink-800">
+                      <Check className="mt-0.5 h-5 w-5 flex-shrink-0 text-accent-600" aria-hidden="true" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
                 </ul>
               </div>
               <p>
-                For warranty claims or questions, please contact our customer support team at 
+                For warranty claims or questions, please contact our customer support team at
                 support@dreamlandgadgets.com or call us at 1-800-555-1234.
               </p>
             </div>
           )}
-          
+
           {activeTab === 'reviews' && (
-            <div>
-              <div className="flex items-center justify-between mb-6">
-                <h3 className="text-xl font-medium">Customer Reviews</h3>
+            <div className="max-w-3xl">
+              <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
+                <h3 className="text-xl">Customer Reviews</h3>
                 <button className="btn btn-outline">Write a Review</button>
               </div>
-              
-              <div className="bg-gray-50 p-4 rounded-lg mb-6">
-                <div className="flex items-center mb-2">
-                  <div className="flex mr-2">
+
+              <div className="mb-6 flex flex-wrap items-center gap-x-4 gap-y-1 rounded-xl bg-gray-50 p-5">
+                <span className="font-display text-display-sm font-medium text-ink-900">4.8</span>
+                <div>
+                  <div className="flex gap-0.5" role="img" aria-label="4.8 out of 5 stars">
                     {[...Array(5)].map((_, i) => (
-                      <Star 
-                        key={i} 
-                        className="h-5 w-5 text-accent-600 fill-accent-600"
-                      />
+                      <Star key={i} className="h-4 w-4 fill-accent-600 text-accent-600" />
                     ))}
                   </div>
-                  <span className="font-medium">4.8 out of 5</span>
+                  <p className="text-sm text-gray-600">4.8 out of 5. Based on 142 reviews</p>
                 </div>
-                <p className="text-sm text-gray-600">Based on 142 reviews</p>
               </div>
-              
-              <div className="space-y-6">
+
+              <div className="divide-y divide-gray-200">
                 {[1, 2, 3].map((review) => (
-                  <div key={review} className="border-b border-gray-200 pb-6">
-                    <div className="flex items-center mb-2">
-                      <span className="font-medium mr-3">John D.</span>
-                      <div className="flex mr-2">
+                  <div key={review} className="py-5">
+                    <div className="mb-2 flex flex-wrap items-center gap-x-3 gap-y-1">
+                      <span className="font-medium text-ink-900">John D.</span>
+                      <div className="flex gap-0.5" role="img" aria-label={`${6 - review} out of 5 stars`}>
                         {[...Array(5)].map((_, i) => (
-                          <Star 
-                            key={i} 
-                            className={`h-4 w-4 ${i < (6 - review) ? 'text-accent-600 fill-accent-600' : 'text-gray-300'}`}
+                          <Star
+                            key={i}
+                            className={`h-4 w-4 ${i < (6 - review) ? 'fill-accent-600 text-accent-600' : 'text-gray-300'}`}
                           />
                         ))}
                       </div>
                       <span className="text-sm text-gray-500">2 weeks ago</span>
                     </div>
-                    <p className="text-gray-700">
+                    <p className="leading-relaxed">
                       {review === 1 && "Absolutely love my refurbished iPhone! Looks brand new, and the battery life is excellent. The shipping was fast, and it came in a premium package. Definitely recommend!"}
                       {review === 2 && "Great value for money. The phone is in excellent condition as described. The only reason for 4 stars is that the charger wasn't included, but otherwise perfect experience."}
                       {review === 3 && "Phone works great and arrived quickly. Very satisfied with my purchase from Dreamland Gadgets. Will definitely shop here again in the future."}
@@ -472,19 +448,17 @@ const ProductDetailPage = () => {
                   </div>
                 ))}
               </div>
-              
-              <button className="mt-6 text-accent-700 hover:text-accent-800 font-medium">
-                Load More Reviews
-              </button>
+
+              <button className="btn btn-quiet mt-2 px-0">Load More Reviews</button>
             </div>
           )}
         </div>
       </div>
-      
+
       {/* Related products */}
       {relatedProducts.length > 0 && (
-        <div className="mb-16">
-          <h2 className="text-2xl font-bold mb-8">You Might Also Like</h2>
+        <div className="mb-8">
+          <h2 className="section-title mb-6">You Might Also Like</h2>
           <ProductSlider products={relatedProducts} />
         </div>
       )}

@@ -48,32 +48,32 @@ const ProductSlider = ({ products }: ProductSliderProps) => {
       {canScrollLeft && (
         <button 
           onClick={scrollLeft}
-          className="absolute left-0 top-1/2 transform -translate-y-1/2 -ml-4 z-10 bg-white rounded-full p-2 shadow-md hover:bg-gray-100 transition-colors"
+          className="absolute left-0 top-1/2 transform -translate-y-1/2 -ml-4 z-10 hidden h-11 w-11 items-center justify-center rounded-full border border-gray-200 bg-white shadow-md transition-colors hover:border-ink-900 sm:inline-flex"
           aria-label="Scroll left"
         >
-          <ChevronLeft className="h-6 w-6 text-ink-900" />
+          <ChevronLeft className="h-5 w-5 text-ink-900" />
         </button>
       )}
       
       {canScrollRight && (
         <button 
           onClick={scrollRight}
-          className="absolute right-0 top-1/2 transform -translate-y-1/2 -mr-4 z-10 bg-white rounded-full p-2 shadow-md hover:bg-gray-100 transition-colors"
+          className="absolute right-0 top-1/2 transform -translate-y-1/2 -mr-4 z-10 hidden h-11 w-11 items-center justify-center rounded-full border border-gray-200 bg-white shadow-md transition-colors hover:border-ink-900 sm:inline-flex"
           aria-label="Scroll right"
         >
-          <ChevronRight className="h-6 w-6 text-ink-900" />
+          <ChevronRight className="h-5 w-5 text-ink-900" />
         </button>
       )}
       
       {/* Product slider */}
       <div 
         ref={sliderRef}
-        className="flex overflow-x-auto pb-4 hide-scrollbar gap-4 px-1"
+        className="hide-scrollbar -mx-5 flex snap-x gap-4 overflow-x-auto px-5 pb-4 sm:mx-0 sm:px-0.5"
         onScroll={checkScrollability}
         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
       >
         {products.map((product) => (
-          <div key={product.id} className="min-w-[250px] sm:min-w-[280px] max-w-[300px] flex-shrink-0">
+          <div key={product.id} className="w-[260px] flex-shrink-0 snap-start sm:w-[280px]">
             <ProductCard product={product} />
           </div>
         ))}

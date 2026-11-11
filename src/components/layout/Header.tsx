@@ -6,14 +6,13 @@ import {
   User, 
   Menu, 
   X, 
-  Smartphone,
-  Phone,
   ChevronDown,
   Heart,
   Bell,
   LogOut
 } from 'lucide-react';
 import { useCart } from '../../context/cart';
+import Logo from '../common/Logo';
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -66,114 +65,117 @@ const Header = () => {
     setIsDropdownOpen(isDropdownOpen === menu ? '' : menu);
   };
 
+  const menuPanel =
+    'absolute top-full w-60 rounded-xl border border-gray-200 bg-white p-1.5 shadow-lg transition-all duration-150';
+  const menuItem = 'block rounded-lg px-3 py-2 text-[0.95rem] text-ink-800 hover:bg-gray-100';
+
   return (
     <>
       {/* Top banner */}
-      <div className="bg-ink-900 text-white py-2 px-4 text-center text-sm">
+      <div className="bg-accent-800 px-4 py-2 text-center text-[0.8rem] text-accent-50 sm:text-sm">
         <p>
           Free shipping on orders over ₹15,000 | 12-month warranty on all devices
         </p>
       </div>
 
-      <header 
-        className={`sticky top-0 z-50 w-full transition-all duration-300 ${
-          isScrolled ? 'bg-white shadow-md py-2' : 'bg-white/95 backdrop-blur-md py-4'
+      <header
+        className={`sticky top-0 z-50 w-full border-b bg-canvas/90 backdrop-blur-md transition-[border-color,box-shadow] duration-200 ${
+          isScrolled ? 'border-gray-200 shadow-sm' : 'border-transparent'
         }`}
       >
-        <div className="container mx-auto px-4">
+        <div className="container">
           {/* Main header content */}
-          <div className="flex items-center justify-between">
-            <Link 
-              to="/" 
-              className="flex items-center gap-2 text-ink-900 transition-opacity hover:opacity-80"
-            >
-              <div className="bg-accent-600 rounded-lg p-2">
-                <Smartphone className="h-6 w-6 text-ink-900" />
-              </div>
-              <div>
-                <span className="font-bold text-xl hidden sm:block">Dreamland Gadgets</span>
-                <span className="text-xs text-gray-600 hidden sm:block">Premium Refurbished Phones</span>
-              </div>
+          <div className="flex h-16 items-center justify-between gap-4 lg:h-[4.5rem]">
+            <Link to="/" className="rounded-lg" aria-label="Dreamland Gadgets home">
+              <Logo />
             </Link>
-            
+
             {/* Desktop Navigation */}
-            <nav className="hidden lg:flex items-center space-x-1">
-              <Link to="/" className="nav-link px-4 py-2">Home</Link>
-              
-              <div className="relative group">
-                <button 
-                  className="nav-link px-4 py-2 flex items-center"
+            <nav className="hidden items-center gap-0.5 lg:flex" aria-label="Main">
+              <Link to="/" className="nav-link">Home</Link>
+
+              <div className="group relative">
+                <button
+                  className="nav-link gap-1"
                   aria-haspopup="true"
                   aria-expanded={isDropdownOpen === 'phones'}
                   onClick={() => handleDropdown('phones')}
                 >
-                  <Phone className="h-4 w-4 mr-1" />
                   Phones
-                  <ChevronDown className="h-4 w-4 ml-1" />
+                  <ChevronDown className="h-4 w-4" aria-hidden="true" />
                 </button>
-                <div className={`absolute top-full left-0 w-64 bg-white shadow-lg rounded-lg py-2 group-hover:opacity-100 group-hover:visible transition-all duration-200 group-hover:translate-y-0 ${
-                  isDropdownOpen === 'phones' ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-2'
-                }`}>
-                  <Link to="/products?category=iphone" className="block px-4 py-2 hover:bg-gray-50">iPhone</Link>
-                  <Link to="/products?category=samsung" className="block px-4 py-2 hover:bg-gray-50">Samsung</Link>
-                  <Link to="/products?category=google" className="block px-4 py-2 hover:bg-gray-50">Google Pixel</Link>
-                  <Link to="/products?category=oneplus" className="block px-4 py-2 hover:bg-gray-50">OnePlus</Link>
-                  <div className="border-t border-gray-100 my-2"></div>
-                  <Link to="/products" className="block px-4 py-2 hover:bg-gray-50 text-accent-700">View All Phones</Link>
+                <div
+                  className={`${menuPanel} left-0 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100 ${
+                    isDropdownOpen === 'phones' ? 'visible translate-y-0 opacity-100' : 'invisible -translate-y-1 opacity-0'
+                  }`}
+                >
+                  <Link to="/products?category=iphone" className={menuItem}>iPhone</Link>
+                  <Link to="/products?category=samsung" className={menuItem}>Samsung</Link>
+                  <Link to="/products?category=google" className={menuItem}>Google Pixel</Link>
+                  <Link to="/products?category=oneplus" className={menuItem}>OnePlus</Link>
+                  <div className="my-1.5 border-t border-gray-200"></div>
+                  <Link to="/products" className={`${menuItem} font-medium text-accent-700`}>View All Phones</Link>
                 </div>
               </div>
-              
-              <Link to="/products?category=deals" className="nav-link px-4 py-2">Deals</Link>
-              <Link to="/products" className="nav-link px-4 py-2">Shop</Link>
-              <Link to="/contact" className="nav-link px-4 py-2">Contact</Link>
+
+              <Link to="/products?category=deals" className="nav-link">Deals</Link>
+              <Link to="/products" className="nav-link">Shop</Link>
+              <Link to="/contact" className="nav-link">Contact</Link>
             </nav>
-            
+
             {/* Icons */}
-            <div className="flex items-center space-x-1">
-              <button 
+            <div className="flex items-center gap-0.5">
+              <button
                 onClick={() => setIsSearchOpen(!isSearchOpen)}
                 className="icon-button"
                 aria-label="Search"
+                aria-expanded={isSearchOpen}
               >
                 <Search className="h-5 w-5" />
               </button>
-              
-              <Link to="/account?tab=wishlist" className="icon-button hidden sm:flex" aria-label="Wishlist">
+
+              <Link to="/account?tab=wishlist" className="icon-button hidden sm:inline-flex" aria-label="Wishlist">
                 <Heart className="h-5 w-5" />
               </Link>
-              
-              <Link to="/account?tab=notifications" className="icon-button hidden sm:flex" aria-label="Notifications">
+
+              <Link to="/account?tab=notifications" className="icon-button hidden sm:inline-flex" aria-label="Notifications">
                 <Bell className="h-5 w-5" />
               </Link>
-              
-              <Link to="/cart" className="icon-button relative" aria-label="Cart">
-                <ShoppingCart className="h-5 w-5" />
-                {cartItemsCount > 0 && (
-                  <span className="absolute -top-2 -right-2 bg-accent-600 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
-                    {cartItemsCount}
-                  </span>
-                )}
-              </Link>
-              
-              <div className="relative group hidden sm:block">
+
+              <div className="group relative hidden sm:block">
                 <Link to="/account" className="icon-button" aria-label="Account">
                   <User className="h-5 w-5" />
                 </Link>
-                <div className="absolute top-full right-0 w-48 bg-white shadow-lg rounded-lg py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 -translate-y-2 group-hover:translate-y-0">
-                  <Link to="/account" className="block px-4 py-2 hover:bg-gray-50">My Account</Link>
-                  <Link to="/account?tab=orders" className="block px-4 py-2 hover:bg-gray-50">Orders</Link>
-                  <Link to="/account?tab=wishlist" className="block px-4 py-2 hover:bg-gray-50">Wishlist</Link>
-                  <div className="border-t border-gray-100 my-2"></div>
-                  <button className="block w-full text-left px-4 py-2 hover:bg-gray-50 text-red-600">
+                <div className={`${menuPanel} invisible right-0 w-48 -translate-y-1 opacity-0 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100`}>
+                  <Link to="/account" className={menuItem}>My Account</Link>
+                  <Link to="/account?tab=orders" className={menuItem}>Orders</Link>
+                  <Link to="/account?tab=wishlist" className={menuItem}>Wishlist</Link>
+                  <div className="my-1.5 border-t border-gray-200"></div>
+                  <button className={`${menuItem} w-full text-left text-red-700`}>
                     Sign Out
                   </button>
                 </div>
               </div>
-              
-              <button 
-                className="lg:hidden icon-button"
+
+              <Link
+                to="/cart"
+                className="relative ml-1 inline-flex h-10 items-center gap-2 rounded-full bg-ink-900 px-3.5 text-sm font-medium text-white transition-colors hover:bg-ink-700"
+                aria-label="Cart"
+              >
+                <ShoppingCart className="h-[1.1rem] w-[1.1rem]" />
+                <span className="hidden sm:inline">Cart</span>
+                {cartItemsCount > 0 && (
+                  <span className="inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-accent-300 px-1 text-xs font-semibold text-ink-900">
+                    {cartItemsCount}
+                  </span>
+                )}
+              </Link>
+
+              <button
+                className="icon-button lg:hidden"
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+                aria-expanded={isMobileMenuOpen}
               >
                 {isMobileMenuOpen ? (
                   <X className="h-6 w-6" />
@@ -183,49 +185,47 @@ const Header = () => {
               </button>
             </div>
           </div>
-          
+
           {/* Search bar */}
           {isSearchOpen && (
-            <form className="mt-4 relative" role="search" onSubmit={handleSearchSubmit}>
+            <form className="relative animate-fade-in pb-4" role="search" onSubmit={handleSearchSubmit}>
               <input
                 type="search"
                 aria-label="Search for phones"
                 placeholder="Search for phones..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full p-3 pl-10 pr-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-600 bg-gray-50"
+                className="field h-12 rounded-full pl-12"
                 autoFocus
               />
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+              <Search className="pointer-events-none absolute left-4 top-3.5 h-5 w-5 text-gray-400" aria-hidden="true" />
             </form>
           )}
         </div>
-        
+
         {/* Mobile menu */}
         {isMobileMenuOpen && (
-          <div className="lg:hidden absolute top-full left-0 right-0 bg-white shadow-lg max-h-[calc(100vh-100%)] overflow-y-auto">
-            <nav className="container mx-auto px-4 py-4">
-              <div className="mb-4">
-                <Link 
-                  to="/account" 
-                  className="flex items-center p-4 bg-gray-50 rounded-lg mb-4"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  <div className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center mr-3">
-                    <User className="h-5 w-5 text-gray-600" />
-                  </div>
-                  <div>
-                    <span className="block font-medium">Account</span>
-                    <span className="text-sm text-gray-600">Sign in or register</span>
-                  </div>
-                </Link>
-              </div>
+          <div className="absolute left-0 right-0 top-full max-h-[calc(100vh-100%)] overflow-y-auto border-t border-gray-200 bg-canvas shadow-lg lg:hidden">
+            <nav className="container py-4" aria-label="Mobile">
+              <Link
+                to="/account"
+                className="mb-4 flex items-center rounded-xl border border-gray-200 bg-white p-4"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                <div className="mr-3 flex h-10 w-10 items-center justify-center rounded-full bg-accent-50">
+                  <User className="h-5 w-5 text-accent-700" />
+                </div>
+                <div>
+                  <span className="block font-medium text-ink-900">Account</span>
+                  <span className="text-sm text-gray-600">Sign in or register</span>
+                </div>
+              </Link>
 
-              <div className="space-y-2">
+              <div className="space-y-0.5">
                 <Link to="/" className="mobile-nav-link" onClick={() => setIsMobileMenuOpen(false)}>
                   Home
                 </Link>
-                <div className="border-t border-gray-100 my-2"></div>
+                <div className="my-2 border-t border-gray-200"></div>
                 <Link to="/products" className="mobile-nav-link" onClick={() => setIsMobileMenuOpen(false)}>
                   All Phones
                 </Link>
@@ -241,7 +241,7 @@ const Header = () => {
                 <Link to="/products?category=oneplus" className="mobile-nav-link" onClick={() => setIsMobileMenuOpen(false)}>
                   OnePlus
                 </Link>
-                <div className="border-t border-gray-100 my-2"></div>
+                <div className="my-2 border-t border-gray-200"></div>
                 <Link to="/products?category=deals" className="mobile-nav-link" onClick={() => setIsMobileMenuOpen(false)}>
                   Deals
                 </Link>
@@ -250,27 +250,27 @@ const Header = () => {
                 </Link>
               </div>
 
-              <div className="border-t border-gray-200 my-4"></div>
+              <div className="my-4 border-t border-gray-200"></div>
 
-              <div className="space-y-2">
+              <div className="space-y-0.5">
                 <Link to="/account?tab=orders" className="mobile-nav-link flex items-center" onClick={() => setIsMobileMenuOpen(false)}>
-                  <ShoppingCart className="h-5 w-5 mr-3" />
+                  <ShoppingCart className="mr-3 h-5 w-5 text-gray-500" />
                   My Orders
                 </Link>
                 <Link to="/account?tab=wishlist" className="mobile-nav-link flex items-center" onClick={() => setIsMobileMenuOpen(false)}>
-                  <Heart className="h-5 w-5 mr-3" />
+                  <Heart className="mr-3 h-5 w-5 text-gray-500" />
                   Wishlist
                 </Link>
                 <Link to="/account?tab=notifications" className="mobile-nav-link flex items-center" onClick={() => setIsMobileMenuOpen(false)}>
-                  <Bell className="h-5 w-5 mr-3" />
+                  <Bell className="mr-3 h-5 w-5 text-gray-500" />
                   Notifications
                 </Link>
               </div>
 
-              <div className="border-t border-gray-200 my-4"></div>
+              <div className="my-4 border-t border-gray-200"></div>
 
-              <button className="w-full text-left text-red-600 mobile-nav-link flex items-center">
-                <LogOut className="h-5 w-5 mr-3" />
+              <button className="mobile-nav-link flex w-full items-center text-left text-red-700">
+                <LogOut className="mr-3 h-5 w-5" />
                 Sign Out
               </button>
             </nav>

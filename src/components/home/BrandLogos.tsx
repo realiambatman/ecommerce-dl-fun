@@ -1,36 +1,34 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Apple, Smartphone } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 
+const brands = [
+  { id: 'apple', name: 'Apple' },
+  { id: 'samsung', name: 'Samsung' },
+  { id: 'google', name: 'Google' },
+  { id: 'oneplus', name: 'OnePlus' },
+  { id: 'xiaomi', name: 'Xiaomi' },
+  { id: 'huawei', name: 'Huawei' },
+];
+
+// Brand names are set as plain type; no manufacturer logos are used
 const BrandLogos = () => {
-  const [hoveredBrand, setHoveredBrand] = useState<string | null>(null);
-
-  const brands = [
-    { id: 'apple', name: 'Apple', icon: <Apple className="h-10 w-10" /> },
-    { id: 'samsung', name: 'Samsung', icon: <Smartphone className="h-10 w-10" /> },
-    { id: 'google', name: 'Google', icon: <Smartphone className="h-10 w-10" /> },
-    { id: 'oneplus', name: 'OnePlus', icon: <Smartphone className="h-10 w-10" /> },
-    { id: 'xiaomi', name: 'Xiaomi', icon: <Smartphone className="h-10 w-10" /> },
-    { id: 'huawei', name: 'Huawei', icon: <Smartphone className="h-10 w-10" /> },
-  ];
-
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-6">
+    <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
       {brands.map((brand) => (
-        <Link
-          key={brand.id}
-          to={`/products?brand=${brand.id}`}
-          className="flex flex-col items-center justify-center p-6 bg-white rounded-lg shadow-sm hover:shadow-md transition-all cursor-pointer"
-          onMouseEnter={() => setHoveredBrand(brand.id)}
-          onMouseLeave={() => setHoveredBrand(null)}
-        >
-          <div className={`transition-colors duration-300 ${hoveredBrand === brand.id ? 'text-accent-600' : 'text-gray-700'}`}>
-            {brand.icon}
-          </div>
-          <span className="mt-2 font-medium text-ink-900">{brand.name}</span>
-        </Link>
+        <li key={brand.id}>
+          <Link
+            to={`/products?brand=${brand.id}`}
+            className="group flex items-center justify-between rounded-xl border border-gray-200 bg-white px-5 py-4 transition-colors hover:border-ink-900"
+          >
+            <span className="font-display text-lg font-medium text-ink-900">{brand.name}</span>
+            <ArrowUpRight
+              className="h-4 w-4 text-gray-400 transition-colors group-hover:text-accent-600"
+              aria-hidden="true"
+            />
+          </Link>
+        </li>
       ))}
-    </div>
+    </ul>
   );
 };
 

@@ -1,19 +1,49 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { 
-  Smartphone, 
-  Mail, 
-  Phone, 
-  Instagram, 
-  Facebook, 
-  Twitter, 
+import {
+  Mail,
+  Phone,
+  Instagram,
+  Facebook,
+  Twitter,
   Youtube,
   Linkedin,
   MapPin,
   Clock,
   CreditCard,
-  Shield
+  ShieldCheck,
 } from 'lucide-react';
+import Logo from '../common/Logo';
+
+const shopLinks = [
+  { to: '/products', label: 'Shop All Phones' },
+  { to: '/products?category=iphone', label: 'iPhones' },
+  { to: '/products?category=samsung', label: 'Samsung Phones' },
+  { to: '/products?category=google', label: 'Google Pixels' },
+  { to: '/products?category=oneplus', label: 'OnePlus Phones' },
+  { to: '/products?category=deals', label: 'Special Deals' },
+];
+
+const serviceLinks = [
+  { to: '/account', label: 'My Account' },
+  { to: '/track-order', label: 'Track Your Order' },
+  { to: '/shipping', label: 'Shipping Information' },
+  { to: '/returns', label: 'Returns & Warranty' },
+  { to: '/faq', label: 'FAQ' },
+  { to: '/contact', label: 'Contact Us' },
+];
+
+const socials = [
+  { label: 'Facebook', icon: Facebook },
+  { label: 'Instagram', icon: Instagram },
+  { label: 'Twitter', icon: Twitter },
+  { label: 'YouTube', icon: Youtube },
+  { label: 'LinkedIn', icon: Linkedin },
+];
+
+const payments = ['Visa', 'Mastercard', 'PayPal', 'Apple Pay'];
+
+const footerLink = 'text-gray-600 underline-offset-4 transition-colors hover:text-ink-900 hover:underline';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -28,241 +58,161 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-ink-900 text-white">
-      {/* Newsletter Section */}
-      <div className="border-b border-white/10">
-        <div className="container mx-auto px-4 py-12">
-          <div className="grid md:grid-cols-2 gap-8 items-center">
-            <div>
-              <h3 className="text-2xl font-bold mb-2">Stay Updated</h3>
-              <p className="text-gray-300">
-                Subscribe to our newsletter for exclusive deals and phone recommendations.
+    <footer className="mt-20 border-t border-gray-200 bg-gray-100 text-gray-600">
+      <div className="container">
+        {/* Newsletter Section */}
+        <div className="grid items-center gap-6 border-b border-gray-200 py-10 md:grid-cols-2 md:gap-12">
+          <div>
+            <h3 className="text-2xl">Stay Updated</h3>
+            <p className="mt-1">
+              Subscribe to our newsletter for exclusive deals and phone recommendations.
+            </p>
+          </div>
+          <div>
+            <form className="flex flex-col gap-2 sm:flex-row" onSubmit={handleNewsletterSubmit}>
+              <input
+                type="email"
+                required
+                aria-label="Email address"
+                value={newsletterEmail}
+                onChange={(e) => {
+                  setNewsletterEmail(e.target.value);
+                  setIsSubscribed(false);
+                }}
+                placeholder="Enter your email"
+                className="field h-12 flex-1 rounded-full px-5"
+              />
+              <button type="submit" className="btn btn-primary h-12 px-6">
+                Subscribe
+              </button>
+            </form>
+            {isSubscribed && (
+              <p className="mt-2 text-sm font-medium text-accent-700" role="status">
+                Thanks for subscribing!
               </p>
-            </div>
-            <div>
-              <form className="flex gap-2" onSubmit={handleNewsletterSubmit}>
-                <input 
-                  type="email" 
-                  required
-                  aria-label="Email address"
-                  value={newsletterEmail}
-                  onChange={(e) => {
-                    setNewsletterEmail(e.target.value);
-                    setIsSubscribed(false);
-                  }}
-                  placeholder="Enter your email" 
-                  className="flex-1 bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-accent-600"
-                />
-                <button type="submit" className="bg-accent-600 hover:bg-accent-700 text-white px-6 py-3 rounded-lg font-medium transition-colors">
-                  Subscribe
-                </button>
-              </form>
-              {isSubscribed && (
-                <p className="mt-2 text-sm text-accent-600" role="status">
-                  Thanks for subscribing!
-                </p>
-              )}
-            </div>
+            )}
           </div>
         </div>
-      </div>
 
-      {/* Main Footer Content */}
-      <div className="container mx-auto px-4 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+        {/* Main Footer Content */}
+        <div className="grid grid-cols-1 gap-x-10 gap-y-10 py-12 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1.2fr]">
           {/* Company Info */}
           <div>
-            <div className="flex items-center gap-3 mb-6">
-              <div className="bg-accent-600 rounded-lg p-2">
-                <Smartphone className="h-6 w-6 text-ink-900" />
-              </div>
-              <div>
-                <h4 className="font-bold text-xl">Dreamland Gadgets</h4>
-                <p className="text-sm text-gray-400">Premium Refurbished Phones</p>
-              </div>
-            </div>
-            
-            <p className="text-gray-300 mb-6">
+            <Logo />
+            <p className="mt-5 max-w-sm">
               Your trusted source for premium refurbished phones. Quality assured, thoroughly tested, and backed by our comprehensive warranty.
             </p>
-            
+
             {/* Contact Info */}
-            <div className="space-y-4">
-              <div className="flex items-center gap-3 text-gray-300">
-                <MapPin className="h-5 w-5 text-accent-600" />
+            <ul className="mt-6 space-y-3 text-[0.95rem]">
+              <li className="flex items-start gap-3">
+                <MapPin className="mt-0.5 h-[1.1rem] w-[1.1rem] flex-shrink-0 text-accent-600" aria-hidden="true" />
                 <span>123 Tech Street, Digital City, 12345</span>
-              </div>
-              <div className="flex items-center gap-3 text-gray-300">
-                <Phone className="h-5 w-5 text-accent-600" />
+              </li>
+              <li className="flex items-start gap-3">
+                <Phone className="mt-0.5 h-[1.1rem] w-[1.1rem] flex-shrink-0 text-accent-600" aria-hidden="true" />
                 <span>+1 (555) 123-4567</span>
-              </div>
-              <div className="flex items-center gap-3 text-gray-300">
-                <Mail className="h-5 w-5 text-accent-600" />
-                <span>support@dreamlandgadgets.com</span>
-              </div>
-              <div className="flex items-center gap-3 text-gray-300">
-                <Clock className="h-5 w-5 text-accent-600" />
+              </li>
+              <li className="flex items-start gap-3">
+                <Mail className="mt-0.5 h-[1.1rem] w-[1.1rem] flex-shrink-0 text-accent-600" aria-hidden="true" />
+                <span className="break-all">support@dreamlandgadgets.com</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <Clock className="mt-0.5 h-[1.1rem] w-[1.1rem] flex-shrink-0 text-accent-600" aria-hidden="true" />
                 <span>Mon - Fri: 9:00 AM - 6:00 PM EST</span>
-              </div>
-            </div>
+              </li>
+            </ul>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h4 className="text-lg font-bold mb-6">Quick Links</h4>
-            <ul className="space-y-3">
-              <li>
-                <Link to="/products" className="text-gray-300 hover:text-accent-600 transition-colors">
-                  Shop All Phones
-                </Link>
-              </li>
-              <li>
-                <Link to="/products?category=iphone" className="text-gray-300 hover:text-accent-600 transition-colors">
-                  iPhones
-                </Link>
-              </li>
-              <li>
-                <Link to="/products?category=samsung" className="text-gray-300 hover:text-accent-600 transition-colors">
-                  Samsung Phones
-                </Link>
-              </li>
-              <li>
-                <Link to="/products?category=google" className="text-gray-300 hover:text-accent-600 transition-colors">
-                  Google Pixels
-                </Link>
-              </li>
-              <li>
-                <Link to="/products?category=oneplus" className="text-gray-300 hover:text-accent-600 transition-colors">
-                  OnePlus Phones
-                </Link>
-              </li>
-              <li>
-                <Link to="/products?category=deals" className="text-gray-300 hover:text-accent-600 transition-colors">
-                  Special Deals
-                </Link>
-              </li>
+            <h4 className="mb-4 text-base">Quick Links</h4>
+            <ul className="space-y-2.5">
+              {shopLinks.map((link) => (
+                <li key={link.to}>
+                  <Link to={link.to} className={footerLink}>
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
           {/* Customer Service */}
           <div>
-            <h4 className="text-lg font-bold mb-6">Customer Service</h4>
-            <ul className="space-y-3">
-              <li>
-                <Link to="/account" className="text-gray-300 hover:text-accent-600 transition-colors">
-                  My Account
-                </Link>
-              </li>
-              <li>
-                <Link to="/track-order" className="text-gray-300 hover:text-accent-600 transition-colors">
-                  Track Your Order
-                </Link>
-              </li>
-              <li>
-                <Link to="/shipping" className="text-gray-300 hover:text-accent-600 transition-colors">
-                  Shipping Information
-                </Link>
-              </li>
-              <li>
-                <Link to="/returns" className="text-gray-300 hover:text-accent-600 transition-colors">
-                  Returns & Warranty
-                </Link>
-              </li>
-              <li>
-                <Link to="/faq" className="text-gray-300 hover:text-accent-600 transition-colors">
-                  FAQ
-                </Link>
-              </li>
-              <li>
-                <Link to="/contact" className="text-gray-300 hover:text-accent-600 transition-colors">
-                  Contact Us
-                </Link>
-              </li>
+            <h4 className="mb-4 text-base">Customer Service</h4>
+            <ul className="space-y-2.5">
+              {serviceLinks.map((link) => (
+                <li key={link.to}>
+                  <Link to={link.to} className={footerLink}>
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
           {/* Trust & Security */}
           <div>
-            <h4 className="text-lg font-bold mb-6">Trust & Security</h4>
+            <h4 className="mb-4 text-base">Trust & Security</h4>
             <div className="space-y-4">
               <div className="flex items-start gap-3">
-                <Shield className="h-6 w-6 text-accent-600 flex-shrink-0" />
+                <ShieldCheck className="mt-0.5 h-5 w-5 flex-shrink-0 text-accent-600" aria-hidden="true" />
                 <div>
-                  <h5 className="font-medium mb-1">12-Month Warranty</h5>
-                  <p className="text-sm text-gray-300">Comprehensive coverage on all devices</p>
+                  <h5 className="font-sans text-[0.95rem] font-medium tracking-normal">12-Month Warranty</h5>
+                  <p className="text-sm">Comprehensive coverage on all devices</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
-                <CreditCard className="h-6 w-6 text-accent-600 flex-shrink-0" />
+                <CreditCard className="mt-0.5 h-5 w-5 flex-shrink-0 text-accent-600" aria-hidden="true" />
                 <div>
-                  <h5 className="font-medium mb-1">Secure Payments</h5>
-                  <p className="text-sm text-gray-300">SSL encrypted checkout</p>
+                  <h5 className="font-sans text-[0.95rem] font-medium tracking-normal">Secure Payments</h5>
+                  <p className="text-sm">SSL encrypted checkout</p>
                 </div>
               </div>
             </div>
 
             {/* Payment Methods */}
             <div className="mt-6">
-              <h5 className="font-medium mb-3">Accepted Payments</h5>
-              <div className="grid grid-cols-4 gap-2">
-                <div className="bg-white/10 rounded p-2 flex items-center justify-center">
-                  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/320px-Visa_Inc._logo.svg.png" alt="Visa" className="h-6" />
-                </div>
-                <div className="bg-white/10 rounded p-2 flex items-center justify-center">
-                  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/320px-Mastercard-logo.svg.png" alt="Mastercard" className="h-6" />
-                </div>
-                <div className="bg-white/10 rounded p-2 flex items-center justify-center">
-                  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/PayPal.svg/320px-PayPal.svg.png" alt="PayPal" className="h-6" />
-                </div>
-                <div className="bg-white/10 rounded p-2 flex items-center justify-center">
-                  <span className="text-xs font-semibold text-white whitespace-nowrap leading-6">Apple Pay</span>
-                </div>
-              </div>
+              <h5 className="mb-2.5 font-sans text-sm font-medium tracking-normal">Accepted Payments</h5>
+              <ul className="flex flex-wrap gap-2">
+                {payments.map((name) => (
+                  <li
+                    key={name}
+                    className="rounded-md border border-gray-300 bg-white px-2.5 py-1 text-xs font-medium text-ink-800"
+                  >
+                    {name}
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
         </div>
-      </div>
 
-      {/* Bottom Bar */}
-      <div className="border-t border-white/10">
-        <div className="container mx-auto px-4 py-6">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            {/* Copyright */}
-            <div className="text-gray-400 text-sm">
-              &copy; {currentYear} Dreamland Gadgets. All rights reserved.
-            </div>
+        {/* Bottom Bar */}
+        <div className="flex flex-col items-center justify-between gap-4 border-t border-gray-200 py-6 text-sm md:flex-row">
+          <div>&copy; {currentYear} Dreamland Gadgets. All rights reserved.</div>
 
-            {/* Social Links */}
-            <div className="flex space-x-4">
-              <a href="#" aria-label="Facebook" className="text-gray-400 hover:text-accent-600 transition-colors">
-                <Facebook className="h-5 w-5" />
+          {/* Social Links */}
+          <div className="flex gap-1">
+            {socials.map(({ label, icon: Icon }) => (
+              <a key={label} href="#" aria-label={label} className="icon-button h-9 w-9 text-gray-500 hover:bg-gray-200">
+                <Icon className="h-[1.1rem] w-[1.1rem]" />
               </a>
-              <a href="#" aria-label="Instagram" className="text-gray-400 hover:text-accent-600 transition-colors">
-                <Instagram className="h-5 w-5" />
-              </a>
-              <a href="#" aria-label="Twitter" className="text-gray-400 hover:text-accent-600 transition-colors">
-                <Twitter className="h-5 w-5" />
-              </a>
-              <a href="#" aria-label="YouTube" className="text-gray-400 hover:text-accent-600 transition-colors">
-                <Youtube className="h-5 w-5" />
-              </a>
-              <a href="#" aria-label="LinkedIn" className="text-gray-400 hover:text-accent-600 transition-colors">
-                <Linkedin className="h-5 w-5" />
-              </a>
-            </div>
+            ))}
+          </div>
 
-            {/* Legal Links */}
-            <div className="flex space-x-4 text-sm">
-              <Link to="/privacy" className="text-gray-400 hover:text-accent-600 transition-colors">
-                Privacy Policy
-              </Link>
-              <Link to="/terms" className="text-gray-400 hover:text-accent-600 transition-colors">
-                Terms of Service
-              </Link>
-              <Link to="/sitemap" className="text-gray-400 hover:text-accent-600 transition-colors">
-                Sitemap
-              </Link>
-            </div>
+          {/* Legal Links */}
+          <div className="flex gap-5">
+            <Link to="/privacy" className={footerLink}>
+              Privacy Policy
+            </Link>
+            <Link to="/terms" className={footerLink}>
+              Terms of Service
+            </Link>
+            <Link to="/sitemap" className={footerLink}>
+              Sitemap
+            </Link>
           </div>
         </div>
       </div>

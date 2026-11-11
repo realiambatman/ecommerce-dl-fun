@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { X, ShoppingCart, ChevronRight, Truck, Shield } from 'lucide-react';
+import { Trash2, ShoppingCart, ChevronLeft, Minus, Plus, Lock, Check } from 'lucide-react';
 import { useCart } from '../context/cart';
+import DeviceArt from '../components/common/DeviceArt';
+import TrustStrip from '../components/common/TrustStrip';
 import { FREE_SHIPPING_THRESHOLD, formatPrice, getDiscount, getShippingFee } from '../utils/pricing';
 
 const CartPage = () => {
@@ -25,184 +27,184 @@ const CartPage = () => {
   const discount = getDiscount(subtotal, promoCode);
   const total = subtotal + shipping - discount;
   
+  const itemCount = cartItems.reduce((count, item) => count + item.quantity, 0);
+  const toFreeShipping = Math.max(0, FREE_SHIPPING_THRESHOLD - subtotal);
+
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-8">Your Cart</h1>
-      
+    <div className="container pb-8">
+      <header className="page-header mb-8">
+        <h1 className="page-title">Your Cart</h1>
+        {cartItems.length > 0 && (
+          <p className="mt-2 text-gray-600">
+            {itemCount} {itemCount === 1 ? 'item' : 'items'}
+          </p>
+        )}
+      </header>
+
       {cartItems.length === 0 ? (
-        <div className="bg-white rounded-lg shadow-sm p-8 text-center">
-          <div className="flex justify-center mb-4">
-            <ShoppingCart className="h-16 w-16 text-gray-300" />
-          </div>
-          <h2 className="text-2xl font-medium mb-2">Your cart is empty</h2>
-          <p className="text-gray-600 mb-6">Looks like you haven't added any items to your cart yet.</p>
+        <div className="panel mx-auto max-w-xl py-14 text-center">
+          <span className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-accent-50">
+            <ShoppingCart className="h-7 w-7 text-accent-700" aria-hidden="true" />
+          </span>
+          <h2 className="text-2xl">Your cart is empty</h2>
+          <p className="mb-7 mt-2 text-gray-600">Looks like you haven't added any items to your cart yet.</p>
           <Link to="/products" className="btn btn-primary">
             Start Shopping
           </Link>
         </div>
       ) : (
-        <div className="flex flex-col lg:flex-row gap-8">
+        <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_24rem] lg:gap-12">
           {/* Cart items */}
-          <div className="lg:w-2/3">
-            <div className="bg-white rounded-lg shadow-sm overflow-x-auto">
-              <table className="w-full">
-                <thead className="bg-gray-50 text-left">
-                  <tr>
-                    <th className="py-4 px-6 font-medium">Product</th>
-                    <th className="py-4 px-6 font-medium">Price</th>
-                    <th className="py-4 px-6 font-medium">Quantity</th>
-                    <th className="py-4 px-6 font-medium">Total</th>
-                    <th className="py-4 px-6 sr-only">Actions</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-200">
-                  {cartItems.map((item) => (
-                    <tr key={item.id}>
-                      <td className="py-4 px-6">
-                        <div className="flex items-center">
-                          <img 
-                            src={item.image} 
-                            alt={item.name} 
-                            className="w-16 h-16 object-cover rounded-md mr-4"
-                          />
-                          <div>
-                            <h3 className="font-medium">{item.name}</h3>
-                            <button 
-                              onClick={() => removeFromCart(item.id)}
-                              className="text-sm text-red-500 hover:text-red-700 flex items-center mt-1"
-                            >
-                              <X className="h-4 w-4 mr-1" />
-                              Remove
-                            </button>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="py-4 px-6">
-                        {formatPrice(item.price)}
-                      </td>
-                      <td className="py-4 px-6">
-                        <div className="flex items-center border border-gray-300 rounded-md overflow-hidden w-24">
-                          <button 
-                            onClick={() => updateQuantity(item.id, Math.max(1, item.quantity - 1))}
-                            aria-label={`Decrease quantity of ${item.name}`}
-                            className="px-2 py-1 bg-gray-100 hover:bg-gray-200 transition-colors"
-                          >
-                            -
-                          </button>
-                          <span className="px-3 py-1">{item.quantity}</span>
-                          <button 
-                            onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                            aria-label={`Increase quantity of ${item.name}`}
-                            className="px-2 py-1 bg-gray-100 hover:bg-gray-200 transition-colors"
-                          >
-                            +
-                          </button>
-                        </div>
-                      </td>
-                      <td className="py-4 px-6 font-medium">
+          <div>
+            <ul className="divide-y divide-gray-200 rounded-2xl border border-gray-200 bg-white">
+              {cartItems.map((item) => (
+                <li key={item.id} className="flex gap-4 p-4 sm:gap-5 sm:p-5">
+                  <Link
+                    to={`/products/${item.id}`}
+                    className="tile h-24 w-24 flex-shrink-0 sm:h-28 sm:w-28"
+                    aria-label={item.name}
+                  >
+                    <DeviceArt productId={item.id} className="h-full w-full p-1.5" />
+                  </Link>
+
+                  <div className="flex min-w-0 flex-1 flex-col">
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="min-w-0">
+                        <h3 className="text-lg leading-tight">
+                          <Link to={`/products/${item.id}`} className="hover:underline">
+                            {item.name}
+                          </Link>
+                        </h3>
+                        <p className="mt-1 text-sm text-gray-500">{formatPrice(item.price)} each</p>
+                      </div>
+                      <p className="whitespace-nowrap font-display text-lg font-medium text-ink-900">
                         {formatPrice(item.price * item.quantity)}
-                      </td>
-                      <td className="py-4 px-6">
-                        <button 
-                          onClick={() => removeFromCart(item.id)}
-                          className="text-gray-400 hover:text-red-500"
-                          aria-label="Remove item"
+                      </p>
+                    </div>
+
+                    <div className="mt-auto flex items-center justify-between gap-3 pt-3">
+                      <div className="inline-flex h-10 items-center rounded-full border border-gray-300">
+                        <button
+                          onClick={() => updateQuantity(item.id, Math.max(1, item.quantity - 1))}
+                          aria-label={`Decrease quantity of ${item.name}`}
+                          disabled={item.quantity <= 1}
+                          className="inline-flex h-10 w-10 items-center justify-center rounded-full text-ink-900 transition-colors hover:bg-gray-100 disabled:text-gray-300 disabled:hover:bg-transparent"
                         >
-                          <X className="h-5 w-5" />
+                          <Minus className="h-4 w-4" />
                         </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-            
-            <div className="mt-6 flex flex-col sm:flex-row gap-4">
-              <Link to="/products" className="btn btn-outline">
-                <ChevronRight className="h-5 w-5 mr-1 rotate-180" />
-                Continue Shopping
-              </Link>
-            </div>
+                        <span className="w-7 text-center text-sm font-medium text-ink-900">{item.quantity}</span>
+                        <button
+                          onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                          aria-label={`Increase quantity of ${item.name}`}
+                          className="inline-flex h-10 w-10 items-center justify-center rounded-full text-ink-900 transition-colors hover:bg-gray-100"
+                        >
+                          <Plus className="h-4 w-4" />
+                        </button>
+                      </div>
+
+                      <button
+                        onClick={() => removeFromCart(item.id)}
+                        className="inline-flex h-10 items-center gap-1.5 rounded-full px-3 text-sm text-gray-600 transition-colors hover:bg-red-50 hover:text-red-700"
+                        aria-label={`Remove ${item.name}`}
+                      >
+                        <Trash2 className="h-4 w-4" />
+                        Remove
+                      </button>
+                    </div>
+                  </div>
+                </li>
+              ))}
+            </ul>
+
+            <Link to="/products" className="btn btn-outline mt-5">
+              <ChevronLeft className="h-5 w-5" />
+              Continue Shopping
+            </Link>
           </div>
-          
+
           {/* Order summary */}
-          <div className="lg:w-1/3">
-            <div className="bg-white rounded-lg shadow-sm p-6">
-              <h2 className="text-xl font-bold mb-6">Order Summary</h2>
-              
-              <div className="space-y-4 mb-6">
+          <aside className="lg:sticky lg:top-28 lg:self-start">
+            <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-md">
+              <h2 className="mb-5 text-xl">Order Summary</h2>
+
+              {/* Free shipping progress */}
+              <div className="mb-5 rounded-xl bg-accent-50 p-4 text-sm text-accent-800">
+                {toFreeShipping > 0 ? (
+                  <p>
+                    Add <span className="font-semibold">{formatPrice(toFreeShipping)}</span> more for free shipping.
+                  </p>
+                ) : (
+                  <p className="flex items-center gap-2 font-medium">
+                    <Check className="h-4 w-4" aria-hidden="true" />
+                    This order ships free.
+                  </p>
+                )}
+                <div className="mt-2.5 h-1.5 overflow-hidden rounded-full bg-accent-100" aria-hidden="true">
+                  <div
+                    className="h-full rounded-full bg-accent-600 transition-all duration-300"
+                    style={{ width: `${Math.min(100, (subtotal / FREE_SHIPPING_THRESHOLD) * 100)}%` }}
+                  />
+                </div>
+              </div>
+
+              <dl className="space-y-3">
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Subtotal</span>
-                  <span className="font-medium">{formatPrice(subtotal)}</span>
+                  <dt className="text-gray-600">Subtotal</dt>
+                  <dd className="font-medium text-ink-900">{formatPrice(subtotal)}</dd>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Shipping</span>
-                  <span className="font-medium">
+                  <dt className="text-gray-600">Shipping</dt>
+                  <dd className="font-medium text-ink-900">
                     {shipping === 0 ? 'Free' : formatPrice(shipping)}
-                  </span>
+                  </dd>
                 </div>
                 {discount > 0 && (
                   <div className="flex justify-between text-accent-700">
-                    <span>Discount ({promoCode})</span>
-                    <span>-{formatPrice(discount)}</span>
+                    <dt>Discount ({promoCode})</dt>
+                    <dd className="font-medium">-{formatPrice(discount)}</dd>
                   </div>
                 )}
-                <div className="border-t border-gray-200 pt-4 flex justify-between">
-                  <span className="font-bold">Total</span>
-                  <span className="font-bold text-xl">{formatPrice(total)}</span>
+                <div className="flex items-baseline justify-between border-t border-gray-200 pt-4">
+                  <dt className="font-medium text-ink-900">Total</dt>
+                  <dd className="font-display text-2xl font-medium text-ink-900">{formatPrice(total)}</dd>
                 </div>
-              </div>
-              
+              </dl>
+
               {/* Coupon code */}
-              <form onSubmit={handleCouponSubmit} className="mb-6">
-                <h3 className="font-medium mb-2">Promo Code</h3>
-                <div className="flex">
-                  <input 
-                    type="text" 
-                    placeholder="Enter code" 
-                    aria-label="Promo code" 
-                    className="flex-grow border border-gray-300 rounded-l-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-accent-600"
+              <form onSubmit={handleCouponSubmit} className="mt-6">
+                <label htmlFor="promo-code" className="field-label">Promo Code</label>
+                <div className="flex gap-2">
+                  <input
+                    id="promo-code"
+                    type="text"
+                    placeholder="Enter code"
+                    className="field min-w-0 flex-1"
+                    aria-invalid={couponError ? true : undefined}
+                    aria-describedby="promo-status"
                     value={couponCode}
                     onChange={(e) => setCouponCode(e.target.value)}
                   />
-                  <button 
-                    type="submit"
-                    className="bg-ink-900 text-white px-4 py-2 rounded-r-md hover:bg-ink-800 transition-colors"
-                  >
+                  <button type="submit" className="btn btn-secondary rounded-lg px-5">
                     Apply
                   </button>
                 </div>
-                {couponError ? (
-                  <p className="mt-1 text-sm text-red-500">{couponError}</p>
-                ) : promoCode && (
-                  <p className="mt-1 text-sm text-accent-700">Coupon {promoCode} applied successfully!</p>
-                )}
+                <p id="promo-status" role="status" className="mt-1.5 min-h-5 text-sm">
+                  {couponError ? (
+                    <span className="text-red-700">{couponError}</span>
+                  ) : promoCode ? (
+                    <span className="text-accent-700">Coupon {promoCode} applied successfully!</span>
+                  ) : null}
+                </p>
               </form>
-              
-              {/* Benefits */}
-              <div className="mb-6 bg-gray-50 p-4 rounded-md">
-                <div className="flex items-start mb-3">
-                  <Truck className="h-5 w-5 text-accent-600 mr-2 flex-shrink-0 mt-0.5" />
-                  <p className="text-sm">
-                    <span className="font-medium">Free shipping</span> on orders over ₹{FREE_SHIPPING_THRESHOLD.toLocaleString('en-IN')}
-                  </p>
-                </div>
-                <div className="flex items-start">
-                  <Shield className="h-5 w-5 text-accent-600 mr-2 flex-shrink-0 mt-0.5" />
-                  <p className="text-sm">
-                    <span className="font-medium">12-month warranty</span> on all purchases
-                  </p>
-                </div>
-              </div>
-              
-              <Link 
-                to="/checkout" 
-                className="btn btn-primary w-full py-3"
-              >
+
+              <Link to="/checkout" className="btn btn-primary btn-lg mt-4 w-full">
+                <Lock className="h-4 w-4" aria-hidden="true" />
                 Proceed to Checkout
               </Link>
+
+              <TrustStrip variant="stack" className="mt-6 border-t border-gray-200 pt-5" />
             </div>
-          </div>
+          </aside>
         </div>
       )}
     </div>

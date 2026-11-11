@@ -1,321 +1,255 @@
 import { Link } from 'react-router-dom';
-import { ChevronRight, Shield, Truck, CreditCard, Star, ArrowRight } from 'lucide-react';
+import { ArrowRight, Check } from 'lucide-react';
 import ProductSlider from '../components/products/ProductSlider';
 import { featuredProducts, newArrivals } from '../data/products';
 import BrandLogos from '../components/home/BrandLogos';
 import TestimonialSlider from '../components/home/TestimonialSlider';
+import DeviceArt from '../components/common/DeviceArt';
+import GradeBadge, { GRADES } from '../components/common/GradeBadge';
+import TrustStrip from '../components/common/TrustStrip';
+import { formatPrice } from '../utils/pricing';
+
+const heroProduct = featuredProducts[0];
+
+const inspection = ['Battery health 85% or more', 'Display and touch', 'Cameras, speakers, microphone', 'Buttons, ports, wireless'];
+
+const reasons = [
+  'Save up to 70% compared to buying new',
+  'Reduce electronic waste and help the environment',
+  'Get flagship features without the flagship price',
+  'All devices thoroughly tested and certified',
+];
+
+const SectionHeading = ({ title, text, to, linkLabel }: { title: string; text: string; to?: string; linkLabel?: string }) => (
+  <div className="mb-8 flex flex-wrap items-end justify-between gap-x-8 gap-y-3">
+    <div>
+      <h2 className="section-title">{title}</h2>
+      <p className="mt-2 max-w-xl text-gray-600">{text}</p>
+    </div>
+    {to && (
+      <Link to={to} className="text-link inline-flex items-center gap-1.5">
+        {linkLabel}
+        <ArrowRight className="h-4 w-4" aria-hidden="true" />
+      </Link>
+    )}
+  </div>
+);
 
 const HomePage = () => {
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col gap-16 sm:gap-24">
       {/* Hero Section */}
-      <section className="relative min-h-[85vh] flex items-center bg-gradient-to-br from-ink-900 via-ink-800 to-ink-900">
-        {/* Background Pattern */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute inset-0" style={{ 
-            backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(255,255,255,0.15) 1px, transparent 0)',
-            backgroundSize: '40px 40px'
-          }}></div>
-        </div>
-        
-        {/* Content */}
-        <div className="container mx-auto px-4 relative z-10 py-20">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="text-center lg:text-left">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
-                Premium Phones,
-                <span className="text-accent-600"> Renewed</span> for You
-              </h1>
-              <p className="text-lg md:text-xl mb-8 text-gray-300">
-                Discover certified pre-owned smartphones that look and perform like new, backed by our 12-month warranty and 30-day money-back guarantee.
-              </p>
-              <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
-                <Link 
-                  to="/products" 
-                  className="btn bg-accent-600 hover:bg-accent-700 text-white px-8 py-3 text-lg font-medium rounded-full transition-all"
-                >
-                  Shop Now
-                  <ChevronRight className="ml-2 h-5 w-5 inline-block" />
-                </Link>
-                <Link 
-                  to="/products?category=deals" 
-                  className="btn bg-white/10 hover:bg-white/20 text-white px-8 py-3 text-lg font-medium rounded-full backdrop-blur-sm transition-all"
-                >
-                  View Deals
-                </Link>
-              </div>
-              
-              {/* Trust Badges */}
-              <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-6">
-                <div className="flex flex-col items-center text-center">
-                  <div className="bg-white/10 rounded-full p-3 mb-3">
-                    <Shield className="h-6 w-6 text-accent-600" />
-                  </div>
-                  <span className="text-white text-sm">12-Month Warranty</span>
-                </div>
-                <div className="flex flex-col items-center text-center">
-                  <div className="bg-white/10 rounded-full p-3 mb-3">
-                    <Truck className="h-6 w-6 text-accent-600" />
-                  </div>
-                  <span className="text-white text-sm">Free Shipping over ₹15,000</span>
-                </div>
-                <div className="flex flex-col items-center text-center">
-                  <div className="bg-white/10 rounded-full p-3 mb-3">
-                    <Star className="h-6 w-6 text-accent-600" />
-                  </div>
-                  <span className="text-white text-sm">30-Day Returns</span>
-                </div>
-                <div className="flex flex-col items-center text-center">
-                  <div className="bg-white/10 rounded-full p-3 mb-3">
-                    <CreditCard className="h-6 w-6 text-accent-600" />
-                  </div>
-                  <span className="text-white text-sm">Secure Payment</span>
-                </div>
-              </div>
-            </div>
-            
-            {/* Hero Images */}
-            <div className="relative hidden lg:block">
-              <div className="relative z-10 transform translate-x-12">
-                <img 
-                  src="https://images.pexels.com/photos/404280/pexels-photo-404280.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750" 
-                  alt="Featured Phone" 
-                  className="rounded-lg shadow-2xl"
-                />
-              </div>
-              <div className="absolute top-1/4 -left-8 z-0 w-3/4">
-                <img 
-                  src="https://images.pexels.com/photos/47261/pexels-photo-47261.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750" 
-                  alt="Secondary Phone" 
-                  className="rounded-lg shadow-2xl opacity-75 blur-sm"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        {/* Scroll Indicator */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white text-center">
-          <p className="text-sm mb-2">Scroll to explore</p>
-          <div className="animate-bounce">
-            <ArrowRight className="h-6 w-6 transform rotate-90" />
-          </div>
-        </div>
-      </section>
-      
-      {/* Features Section */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="flex items-center p-6 rounded-xl bg-gray-50 hover:bg-gray-100 transition-colors">
-              <Shield className="h-12 w-12 text-accent-600 flex-shrink-0" />
-              <div className="ml-4">
-                <h3 className="font-medium text-lg">12-Month Warranty</h3>
-                <p className="text-gray-600">Full coverage on all devices</p>
-              </div>
-            </div>
-            
-            <div className="flex items-center p-6 rounded-xl bg-gray-50 hover:bg-gray-100 transition-colors">
-              <Truck className="h-12 w-12 text-accent-600 flex-shrink-0" />
-              <div className="ml-4">
-                <h3 className="font-medium text-lg">Free Shipping</h3>
-                <p className="text-gray-600">On orders over ₹15,000</p>
-              </div>
-            </div>
-            
-            <div className="flex items-center p-6 rounded-xl bg-gray-50 hover:bg-gray-100 transition-colors">
-              <CreditCard className="h-12 w-12 text-accent-600 flex-shrink-0" />
-              <div className="ml-4">
-                <h3 className="font-medium text-lg">Secure Payment</h3>
-                <p className="text-gray-600">100% secure checkout</p>
-              </div>
-            </div>
-            
-            <div className="flex items-center p-6 rounded-xl bg-gray-50 hover:bg-gray-100 transition-colors">
-              <Star className="h-12 w-12 text-accent-600 flex-shrink-0" />
-              <div className="ml-4">
-                <h3 className="font-medium text-lg">Quality Assured</h3>
-                <p className="text-gray-600">30-day satisfaction guarantee</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      
-      {/* Featured Products */}
-      <section className="py-20 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">Featured Devices</h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              Our most popular refurbished phones, thoroughly tested and certified to look and work like new.
+      <section className="container pt-8 sm:pt-12 lg:pt-16">
+        <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:gap-16">
+          <div>
+            <h1 className="font-display text-[2.6rem] font-medium leading-[1.02] tracking-[-0.035em] text-ink-900 sm:text-display-xl lg:text-[4.5rem]">
+              Premium Phones, Renewed for You
+            </h1>
+            <p className="mt-6 max-w-lg text-lg text-gray-600 sm:text-xl">
+              Discover certified pre-owned smartphones that look and perform like new, backed by our 12-month warranty and 30-day money-back guarantee.
             </p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Link to="/products" className="btn btn-primary btn-lg">
+                Shop Now
+              </Link>
+              <Link to="/products?category=deals" className="btn btn-outline btn-lg">
+                View Deals
+              </Link>
+            </div>
           </div>
-          
-          <ProductSlider products={featuredProducts} />
-          
-          <div className="text-center mt-10">
-            <Link to="/products" className="btn btn-primary">
-              View All Products
+
+          {/* Featured device with its inspection sheet */}
+          <div className="settle relative">
+            <div className="tile aspect-[4/3.5] rounded-3xl sm:aspect-[4/3.1] lg:aspect-[4/3.6]">
+              <DeviceArt
+                productId={heroProduct.id}
+                view="pair"
+                title={`${heroProduct.name}, front and back`}
+                className="h-full w-full p-5 pb-24 sm:p-8 sm:pb-8 sm:pr-[42%] lg:pr-[38%]"
+              />
+            </div>
+
+            <div className="relative mx-4 -mt-20 rounded-2xl border border-gray-200 bg-white p-5 shadow-lg sm:absolute sm:bottom-6 sm:right-6 sm:mx-0 sm:mt-0 sm:w-[17.5rem]">
+              <GradeBadge condition={heroProduct.condition} />
+              <p className="mt-3 font-display text-lg font-medium text-ink-900">
+                {heroProduct.name}, {heroProduct.capacity}
+              </p>
+              <ul className="mt-3 space-y-2 border-t border-gray-200 pt-3 text-sm">
+                {inspection.map((item) => (
+                  <li key={item} className="flex items-start gap-2 text-ink-700">
+                    <Check className="mt-0.5 h-4 w-4 flex-shrink-0 text-accent-600" aria-hidden="true" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-4 flex items-center justify-between gap-3 border-t border-gray-200 pt-4">
+                <span className="font-display text-xl font-medium text-ink-900">{formatPrice(heroProduct.price)}</span>
+                <Link to={`/products/${heroProduct.id}`} className="text-link text-sm">
+                  View phone
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <TrustStrip className="mt-10 sm:mt-14" />
+      </section>
+
+      {/* Featured Products */}
+      <section className="container">
+        <SectionHeading
+          title="Featured Devices"
+          text="Our most popular refurbished phones, thoroughly tested and certified to look and work like new."
+          to="/products"
+          linkLabel="View All Products"
+        />
+        <ProductSlider products={featuredProducts} />
+      </section>
+
+      {/* How grading works */}
+      <section className="container">
+        <SectionHeading
+          title="Three grades, described plainly"
+          text="Grades describe looks only. Every phone passes the same 30+ checks and carries the same 12-month warranty."
+        />
+        <ol className="grid gap-4 md:grid-cols-3">
+          {(Object.keys(GRADES) as (keyof typeof GRADES)[]).map((condition) => {
+            const grade = GRADES[condition];
+            return (
+              <li key={condition}>
+                <Link
+                  to={`/products?condition=${condition}`}
+                  className="group flex h-full flex-col rounded-2xl border border-gray-200 bg-white p-6 transition-colors hover:border-ink-900"
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="font-display text-5xl font-medium text-ink-900">{grade.letter}</span>
+                    <span className="flex items-end gap-1" aria-hidden="true">
+                      {[1, 2, 3].map((step) => (
+                        <span
+                          key={step}
+                          className={`w-2 rounded-full ${step <= grade.level ? 'bg-accent-600' : 'bg-gray-200'}`}
+                          style={{ height: `${10 + step * 8}px` }}
+                        />
+                      ))}
+                    </span>
+                  </div>
+                  <h3 className="mt-5 text-xl">{condition}</h3>
+                  <p className="mt-1 text-gray-600">{grade.summary}</p>
+                  <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-accent-700">
+                    Shop {condition.toLowerCase()} phones
+                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
+                  </span>
+                </Link>
+              </li>
+            );
+          })}
+        </ol>
+      </section>
+
+      {/* Banner */}
+      <section className="container">
+        <div className="grid overflow-hidden rounded-3xl bg-accent-800 text-white lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)]">
+          <div className="p-7 sm:p-12 lg:p-16">
+            <h2 className="font-display text-display-sm font-medium text-white sm:text-display-lg">
+              Why Choose Refurbished?
+            </h2>
+            <p className="mt-5 max-w-xl text-lg text-accent-100">
+              Buying refurbished isn't just good for your wallet - it's good for the planet too. Each refurbished phone saves up to 80kg of carbon emissions.
+            </p>
+            <ul className="mt-8 grid gap-x-8 gap-y-4 sm:grid-cols-2">
+              {reasons.map((reason) => (
+                <li key={reason} className="flex items-start gap-3 text-accent-50">
+                  <span className="mt-0.5 inline-flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-accent-300 text-accent-900">
+                    <Check className="h-3.5 w-3.5" strokeWidth={3} aria-hidden="true" />
+                  </span>
+                  {reason}
+                </li>
+              ))}
+            </ul>
+            <Link
+              to="/products"
+              className="btn btn-lg mt-10 bg-white text-accent-900 hover:bg-accent-50 focus-visible:outline-white"
+            >
+              Browse Our Selection
             </Link>
           </div>
-        </div>
-      </section>
-      
-      {/* Banner */}
-      <section className="py-20 bg-ink-900 text-white">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-col md:flex-row items-center justify-between">
-            <div className="mb-12 md:mb-0 md:mr-12 max-w-2xl">
-              <h2 className="text-4xl font-bold mb-6 text-white">Why Choose Refurbished?</h2>
-              <p className="text-xl mb-8 text-gray-300">
-                Buying refurbished isn't just good for your wallet - it's good for the planet too. Each refurbished phone saves up to 80kg of carbon emissions.
-              </p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
-                <div className="flex items-start">
-                  <div className="h-8 w-8 rounded-full bg-accent-600 text-white flex items-center justify-center font-bold flex-shrink-0 mt-1">1</div>
-                  <p className="ml-4 text-gray-300">Save up to 70% compared to buying new</p>
-                </div>
-                <div className="flex items-start">
-                  <div className="h-8 w-8 rounded-full bg-accent-600 text-white flex items-center justify-center font-bold flex-shrink-0 mt-1">2</div>
-                  <p className="ml-4 text-gray-300">Reduce electronic waste and help the environment</p>
-                </div>
-                <div className="flex items-start">
-                  <div className="h-8 w-8 rounded-full bg-accent-600 text-white flex items-center justify-center font-bold flex-shrink-0 mt-1">3</div>
-                  <p className="ml-4 text-gray-300">Get flagship features without the flagship price</p>
-                </div>
-                <div className="flex items-start">
-                  <div className="h-8 w-8 rounded-full bg-accent-600 text-white flex items-center justify-center font-bold flex-shrink-0 mt-1">4</div>
-                  <p className="ml-4 text-gray-300">All devices thoroughly tested and certified</p>
-                </div>
-              </div>
-              <Link to="/products" className="btn bg-accent-600 hover:bg-accent-700 text-white px-8 py-3 text-lg font-medium rounded-full transition-all">
-                Browse Our Selection
-                <ChevronRight className="ml-2 h-5 w-5 inline-block" />
-              </Link>
-            </div>
-            <div className="w-full md:w-1/3 flex-shrink-0">
-              <div className="relative">
-                <img 
-                  src="https://images.pexels.com/photos/404280/pexels-photo-404280.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750" 
-                  alt="Refurbished Phone" 
-                  className="rounded-lg shadow-2xl"
-                />
-                <div className="absolute -bottom-4 -right-4 bg-accent-600 text-white rounded-lg p-4 shadow-lg">
-                  <p className="font-bold text-xl">Save up to</p>
-                  <p className="text-4xl font-bold">70%</p>
-                </div>
-              </div>
-            </div>
+          <div className="relative flex min-h-[15rem] items-end bg-accent-700 p-7 sm:p-12">
+            <DeviceArt
+              productId="6"
+              view="front"
+              className="absolute -right-6 top-6 h-[120%] w-auto opacity-90 sm:right-2 lg:-right-8"
+            />
+            <p className="relative">
+              <span className="block text-accent-100">Save up to</span>
+              <span className="block font-display text-[5.5rem] font-medium leading-none tracking-[-0.04em]">70%</span>
+            </p>
           </div>
         </div>
       </section>
-      
+
       {/* New Arrivals */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">New Arrivals</h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              Just added to our collection, these refurbished smartphones are ready to find a new home.
-            </p>
-          </div>
-          
-          <ProductSlider products={newArrivals} />
-        </div>
-      </section>
-      
-      {/* Brands */}
-      <section className="py-20 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">Brands We Carry</h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              We offer premium refurbished devices from all major manufacturers.
-            </p>
-          </div>
-          
-          <BrandLogos />
-        </div>
-      </section>
-      
-      {/* Testimonials */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">What Our Customers Say</h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              Thousands of satisfied customers have trusted us for their refurbished phone needs.
-            </p>
-          </div>
-          
-          <TestimonialSlider />
-        </div>
-      </section>
-      
-      {/* CTA */}
-      <section className="relative py-24">
-        {/* Background Image */}
-        <div 
-          className="absolute inset-0 z-0"
-          style={{
-            backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.pexels.com/photos/1294886/pexels-photo-1294886.jpeg?auto=compress&cs=tinysrgb&w=1920')`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            backgroundAttachment: 'fixed'
-          }}
+      <section className="container">
+        <SectionHeading
+          title="New Arrivals"
+          text="Just added to our collection, these refurbished smartphones are ready to find a new home."
+          to="/products"
+          linkLabel="Shop all phones"
         />
-        
-        {/* Content */}
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">
-              Ready to Make a
-              <span className="text-accent-600"> Smart Choice</span>?
+        <ProductSlider products={newArrivals} />
+      </section>
+
+      {/* Brands */}
+      <section className="container">
+        <SectionHeading
+          title="Brands We Carry"
+          text="We offer premium refurbished devices from all major manufacturers."
+        />
+        <BrandLogos />
+      </section>
+
+      {/* Testimonials */}
+      <section className="container">
+        <SectionHeading
+          title="What Our Customers Say"
+          text="Thousands of satisfied customers have trusted us for their refurbished phone needs."
+        />
+        <TestimonialSlider />
+      </section>
+
+      {/* CTA */}
+      <section className="container">
+        <div className="grid gap-10 border-t border-gray-300 pt-12 lg:grid-cols-2 lg:gap-16">
+          <div>
+            <h2 className="font-display text-display-md font-medium text-ink-900 sm:text-display-lg">
+              Ready to Make a Smart Choice?
             </h2>
-            <p className="text-xl text-gray-200 mb-8 leading-relaxed">
-              Join thousands of satisfied customers who've discovered premium quality at unbeatable prices. 
+            <p className="mt-5 max-w-xl text-lg text-gray-600">
+              Join thousands of satisfied customers who've discovered premium quality at unbeatable prices.
               Our certified refurbished phones offer flagship features without the flagship price tag.
             </p>
-            
-            {/* Benefits */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 transition-transform">
-                <div className="text-accent-600 text-2xl font-bold mb-2">30+</div>
-                <p className="text-white">Quality Checks</p>
-              </div>
-              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 transition-transform">
-                <div className="text-accent-600 text-2xl font-bold mb-2">12</div>
-                <p className="text-white">Months Warranty</p>
-              </div>
-              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 transition-transform">
-                <div className="text-accent-600 text-2xl font-bold mb-2">40%</div>
-                <p className="text-white">Average Savings</p>
-              </div>
-            </div>
-            
-            {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link 
-                to="/products" 
-                className="btn bg-accent-600 hover:bg-accent-700 text-white px-8 py-4 text-lg font-medium rounded-full transition-all hover:shadow-lg"
-              >
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Link to="/products" className="btn btn-primary btn-lg">
                 Shop Now
-                <ChevronRight className="ml-2 h-5 w-5 inline-block" />
               </Link>
-              <Link 
-                to="/products?category=deals" 
-                className="btn bg-white/20 hover:bg-white/30 text-white px-8 py-4 text-lg font-medium rounded-full backdrop-blur-sm transition-all hover:shadow-lg"
-              >
+              <Link to="/products?category=deals" className="btn btn-outline btn-lg">
                 View Special Deals
               </Link>
             </div>
           </div>
-        </div>
-        
-        {/* Decorative Elements */}
-        <div className="absolute bottom-0 left-0 w-full overflow-hidden">
-          <div className="w-full h-16 bg-gradient-to-b from-transparent to-white/10 backdrop-blur-sm"></div>
+
+          {/* Benefits */}
+          <dl className="grid grid-cols-3 gap-4 self-end">
+            {[
+              { value: '30+', label: 'Quality Checks' },
+              { value: '12', label: 'Months Warranty' },
+              { value: '40%', label: 'Average Savings' },
+            ].map((stat) => (
+              <div key={stat.label} className="flex flex-col-reverse border-l border-gray-300 pl-4 sm:pl-6">
+                <dt className="mt-1 text-sm text-gray-600 sm:text-base">{stat.label}</dt>
+                <dd className="font-display text-display-md font-medium text-accent-700 sm:text-display-xl">{stat.value}</dd>
+              </div>
+            ))}
+          </dl>
         </div>
       </section>
     </div>

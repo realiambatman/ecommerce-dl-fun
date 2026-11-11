@@ -33,7 +33,7 @@ const Layout = () => {
   }, [pathname]);
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-50">
+    <div className="flex flex-col min-h-screen bg-canvas">
       <Header />
       <main className="flex-grow">
         <Outlet />

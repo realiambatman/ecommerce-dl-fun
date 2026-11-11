@@ -122,33 +122,41 @@ const ProductsPage = () => {
   ];
   
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold">Shop Refurbished Phones</h1>
-        
+    <div className="container pb-8">
+      <header className="page-header mb-8 flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <h1 className="page-title">Shop Refurbished Phones</h1>
+          <p className="mt-2 text-gray-600">
+            {searchParam ? (
+              <>Results for &ldquo;{searchParam}&rdquo;. </>
+            ) : null}
+            Every phone is tested, graded and covered for 12 months.
+          </p>
+        </div>
+
         {/* Mobile filter button */}
-        <button 
-          className="md:hidden flex items-center space-x-2 bg-white px-4 py-2 rounded-lg shadow-sm border border-gray-200"
+        <button
+          className="btn btn-outline md:hidden"
           onClick={() => setIsFilterOpen(!isFilterOpen)}
         >
-          <SlidersHorizontal className="h-5 w-5" />
+          <SlidersHorizontal className="h-4 w-4" />
           <span>Filters</span>
         </button>
-      </div>
-      
-      <div className="flex flex-col md:flex-row gap-8">
+      </header>
+
+      <div className="flex flex-col gap-8 md:flex-row lg:gap-12">
         {/* Filters sidebar */}
         <aside 
           className={`
-            md:w-1/4 lg:w-1/5 bg-white p-4 rounded-lg shadow-sm
-            ${isFilterOpen ? 'fixed inset-0 z-50 overflow-auto' : 'hidden md:block'}
+            md:w-56 md:flex-shrink-0 md:self-start md:sticky md:top-28
+            ${isFilterOpen ? 'fixed inset-0 z-[60] overflow-auto bg-canvas p-5' : 'hidden md:block'}
           `}
         >
           <div className="flex justify-between items-center mb-4 md:hidden">
-            <h2 className="text-xl font-bold">Filters</h2>
+            <h2 className="text-2xl">Filters</h2>
             <button 
               onClick={() => setIsFilterOpen(false)}
-              className="p-1 rounded-full hover:bg-gray-100"
+              className="icon-button"
               aria-label="Close filters"
             >
               <X className="h-6 w-6" />
@@ -159,70 +167,70 @@ const ProductsPage = () => {
           {(searchParam || categoryParam || brandParam || conditionParam || priceRangeParam) && (
             <div className="mb-6">
               <div className="flex justify-between items-center mb-2">
-                <h3 className="font-medium">Active Filters</h3>
+                <h3 className="font-sans text-sm font-semibold tracking-normal">Active Filters</h3>
                 <button 
                   onClick={clearFilters}
-                  className="text-sm text-accent-700 hover:text-accent-800"
+                  className="text-sm font-medium text-accent-700 underline-offset-4 hover:underline"
                 >
                   Clear all
                 </button>
               </div>
               <div className="flex flex-wrap gap-2">
                 {searchParam && (
-                  <span className="inline-flex items-center px-3 py-1 bg-gray-100 rounded-full text-sm">
+                  <span className="inline-flex items-center rounded-full border border-accent-200 bg-accent-50 py-1 pl-3 pr-1.5 text-sm text-accent-800">
                     &ldquo;{searchParam}&rdquo;
                     <button 
                       onClick={() => updateFilters('search', '')}
                       aria-label="Remove search filter"
-                      className="ml-1 text-gray-500 hover:text-gray-700"
+                      className="ml-1 inline-flex h-5 w-5 items-center justify-center rounded-full hover:bg-accent-100"
                     >
                       <X className="h-4 w-4" />
                     </button>
                   </span>
                 )}
                 {categoryParam && (
-                  <span className="inline-flex items-center px-3 py-1 bg-gray-100 rounded-full text-sm">
+                  <span className="inline-flex items-center rounded-full border border-accent-200 bg-accent-50 py-1 pl-3 pr-1.5 text-sm text-accent-800">
                     {categories.find(c => c.value === categoryParam)?.label || categoryParam}
                     <button 
                       onClick={() => updateFilters('category', '')}
                       aria-label="Remove category filter"
-                      className="ml-1 text-gray-500 hover:text-gray-700"
+                      className="ml-1 inline-flex h-5 w-5 items-center justify-center rounded-full hover:bg-accent-100"
                     >
                       <X className="h-4 w-4" />
                     </button>
                   </span>
                 )}
                 {brandParam && (
-                  <span className="inline-flex items-center px-3 py-1 bg-gray-100 rounded-full text-sm">
+                  <span className="inline-flex items-center rounded-full border border-accent-200 bg-accent-50 py-1 pl-3 pr-1.5 text-sm text-accent-800">
                     {brands.find(b => b.value === brandParam)?.label || brandParam}
                     <button 
                       onClick={() => updateFilters('brand', '')}
                       aria-label="Remove brand filter"
-                      className="ml-1 text-gray-500 hover:text-gray-700"
+                      className="ml-1 inline-flex h-5 w-5 items-center justify-center rounded-full hover:bg-accent-100"
                     >
                       <X className="h-4 w-4" />
                     </button>
                   </span>
                 )}
                 {conditionParam && (
-                  <span className="inline-flex items-center px-3 py-1 bg-gray-100 rounded-full text-sm">
+                  <span className="inline-flex items-center rounded-full border border-accent-200 bg-accent-50 py-1 pl-3 pr-1.5 text-sm text-accent-800">
                     {conditionParam}
                     <button 
                       onClick={() => updateFilters('condition', '')}
                       aria-label="Remove condition filter"
-                      className="ml-1 text-gray-500 hover:text-gray-700"
+                      className="ml-1 inline-flex h-5 w-5 items-center justify-center rounded-full hover:bg-accent-100"
                     >
                       <X className="h-4 w-4" />
                     </button>
                   </span>
                 )}
                 {priceRangeParam && (
-                  <span className="inline-flex items-center px-3 py-1 bg-gray-100 rounded-full text-sm">
+                  <span className="inline-flex items-center rounded-full border border-accent-200 bg-accent-50 py-1 pl-3 pr-1.5 text-sm text-accent-800">
                     {priceRanges.find(p => p.value === priceRangeParam)?.label || `₹${priceRangeParam.replace('-', ' - ₹')}`}
                     <button 
                       onClick={() => updateFilters('priceRange', '')}
                       aria-label="Remove price filter"
-                      className="ml-1 text-gray-500 hover:text-gray-700"
+                      className="ml-1 inline-flex h-5 w-5 items-center justify-center rounded-full hover:bg-accent-100"
                     >
                       <X className="h-4 w-4" />
                     </button>
@@ -233,9 +241,9 @@ const ProductsPage = () => {
           )}
           
           {/* Category filter */}
-          <div className="mb-6">
-            <h3 className="font-medium mb-3">Category</h3>
-            <div className="space-y-2">
+          <div className="mb-6 border-t border-gray-200 pt-5">
+            <h3 className="mb-3 font-sans text-sm font-semibold tracking-normal">Category</h3>
+            <div className="space-y-1.5">
               {categories.map(category => (
                 <div key={category.value} className="flex items-center">
                   <input
@@ -244,9 +252,9 @@ const ProductsPage = () => {
                     name="category"
                     checked={categoryParam === category.value}
                     onChange={() => updateFilters('category', category.value)}
-                    className="mr-2 accent-accent-600"
+                    className="mr-2.5 h-4 w-4"
                   />
-                  <label htmlFor={`category-${category.value}`} className="text-sm cursor-pointer">
+                  <label htmlFor={`category-${category.value}`} className="cursor-pointer py-0.5 text-[0.95rem] text-ink-700 hover:text-ink-900">
                     {category.label}
                   </label>
                 </div>
@@ -255,9 +263,9 @@ const ProductsPage = () => {
           </div>
           
           {/* Brand filter */}
-          <div className="mb-6">
-            <h3 className="font-medium mb-3">Brand</h3>
-            <div className="space-y-2">
+          <div className="mb-6 border-t border-gray-200 pt-5">
+            <h3 className="mb-3 font-sans text-sm font-semibold tracking-normal">Brand</h3>
+            <div className="space-y-1.5">
               {brands.map(brand => (
                 <div key={brand.value} className="flex items-center">
                   <input
@@ -266,9 +274,9 @@ const ProductsPage = () => {
                     name="brand"
                     checked={brandParam === brand.value}
                     onChange={() => updateFilters('brand', brand.value)}
-                    className="mr-2 accent-accent-600"
+                    className="mr-2.5 h-4 w-4"
                   />
-                  <label htmlFor={`brand-${brand.value}`} className="text-sm cursor-pointer">
+                  <label htmlFor={`brand-${brand.value}`} className="cursor-pointer py-0.5 text-[0.95rem] text-ink-700 hover:text-ink-900">
                     {brand.label}
                   </label>
                 </div>
@@ -277,9 +285,9 @@ const ProductsPage = () => {
           </div>
           
           {/* Condition filter */}
-          <div className="mb-6">
-            <h3 className="font-medium mb-3">Condition</h3>
-            <div className="space-y-2">
+          <div className="mb-6 border-t border-gray-200 pt-5">
+            <h3 className="mb-3 font-sans text-sm font-semibold tracking-normal">Condition</h3>
+            <div className="space-y-1.5">
               {conditions.map(condition => (
                 <div key={condition.value} className="flex items-center">
                   <input
@@ -288,9 +296,9 @@ const ProductsPage = () => {
                     name="condition"
                     checked={conditionParam === condition.value}
                     onChange={() => updateFilters('condition', condition.value)}
-                    className="mr-2 accent-accent-600"
+                    className="mr-2.5 h-4 w-4"
                   />
-                  <label htmlFor={`condition-${condition.value}`} className="text-sm cursor-pointer">
+                  <label htmlFor={`condition-${condition.value}`} className="cursor-pointer py-0.5 text-[0.95rem] text-ink-700 hover:text-ink-900">
                     {condition.label}
                   </label>
                 </div>
@@ -299,9 +307,9 @@ const ProductsPage = () => {
           </div>
           
           {/* Price range filter */}
-          <div className="mb-6">
-            <h3 className="font-medium mb-3">Price Range</h3>
-            <div className="space-y-2">
+          <div className="mb-6 border-t border-gray-200 pt-5">
+            <h3 className="mb-3 font-sans text-sm font-semibold tracking-normal">Price Range</h3>
+            <div className="space-y-1.5">
               {priceRanges.map(range => (
                 <div key={range.value} className="flex items-center">
                   <input
@@ -310,9 +318,9 @@ const ProductsPage = () => {
                     name="priceRange"
                     checked={priceRangeParam === range.value}
                     onChange={() => updateFilters('priceRange', range.value)}
-                    className="mr-2 accent-accent-600"
+                    className="mr-2.5 h-4 w-4"
                   />
-                  <label htmlFor={`price-${range.value}`} className="text-sm cursor-pointer">
+                  <label htmlFor={`price-${range.value}`} className="cursor-pointer py-0.5 text-[0.95rem] text-ink-700 hover:text-ink-900">
                     {range.label}
                   </label>
                 </div>
@@ -334,8 +342,9 @@ const ProductsPage = () => {
         {/* Products grid */}
         <div className="flex-1">
           {filteredProducts.length === 0 ? (
-            <div className="h-64 flex flex-col items-center justify-center bg-white rounded-lg">
-              <p className="text-lg mb-4">No products match your filters.</p>
+            <div className="panel flex flex-col items-center justify-center py-16 text-center">
+              <h2 className="text-2xl">No products match your filters.</h2>
+              <p className="mb-6 mt-2 text-gray-600">Remove a filter or clear them all to see every phone.</p>
               <button 
                 onClick={clearFilters}
                 className="btn btn-primary"
@@ -345,8 +354,8 @@ const ProductsPage = () => {
             </div>
           ) : (
             <>
-              <p className="mb-4 text-gray-600">{filteredProducts.length} {filteredProducts.length === 1 ? 'product' : 'products'} found</p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              <p className="mb-4 text-sm text-gray-600" role="status">{filteredProducts.length} {filteredProducts.length === 1 ? 'product' : 'products'} found</p>
+              <div className="grid grid-cols-1 gap-4 min-[480px]:grid-cols-2 lg:grid-cols-3 lg:gap-5">
                 {filteredProducts.map(product => (
                   <ProductCard key={product.id} product={product} />
                 ))}

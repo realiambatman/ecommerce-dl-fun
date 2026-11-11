@@ -24,24 +24,24 @@ const ContactPage = () => {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="text-center mb-12">
-        <h1 className="text-4xl font-bold mb-4">Contact Us</h1>
-        <p className="text-gray-600 max-w-2xl mx-auto">
+    <div className="container pb-8">
+      <header className="page-header mb-10">
+        <h1 className="page-title">Contact Us</h1>
+        <p className="page-lede">
           Have questions about our refurbished phones? Need help with your order? 
           We're here to help! Get in touch with our friendly customer support team.
         </p>
-      </div>
+      </header>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
         {/* Contact Information */}
         <div>
-          <h2 className="text-2xl font-bold mb-6">Get in Touch</h2>
+          <h2 className="text-2xl mb-6">Get in Touch</h2>
           
           <div className="space-y-6 mb-8">
             <div className="flex items-start">
-              <div className="bg-accent-600 rounded-lg p-3 mr-4">
-                <Phone className="h-6 w-6 text-ink-900" />
+              <div className="mr-4 flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full bg-accent-50 text-accent-700">
+                <Phone className="h-5 w-5" />
               </div>
               <div>
                 <h3 className="font-medium text-lg">Phone</h3>
@@ -51,8 +51,8 @@ const ContactPage = () => {
             </div>
 
             <div className="flex items-start">
-              <div className="bg-accent-600 rounded-lg p-3 mr-4">
-                <Mail className="h-6 w-6 text-ink-900" />
+              <div className="mr-4 flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full bg-accent-50 text-accent-700">
+                <Mail className="h-5 w-5" />
               </div>
               <div>
                 <h3 className="font-medium text-lg">Email</h3>
@@ -62,8 +62,8 @@ const ContactPage = () => {
             </div>
 
             <div className="flex items-start">
-              <div className="bg-accent-600 rounded-lg p-3 mr-4">
-                <MapPin className="h-6 w-6 text-ink-900" />
+              <div className="mr-4 flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full bg-accent-50 text-accent-700">
+                <MapPin className="h-5 w-5" />
               </div>
               <div>
                 <h3 className="font-medium text-lg">Address</h3>
@@ -72,8 +72,8 @@ const ContactPage = () => {
             </div>
 
             <div className="flex items-start">
-              <div className="bg-accent-600 rounded-lg p-3 mr-4">
-                <Clock className="h-6 w-6 text-ink-900" />
+              <div className="mr-4 flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full bg-accent-50 text-accent-700">
+                <Clock className="h-5 w-5" />
               </div>
               <div>
                 <h3 className="font-medium text-lg">Business Hours</h3>
@@ -87,8 +87,8 @@ const ContactPage = () => {
           </div>
 
           {/* FAQ Section */}
-          <div className="bg-gray-50 rounded-lg p-6">
-            <h3 className="font-bold text-lg mb-4">Frequently Asked Questions</h3>
+          <div className="rounded-2xl bg-accent-50 p-6 sm:p-8">
+            <h3 className="text-lg mb-4">Frequently Asked Questions</h3>
             <div className="space-y-3">
               <div>
                 <h4 className="font-medium">What's your return policy?</h4>
@@ -108,12 +108,12 @@ const ContactPage = () => {
 
         {/* Contact Form */}
         <div>
-          <div className="bg-white rounded-lg shadow-sm p-6">
-            <h2 className="text-2xl font-bold mb-6">Send us a Message</h2>
+          <div className="panel">
+            <h2 className="text-2xl mb-6">Send us a Message</h2>
             
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="name" className="field-label">
                   Full Name *
                 </label>
                 <input
@@ -123,12 +123,12 @@ const ContactPage = () => {
                   value={formData.name}
                   onChange={handleChange}
                   required
-                  className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-accent-600"
+                  className="field"
                 />
               </div>
 
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="email" className="field-label">
                   Email Address *
                 </label>
                 <input
@@ -138,12 +138,12 @@ const ContactPage = () => {
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-accent-600"
+                  className="field"
                 />
               </div>
 
               <div>
-                <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="subject" className="field-label">
                   Subject *
                 </label>
                 <select
@@ -152,7 +152,7 @@ const ContactPage = () => {
                   value={formData.subject}
                   onChange={handleChange}
                   required
-                  className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-accent-600"
+                  className="field"
                 >
                   <option value="">Select a subject</option>
                   <option value="general">General Inquiry</option>
@@ -165,7 +165,7 @@ const ContactPage = () => {
               </div>
 
               <div>
-                <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="message" className="field-label">
                   Message *
                 </label>
                 <textarea
@@ -175,7 +175,7 @@ const ContactPage = () => {
                   onChange={handleChange}
                   required
                   rows={5}
-                  className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-accent-600"
+                  className="field"
                   placeholder="Please describe your inquiry in detail..."
                 />
               </div>

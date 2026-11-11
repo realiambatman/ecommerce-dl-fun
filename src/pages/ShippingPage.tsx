@@ -2,51 +2,51 @@ import { Truck, Clock, Shield } from 'lucide-react';
 
 const ShippingPage = () => {
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="text-center mb-12">
-        <h1 className="text-4xl font-bold mb-4">Shipping Information</h1>
-        <p className="text-gray-600 max-w-2xl mx-auto">
+    <div className="container pb-8">
+      <header className="page-header mb-10">
+        <h1 className="page-title">Shipping Information</h1>
+        <p className="page-lede">
           Learn about our shipping options, delivery times, and policies to ensure your refurbished phone reaches you safely and on time.
         </p>
-      </div>
+      </header>
 
       {/* Shipping Options */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-        <div className="bg-white rounded-lg shadow-sm p-6 text-center">
-          <div className="bg-accent-600 rounded-full p-3 w-16 h-16 mx-auto mb-4 flex items-center justify-center">
-            <Truck className="h-8 w-8 text-ink-900" />
+        <div className="card p-6">
+          <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-full bg-accent-50 text-accent-700">
+            <Truck className="h-5 w-5" />
           </div>
-          <h3 className="font-bold text-lg mb-2">Standard Shipping</h3>
+          <h3 className="text-lg mb-2">Standard Shipping</h3>
           <p className="text-gray-600 mb-3">5-7 business days</p>
-          <p className="text-2xl font-bold text-accent-700 mb-2">FREE</p>
+          <p className="text-2xl text-accent-700 mb-2">FREE</p>
           <p className="text-sm text-gray-500">On orders over ₹15,000</p>
         </div>
 
-        <div className="bg-white rounded-lg shadow-sm p-6 text-center">
-          <div className="bg-blue-500 rounded-full p-3 w-16 h-16 mx-auto mb-4 flex items-center justify-center">
-            <Clock className="h-8 w-8 text-white" />
+        <div className="card p-6">
+          <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-full bg-accent-50 text-accent-700">
+            <Clock className="h-5 w-5" />
           </div>
-          <h3 className="font-bold text-lg mb-2">Express Shipping</h3>
+          <h3 className="text-lg mb-2">Express Shipping</h3>
           <p className="text-gray-600 mb-3">2-3 business days</p>
-          <p className="text-2xl font-bold text-blue-600 mb-2">₹299</p>
+          <p className="text-2xl text-accent-700 mb-2">₹299</p>
           <p className="text-sm text-gray-500">Available nationwide</p>
         </div>
 
-        <div className="bg-white rounded-lg shadow-sm p-6 text-center">
-          <div className="bg-accent-600 rounded-full p-3 w-16 h-16 mx-auto mb-4 flex items-center justify-center">
-            <Shield className="h-8 w-8 text-white" />
+        <div className="card p-6">
+          <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-full bg-accent-50 text-accent-700">
+            <Shield className="h-5 w-5" />
           </div>
-          <h3 className="font-bold text-lg mb-2">Priority Shipping</h3>
+          <h3 className="text-lg mb-2">Priority Shipping</h3>
           <p className="text-gray-600 mb-3">1-2 business days</p>
-          <p className="text-2xl font-bold text-accent-700 mb-2">₹599</p>
+          <p className="text-2xl text-accent-700 mb-2">₹599</p>
           <p className="text-sm text-gray-500">Fastest delivery option</p>
         </div>
       </div>
 
       {/* Shipping Details */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
-        <div className="bg-white rounded-lg shadow-sm p-6">
-          <h2 className="text-2xl font-bold mb-6">Shipping Policies</h2>
+        <div className="panel">
+          <h2 className="text-2xl mb-6">Shipping Policies</h2>
           
           <div className="space-y-4">
             <div>
@@ -83,8 +83,8 @@ const ShippingPage = () => {
           </div>
         </div>
 
-        <div className="bg-white rounded-lg shadow-sm p-6">
-          <h2 className="text-2xl font-bold mb-6">Delivery Information</h2>
+        <div className="panel">
+          <h2 className="text-2xl mb-6">Delivery Information</h2>
           
           <div className="space-y-4">
             <div>
@@ -123,8 +123,8 @@ const ShippingPage = () => {
       </div>
 
       {/* Shipping Zones */}
-      <div className="bg-white rounded-lg shadow-sm p-6 mb-12">
-        <h2 className="text-2xl font-bold mb-6">Shipping Zones & Transit Times</h2>
+      <div className="panel mb-12">
+        <h2 className="text-2xl mb-6">Shipping Zones & Transit Times</h2>
         
         <div className="overflow-x-auto">
           <table className="w-full">
@@ -172,8 +172,8 @@ const ShippingPage = () => {
       </div>
 
       {/* FAQ */}
-      <div className="bg-gray-50 rounded-lg p-6">
-        <h2 className="text-2xl font-bold mb-6">Shipping FAQ</h2>
+      <div className="rounded-2xl bg-accent-50 p-6 sm:p-8">
+        <h2 className="text-2xl mb-6">Shipping FAQ</h2>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>

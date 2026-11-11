@@ -19,7 +19,8 @@ import { useCart } from '../context/cart';
 import { formatPrice } from '../utils/pricing';
 import ProductSlider from '../components/products/ProductSlider';
 import DeviceArt from '../components/common/DeviceArt';
-import GradeBadge, { GRADES } from '../components/common/GradeBadge';
+import GradeBadge from '../components/common/GradeBadge';
+import { GRADES } from '../data/grades';
 
 const VIEWS = [
   { id: 'pair', label: 'Front and back' },

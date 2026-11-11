@@ -49,23 +49,23 @@ const SitemapPage = () => {
   ];
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="text-center mb-12">
-        <h1 className="text-4xl font-bold mb-4">Sitemap</h1>
-        <p className="text-gray-600 max-w-2xl mx-auto">
+    <div className="container pb-8">
+      <header className="page-header mb-10">
+        <h1 className="page-title">Sitemap</h1>
+        <p className="page-lede">
           Find all the pages and sections of our website organized for easy navigation.
         </p>
-      </div>
+      </header>
 
       {/* Site Structure */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
         {siteStructure.map((section, index) => (
-          <div key={index} className="bg-white rounded-lg shadow-sm p-6">
+          <div key={index} className="panel">
             <div className="flex items-center mb-4">
-              <div className="bg-accent-600 rounded-lg p-2 mr-3">
+              <div className="mr-3 flex h-9 w-9 items-center justify-center rounded-full bg-accent-50 text-accent-700">
                 {section.icon}
               </div>
-              <h2 className="text-xl font-bold">{section.title}</h2>
+              <h2 className="text-xl">{section.title}</h2>
             </div>
             
             <ul className="space-y-2">
@@ -87,8 +87,8 @@ const SitemapPage = () => {
 
       {/* Additional Information */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <div className="bg-white rounded-lg shadow-sm p-6">
-          <h2 className="text-2xl font-bold mb-4">Website Features</h2>
+        <div className="panel">
+          <h2 className="text-2xl mb-4">Website Features</h2>
           <div className="space-y-3">
             <div className="flex items-start">
               <div className="w-2 h-2 bg-accent-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
@@ -132,8 +132,8 @@ const SitemapPage = () => {
           </div>
         </div>
 
-        <div className="bg-white rounded-lg shadow-sm p-6">
-          <h2 className="text-2xl font-bold mb-4">Quick Links</h2>
+        <div className="panel">
+          <h2 className="text-2xl mb-4">Quick Links</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
               <h3 className="font-medium mb-2">Popular Categories</h3>

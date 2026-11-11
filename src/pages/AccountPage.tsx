@@ -31,30 +31,32 @@ const AccountPage = () => {
   };
   
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-8">My Account</h1>
+    <div className="container pb-8">
+      <header className="page-header mb-8">
+        <h1 className="page-title">My Account</h1>
+      </header>
       
       <div className="flex flex-col lg:flex-row gap-8">
         {/* Sidebar */}
-        <div className="lg:w-1/4">
-          <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
+        <div className="lg:w-72 lg:flex-shrink-0">
+          <div className="panel mb-6">
             <div className="flex items-center mb-6">
-              <div className="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center mr-4">
-                <User className="h-8 w-8 text-gray-500" />
+              <div className="mr-4 flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-accent-50">
+                <User className="h-6 w-6 text-accent-700" />
               </div>
               <div>
-                <h2 className="font-bold text-lg">John Doe</h2>
-                <p className="text-gray-600">john.doe@example.com</p>
+                <h2 className="text-lg">John Doe</h2>
+                <p className="break-all text-sm text-gray-600">john.doe@example.com</p>
               </div>
             </div>
             
             <nav className="space-y-1">
               <button 
                 onClick={() => setActiveTab('profile')}
-                className={`w-full flex items-center p-3 rounded-md transition-colors ${
+                className={`w-full flex items-center px-3 py-2.5 rounded-lg text-left font-medium transition-colors ${
                   activeTab === 'profile' 
                     ? 'bg-accent-50 text-accent-800' 
-                    : 'hover:bg-gray-50'
+                    : 'text-ink-700 hover:bg-gray-100'
                 }`}
               >
                 <User className={`h-5 w-5 mr-3 ${activeTab === 'profile' ? 'text-accent-600' : 'text-gray-500'}`} />
@@ -63,10 +65,10 @@ const AccountPage = () => {
               
               <button 
                 onClick={() => setActiveTab('orders')}
-                className={`w-full flex items-center p-3 rounded-md transition-colors ${
+                className={`w-full flex items-center px-3 py-2.5 rounded-lg text-left font-medium transition-colors ${
                   activeTab === 'orders' 
                     ? 'bg-accent-50 text-accent-800' 
-                    : 'hover:bg-gray-50'
+                    : 'text-ink-700 hover:bg-gray-100'
                 }`}
               >
                 <ShoppingBag className={`h-5 w-5 mr-3 ${activeTab === 'orders' ? 'text-accent-600' : 'text-gray-500'}`} />
@@ -75,10 +77,10 @@ const AccountPage = () => {
               
               <button 
                 onClick={() => setActiveTab('wishlist')}
-                className={`w-full flex items-center p-3 rounded-md transition-colors ${
+                className={`w-full flex items-center px-3 py-2.5 rounded-lg text-left font-medium transition-colors ${
                   activeTab === 'wishlist' 
                     ? 'bg-accent-50 text-accent-800' 
-                    : 'hover:bg-gray-50'
+                    : 'text-ink-700 hover:bg-gray-100'
                 }`}
               >
                 <Heart className={`h-5 w-5 mr-3 ${activeTab === 'wishlist' ? 'text-accent-600' : 'text-gray-500'}`} />
@@ -87,10 +89,10 @@ const AccountPage = () => {
               
               <button 
                 onClick={() => setActiveTab('payment')}
-                className={`w-full flex items-center p-3 rounded-md transition-colors ${
+                className={`w-full flex items-center px-3 py-2.5 rounded-lg text-left font-medium transition-colors ${
                   activeTab === 'payment' 
                     ? 'bg-accent-50 text-accent-800' 
-                    : 'hover:bg-gray-50'
+                    : 'text-ink-700 hover:bg-gray-100'
                 }`}
               >
                 <CreditCard className={`h-5 w-5 mr-3 ${activeTab === 'payment' ? 'text-accent-600' : 'text-gray-500'}`} />
@@ -99,10 +101,10 @@ const AccountPage = () => {
               
               <button 
                 onClick={() => setActiveTab('notifications')}
-                className={`w-full flex items-center p-3 rounded-md transition-colors ${
+                className={`w-full flex items-center px-3 py-2.5 rounded-lg text-left font-medium transition-colors ${
                   activeTab === 'notifications' 
                     ? 'bg-accent-50 text-accent-800' 
-                    : 'hover:bg-gray-50'
+                    : 'text-ink-700 hover:bg-gray-100'
                 }`}
               >
                 <Bell className={`h-5 w-5 mr-3 ${activeTab === 'notifications' ? 'text-accent-600' : 'text-gray-500'}`} />
@@ -111,10 +113,10 @@ const AccountPage = () => {
               
               <button 
                 onClick={() => setActiveTab('settings')}
-                className={`w-full flex items-center p-3 rounded-md transition-colors ${
+                className={`w-full flex items-center px-3 py-2.5 rounded-lg text-left font-medium transition-colors ${
                   activeTab === 'settings' 
                     ? 'bg-accent-50 text-accent-800' 
-                    : 'hover:bg-gray-50'
+                    : 'text-ink-700 hover:bg-gray-100'
                 }`}
               >
                 <Settings className={`h-5 w-5 mr-3 ${activeTab === 'settings' ? 'text-accent-600' : 'text-gray-500'}`} />
@@ -132,55 +134,55 @@ const AccountPage = () => {
         </div>
         
         {/* Main content */}
-        <div className="lg:w-3/4">
-          <div className="bg-white rounded-lg shadow-sm p-6">
+        <div className="min-w-0 flex-1">
+          <div className="panel">
             {/* Profile tab */}
             {activeTab === 'profile' && (
               <div>
-                <h2 className="text-xl font-bold mb-6">Profile Information</h2>
+                <h2 className="text-xl mb-6">Profile Information</h2>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                   <div>
-                    <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-1">
+                    <label htmlFor="firstName" className="field-label">
                       First Name
                     </label>
                     <input 
                       type="text" 
                       id="firstName" 
-                      className="w-full border border-gray-300 rounded-md px-3 py-2"
+                      className="field"
                       defaultValue="John"
                     />
                   </div>
                   <div>
-                    <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-1">
+                    <label htmlFor="lastName" className="field-label">
                       Last Name
                     </label>
                     <input 
                       type="text" 
                       id="lastName" 
-                      className="w-full border border-gray-300 rounded-md px-3 py-2"
+                      className="field"
                       defaultValue="Doe"
                     />
                   </div>
                   <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                    <label htmlFor="email" className="field-label">
                       Email Address
                     </label>
                     <input 
                       type="email" 
                       id="email" 
-                      className="w-full border border-gray-300 rounded-md px-3 py-2"
+                      className="field"
                       defaultValue="john.doe@example.com"
                     />
                   </div>
                   <div>
-                    <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
+                    <label htmlFor="phone" className="field-label">
                       Phone Number
                     </label>
                     <input 
                       type="tel" 
                       id="phone" 
-                      className="w-full border border-gray-300 rounded-md px-3 py-2"
+                      className="field"
                       defaultValue="(555) 123-4567"
                     />
                   </div>
@@ -189,34 +191,34 @@ const AccountPage = () => {
                 <h3 className="font-bold mb-4">Change Password</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                   <div>
-                    <label htmlFor="currentPassword" className="block text-sm font-medium text-gray-700 mb-1">
+                    <label htmlFor="currentPassword" className="field-label">
                       Current Password
                     </label>
                     <input 
                       type="password" 
                       id="currentPassword" 
-                      className="w-full border border-gray-300 rounded-md px-3 py-2"
+                      className="field"
                     />
                   </div>
                   <div></div>
                   <div>
-                    <label htmlFor="newPassword" className="block text-sm font-medium text-gray-700 mb-1">
+                    <label htmlFor="newPassword" className="field-label">
                       New Password
                     </label>
                     <input 
                       type="password" 
                       id="newPassword" 
-                      className="w-full border border-gray-300 rounded-md px-3 py-2"
+                      className="field"
                     />
                   </div>
                   <div>
-                    <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-1">
+                    <label htmlFor="confirmPassword" className="field-label">
                       Confirm New Password
                     </label>
                     <input 
                       type="password" 
                       id="confirmPassword" 
-                      className="w-full border border-gray-300 rounded-md px-3 py-2"
+                      className="field"
                     />
                   </div>
                 </div>
@@ -232,7 +234,7 @@ const AccountPage = () => {
             {/* Orders tab */}
             {activeTab === 'orders' && (
               <div>
-                <h2 className="text-xl font-bold mb-6">Order History</h2>
+                <h2 className="text-xl mb-6">Order History</h2>
                 
                 {mockOrders.length === 0 ? (
                   <div className="text-center py-12">
@@ -246,13 +248,13 @@ const AccountPage = () => {
                 ) : (
                   <div className="overflow-x-auto">
                     <table className="w-full">
-                      <thead className="bg-gray-50 text-left">
+                      <thead className="border-b border-gray-200 text-left text-sm text-gray-500">
                         <tr>
-                          <th className="py-3 px-4 font-medium">Order #</th>
-                          <th className="py-3 px-4 font-medium">Date</th>
-                          <th className="py-3 px-4 font-medium">Status</th>
-                          <th className="py-3 px-4 font-medium">Total</th>
-                          <th className="py-3 px-4 font-medium">Action</th>
+                          <th className="py-3 px-4 font-normal">Order #</th>
+                          <th className="py-3 px-4 font-normal">Date</th>
+                          <th className="py-3 px-4 font-normal">Status</th>
+                          <th className="py-3 px-4 font-normal">Total</th>
+                          <th className="py-3 px-4 font-normal">Action</th>
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-gray-200">
@@ -269,7 +271,7 @@ const AccountPage = () => {
                                 order.status === 'Delivered' 
                                   ? 'bg-accent-100 text-accent-800' 
                                   : order.status === 'Shipped'
-                                  ? 'bg-blue-100 text-blue-800'
+                                  ? 'bg-gray-200 text-ink-800'
                                   : 'bg-accent-100 text-accent-800'
                               }`}>
                                 {order.status}
@@ -295,7 +297,7 @@ const AccountPage = () => {
             {/* Placeholder for other tabs */}
             {activeTab !== 'profile' && activeTab !== 'orders' && (
               <div className="text-center py-12">
-                <h2 className="text-xl font-bold mb-4">
+                <h2 className="text-xl mb-4">
                   {activeTab === 'payment' ? 'Payment Methods' : activeTab.charAt(0).toUpperCase() + activeTab.slice(1)}
                 </h2>
                 <p className="text-gray-600 mb-6">

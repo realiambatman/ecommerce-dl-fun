@@ -2,53 +2,53 @@ import { RotateCcw, Shield, Clock, CheckCircle } from 'lucide-react';
 
 const ReturnsPage = () => {
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="text-center mb-12">
-        <h1 className="text-4xl font-bold mb-4">Returns & Warranty</h1>
-        <p className="text-gray-600 max-w-2xl mx-auto">
+    <div className="container pb-8">
+      <header className="page-header mb-10">
+        <h1 className="page-title">Returns & Warranty</h1>
+        <p className="page-lede">
           We stand behind the quality of our refurbished phones. Learn about our hassle-free return policy and comprehensive warranty coverage.
         </p>
-      </div>
+      </header>
 
       {/* Return Policy Overview */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-        <div className="bg-white rounded-lg shadow-sm p-6 text-center">
-          <div className="bg-accent-600 rounded-full p-3 w-16 h-16 mx-auto mb-4 flex items-center justify-center">
-            <Clock className="h-8 w-8 text-white" />
+        <div className="card p-6">
+          <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-full bg-accent-50 text-accent-700">
+            <Clock className="h-5 w-5" />
           </div>
-          <h3 className="font-bold text-lg mb-2">30-Day Returns</h3>
+          <h3 className="text-lg mb-2">30-Day Returns</h3>
           <p className="text-gray-600">Full refund within 30 days of purchase</p>
         </div>
 
-        <div className="bg-white rounded-lg shadow-sm p-6 text-center">
-          <div className="bg-blue-500 rounded-full p-3 w-16 h-16 mx-auto mb-4 flex items-center justify-center">
-            <RotateCcw className="h-8 w-8 text-white" />
+        <div className="card p-6">
+          <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-full bg-accent-50 text-accent-700">
+            <RotateCcw className="h-5 w-5" />
           </div>
-          <h3 className="font-bold text-lg mb-2">Easy Process</h3>
+          <h3 className="text-lg mb-2">Easy Process</h3>
           <p className="text-gray-600">Simple online return initiation</p>
         </div>
 
-        <div className="bg-white rounded-lg shadow-sm p-6 text-center">
-          <div className="bg-accent-600 rounded-full p-3 w-16 h-16 mx-auto mb-4 flex items-center justify-center">
-            <Shield className="h-8 w-8 text-ink-900" />
+        <div className="card p-6">
+          <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-full bg-accent-50 text-accent-700">
+            <Shield className="h-5 w-5" />
           </div>
-          <h3 className="font-bold text-lg mb-2">12-Month Warranty</h3>
+          <h3 className="text-lg mb-2">12-Month Warranty</h3>
           <p className="text-gray-600">Comprehensive hardware coverage</p>
         </div>
 
-        <div className="bg-white rounded-lg shadow-sm p-6 text-center">
-          <div className="bg-purple-500 rounded-full p-3 w-16 h-16 mx-auto mb-4 flex items-center justify-center">
-            <CheckCircle className="h-8 w-8 text-white" />
+        <div className="card p-6">
+          <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-full bg-accent-50 text-accent-700">
+            <CheckCircle className="h-5 w-5" />
           </div>
-          <h3 className="font-bold text-lg mb-2">Quality Guarantee</h3>
+          <h3 className="text-lg mb-2">Quality Guarantee</h3>
           <p className="text-gray-600">Satisfaction guaranteed or money back</p>
         </div>
       </div>
 
       {/* Return Policy Details */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
-        <div className="bg-white rounded-lg shadow-sm p-6">
-          <h2 className="text-2xl font-bold mb-6">Return Policy</h2>
+        <div className="panel">
+          <h2 className="text-2xl mb-6">Return Policy</h2>
           
           <div className="space-y-4">
             <div>
@@ -90,8 +90,8 @@ const ReturnsPage = () => {
           </div>
         </div>
 
-        <div className="bg-white rounded-lg shadow-sm p-6">
-          <h2 className="text-2xl font-bold mb-6">Warranty Coverage</h2>
+        <div className="panel">
+          <h2 className="text-2xl mb-6">Warranty Coverage</h2>
           
           <div className="space-y-4">
             <div>
@@ -138,13 +138,13 @@ const ReturnsPage = () => {
       </div>
 
       {/* Return Process Steps */}
-      <div className="bg-white rounded-lg shadow-sm p-6 mb-12">
-        <h2 className="text-2xl font-bold mb-6">How to Return Your Device</h2>
+      <div className="panel mb-12">
+        <h2 className="text-2xl mb-6">How to Return Your Device</h2>
         
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-          <div className="text-center">
-            <div className="bg-accent-600 rounded-full p-3 w-16 h-16 mx-auto mb-4 flex items-center justify-center">
-              <span className="text-2xl font-bold text-ink-900">1</span>
+          <div>
+            <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-full bg-ink-900">
+              <span className="font-display text-lg font-medium text-white">1</span>
             </div>
             <h3 className="font-medium text-lg mb-2">Contact Us</h3>
             <p className="text-gray-600">
@@ -152,9 +152,9 @@ const ReturnsPage = () => {
             </p>
           </div>
 
-          <div className="text-center">
-            <div className="bg-accent-600 rounded-full p-3 w-16 h-16 mx-auto mb-4 flex items-center justify-center">
-              <span className="text-2xl font-bold text-ink-900">2</span>
+          <div>
+            <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-full bg-ink-900">
+              <span className="font-display text-lg font-medium text-white">2</span>
             </div>
             <h3 className="font-medium text-lg mb-2">Get Return Label</h3>
             <p className="text-gray-600">
@@ -162,9 +162,9 @@ const ReturnsPage = () => {
             </p>
           </div>
 
-          <div className="text-center">
-            <div className="bg-accent-600 rounded-full p-3 w-16 h-16 mx-auto mb-4 flex items-center justify-center">
-              <span className="text-2xl font-bold text-ink-900">3</span>
+          <div>
+            <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-full bg-ink-900">
+              <span className="font-display text-lg font-medium text-white">3</span>
             </div>
             <h3 className="font-medium text-lg mb-2">Ship It Back</h3>
             <p className="text-gray-600">
@@ -172,9 +172,9 @@ const ReturnsPage = () => {
             </p>
           </div>
 
-          <div className="text-center">
-            <div className="bg-accent-600 rounded-full p-3 w-16 h-16 mx-auto mb-4 flex items-center justify-center">
-              <span className="text-2xl font-bold text-ink-900">4</span>
+          <div>
+            <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-full bg-ink-900">
+              <span className="font-display text-lg font-medium text-white">4</span>
             </div>
             <h3 className="font-medium text-lg mb-2">Get Refunded</h3>
             <p className="text-gray-600">
@@ -185,8 +185,8 @@ const ReturnsPage = () => {
       </div>
 
       {/* FAQ */}
-      <div className="bg-gray-50 rounded-lg p-6">
-        <h2 className="text-2xl font-bold mb-6">Frequently Asked Questions</h2>
+      <div className="rounded-2xl bg-accent-50 p-6 sm:p-8">
+        <h2 className="text-2xl mb-6">Frequently Asked Questions</h2>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>

@@ -5,7 +5,8 @@ import { featuredProducts, newArrivals } from '../data/products';
 import BrandLogos from '../components/home/BrandLogos';
 import TestimonialSlider from '../components/home/TestimonialSlider';
 import DeviceArt from '../components/common/DeviceArt';
-import GradeBadge, { GRADES } from '../components/common/GradeBadge';
+import GradeBadge from '../components/common/GradeBadge';
+import { GRADES } from '../data/grades';
 import TrustStrip from '../components/common/TrustStrip';
 import { formatPrice } from '../utils/pricing';
 
@@ -177,7 +178,7 @@ const HomePage = () => {
             <DeviceArt
               productId="6"
               view="front"
-              className="absolute -right-6 top-6 h-[120%] w-auto opacity-90 sm:right-2 lg:-right-8"
+              className="absolute -right-10 top-8 h-[125%] w-auto sm:right-0 lg:-right-10"
             />
             <p className="relative">
               <span className="block text-accent-100">Save up to</span>

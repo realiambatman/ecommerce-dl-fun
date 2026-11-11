@@ -2,55 +2,55 @@ import { Shield, Eye, Lock, UserCheck } from 'lucide-react';
 
 const PrivacyPage = () => {
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="text-center mb-12">
-        <h1 className="text-4xl font-bold mb-4">Privacy Policy</h1>
-        <p className="text-gray-600 max-w-2xl mx-auto">
+    <div className="container pb-8">
+      <header className="page-header mb-10">
+        <h1 className="page-title">Privacy Policy</h1>
+        <p className="page-lede">
           Your privacy is important to us. This policy explains how we collect, use, and protect your personal information.
         </p>
         <p className="text-sm text-gray-500 mt-4">Last updated: January 1, 2024</p>
-      </div>
+      </header>
 
       {/* Privacy Highlights */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-        <div className="bg-white rounded-lg shadow-sm p-6 text-center">
-          <div className="bg-accent-600 rounded-full p-3 w-16 h-16 mx-auto mb-4 flex items-center justify-center">
-            <Shield className="h-8 w-8 text-white" />
+        <div className="card p-6">
+          <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-full bg-accent-50 text-accent-700">
+            <Shield className="h-5 w-5" />
           </div>
-          <h3 className="font-bold text-lg mb-2">Data Protection</h3>
+          <h3 className="text-lg mb-2">Data Protection</h3>
           <p className="text-gray-600">Your data is encrypted and securely stored</p>
         </div>
 
-        <div className="bg-white rounded-lg shadow-sm p-6 text-center">
-          <div className="bg-blue-500 rounded-full p-3 w-16 h-16 mx-auto mb-4 flex items-center justify-center">
-            <Eye className="h-8 w-8 text-white" />
+        <div className="card p-6">
+          <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-full bg-accent-50 text-accent-700">
+            <Eye className="h-5 w-5" />
           </div>
-          <h3 className="font-bold text-lg mb-2">Transparency</h3>
+          <h3 className="text-lg mb-2">Transparency</h3>
           <p className="text-gray-600">Clear information about data usage</p>
         </div>
 
-        <div className="bg-white rounded-lg shadow-sm p-6 text-center">
-          <div className="bg-purple-500 rounded-full p-3 w-16 h-16 mx-auto mb-4 flex items-center justify-center">
-            <Lock className="h-8 w-8 text-white" />
+        <div className="card p-6">
+          <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-full bg-accent-50 text-accent-700">
+            <Lock className="h-5 w-5" />
           </div>
-          <h3 className="font-bold text-lg mb-2">No Selling</h3>
+          <h3 className="text-lg mb-2">No Selling</h3>
           <p className="text-gray-600">We never sell your personal information</p>
         </div>
 
-        <div className="bg-white rounded-lg shadow-sm p-6 text-center">
-          <div className="bg-accent-600 rounded-full p-3 w-16 h-16 mx-auto mb-4 flex items-center justify-center">
-            <UserCheck className="h-8 w-8 text-ink-900" />
+        <div className="card p-6">
+          <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-full bg-accent-50 text-accent-700">
+            <UserCheck className="h-5 w-5" />
           </div>
-          <h3 className="font-bold text-lg mb-2">Your Control</h3>
+          <h3 className="text-lg mb-2">Your Control</h3>
           <p className="text-gray-600">Manage your privacy preferences</p>
         </div>
       </div>
 
       {/* Privacy Policy Content */}
-      <div className="max-w-4xl mx-auto">
-        <div className="bg-white rounded-lg shadow-sm p-8">
+      <div className="max-w-3xl">
+        <div className="panel">
           <div className="prose max-w-none">
-            <h2 className="text-2xl font-bold mb-4">1. Information We Collect</h2>
+            <h2 className="text-2xl mb-4">1. Information We Collect</h2>
             <p className="mb-4">
               We collect information you provide directly to us, such as when you create an account, 
               make a purchase, or contact us for support.
@@ -73,7 +73,7 @@ const PrivacyPage = () => {
               <li>Location information (if you enable location services)</li>
             </ul>
 
-            <h2 className="text-2xl font-bold mb-4">2. How We Use Your Information</h2>
+            <h2 className="text-2xl mb-4">2. How We Use Your Information</h2>
             <p className="mb-4">
               We use the information we collect to provide, maintain, and improve our services.
             </p>
@@ -88,7 +88,7 @@ const PrivacyPage = () => {
               <li>Comply with legal obligations</li>
             </ul>
 
-            <h2 className="text-2xl font-bold mb-4">3. Information Sharing</h2>
+            <h2 className="text-2xl mb-4">3. Information Sharing</h2>
             <p className="mb-4">
               We do not sell, trade, or rent your personal information to third parties. 
               We may share your information in the following circumstances:
@@ -101,7 +101,7 @@ const PrivacyPage = () => {
               <li><strong>With Your Consent:</strong> When you explicitly agree to share information</li>
             </ul>
 
-            <h2 className="text-2xl font-bold mb-4">4. Data Security</h2>
+            <h2 className="text-2xl mb-4">4. Data Security</h2>
             <p className="mb-4">
               We implement appropriate technical and organizational measures to protect your personal information:
             </p>
@@ -114,7 +114,7 @@ const PrivacyPage = () => {
               <li>PCI DSS compliance for payment processing</li>
             </ul>
 
-            <h2 className="text-2xl font-bold mb-4">5. Cookies and Tracking</h2>
+            <h2 className="text-2xl mb-4">5. Cookies and Tracking</h2>
             <p className="mb-4">
               We use cookies and similar technologies to enhance your browsing experience:
             </p>
@@ -130,7 +130,7 @@ const PrivacyPage = () => {
               You can control cookies through your browser settings, but disabling certain cookies may affect website functionality.
             </p>
 
-            <h2 className="text-2xl font-bold mb-4">6. Your Rights and Choices</h2>
+            <h2 className="text-2xl mb-4">6. Your Rights and Choices</h2>
             <p className="mb-4">
               You have several rights regarding your personal information:
             </p>
@@ -144,7 +144,7 @@ const PrivacyPage = () => {
               <li><strong>Restriction:</strong> Limit how we process your information</li>
             </ul>
 
-            <h2 className="text-2xl font-bold mb-4">7. Data Retention</h2>
+            <h2 className="text-2xl mb-4">7. Data Retention</h2>
             <p className="mb-6">
               We retain your personal information for as long as necessary to provide our services, 
               comply with legal obligations, resolve disputes, and enforce our agreements. 
@@ -152,21 +152,21 @@ const PrivacyPage = () => {
               while marketing data may be retained until you opt out.
             </p>
 
-            <h2 className="text-2xl font-bold mb-4">8. Children's Privacy</h2>
+            <h2 className="text-2xl mb-4">8. Children's Privacy</h2>
             <p className="mb-6">
               Our services are not intended for children under 13 years of age. 
               We do not knowingly collect personal information from children under 13. 
               If we become aware that we have collected such information, we will delete it promptly.
             </p>
 
-            <h2 className="text-2xl font-bold mb-4">9. International Transfers</h2>
+            <h2 className="text-2xl mb-4">9. International Transfers</h2>
             <p className="mb-6">
               Your information may be transferred to and processed in countries other than your own. 
               We ensure appropriate safeguards are in place to protect your information in accordance 
               with applicable data protection laws.
             </p>
 
-            <h2 className="text-2xl font-bold mb-4">10. Changes to This Policy</h2>
+            <h2 className="text-2xl mb-4">10. Changes to This Policy</h2>
             <p className="mb-6">
               We may update this privacy policy from time to time. We will notify you of any 
               material changes by posting the new policy on our website and updating the 
@@ -174,7 +174,7 @@ const PrivacyPage = () => {
               constitutes acceptance of the updated policy.
             </p>
 
-            <h2 className="text-2xl font-bold mb-4">11. Contact Us</h2>
+            <h2 className="text-2xl mb-4">11. Contact Us</h2>
             <p className="mb-4">
               If you have any questions about this privacy policy or our data practices, please contact us:
             </p>

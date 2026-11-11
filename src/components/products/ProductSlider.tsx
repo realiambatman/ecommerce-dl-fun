@@ -17,7 +17,7 @@ const ProductSlider = ({ products }: ProductSliderProps) => {
   const checkScrollability = () => {
     const slider = sliderRef.current;
     if (slider) {
-      setCanScrollLeft(slider.scrollLeft > 0);
+      setCanScrollLeft(slider.scrollLeft > 8);
       setCanScrollRight(slider.scrollLeft < slider.scrollWidth - slider.clientWidth - 10);
     }
   };
@@ -68,12 +68,12 @@ const ProductSlider = ({ products }: ProductSliderProps) => {
       {/* Product slider */}
       <div 
         ref={sliderRef}
-        className="hide-scrollbar -mx-5 flex snap-x gap-4 overflow-x-auto px-5 pb-4 sm:mx-0 sm:px-0.5"
+        className="hide-scrollbar -mx-5 flex snap-x scroll-px-5 gap-4 overflow-x-auto px-5 pb-4 sm:mx-0 sm:scroll-px-0 sm:px-0"
         onScroll={checkScrollability}
         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
       >
         {products.map((product) => (
-          <div key={product.id} className="w-[260px] flex-shrink-0 snap-start sm:w-[280px]">
+          <div key={product.id} className="w-[260px] flex-shrink-0 snap-start sm:w-[calc((100%-1rem)/2)] md:w-[calc((100%-2rem)/3)] lg:w-[calc((100%-3rem)/4)]">
             <ProductCard product={product} />
           </div>
         ))}

@@ -151,30 +151,30 @@ const FAQPage = () => {
   })).filter(category => category.faqs.length > 0);
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="text-center mb-12">
-        <h1 className="text-4xl font-bold mb-4">Frequently Asked Questions</h1>
-        <p className="text-gray-600 max-w-2xl mx-auto">
+    <div className="container pb-8">
+      <header className="page-header mb-10">
+        <h1 className="page-title">Frequently Asked Questions</h1>
+        <p className="page-lede">
           Find answers to common questions about our refurbished phones, shipping, warranty, and more.
         </p>
-      </div>
+      </header>
 
       {/* Search */}
-      <div className="max-w-md mx-auto mb-12">
+      <div className="max-w-md mb-12">
         <div className="relative">
           <input
             type="text"
             placeholder="Search FAQs..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full border border-gray-300 rounded-lg px-4 py-3 pl-12 focus:outline-none focus:ring-2 focus:ring-accent-600"
+            className="field h-12 rounded-full pl-12"
           />
           <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
         </div>
       </div>
 
       {/* FAQ Categories */}
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-3xl">
         {filteredFAQs.length === 0 ? (
           <div className="text-center py-12">
             <p className="text-gray-600 mb-4">No FAQs found matching your search.</p>
@@ -188,19 +188,20 @@ const FAQPage = () => {
         ) : (
           filteredFAQs.map((category, categoryIndex) => (
             <div key={categoryIndex} className="mb-8">
-              <h2 className="text-2xl font-bold mb-6">{category.title}</h2>
-              <div className="space-y-4">
+              <h2 className="mb-4 text-xl">{category.title}</h2>
+              <div className="space-y-2.5">
                 {category.faqs.map((faq, faqIndex) => {
                   const globalIndex = categoryIndex * 100 + faqIndex;
                   const isOpen = openItems.includes(globalIndex);
                   
                   return (
-                    <div key={faqIndex} className="bg-white rounded-lg shadow-sm border border-gray-200">
+                    <div key={faqIndex} className="overflow-hidden rounded-xl border border-gray-200 bg-white">
                       <button
                         onClick={() => toggleItem(globalIndex)}
+                        aria-expanded={isOpen}
                         className="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 transition-colors"
                       >
-                        <span className="font-medium text-lg pr-4">{faq.question}</span>
+                        <span className="pr-4 font-medium text-ink-900">{faq.question}</span>
                         {isOpen ? (
                           <ChevronUp className="h-5 w-5 text-gray-500 flex-shrink-0" />
                         ) : (
@@ -222,13 +223,13 @@ const FAQPage = () => {
       </div>
 
       {/* Contact Section */}
-      <div className="max-w-2xl mx-auto mt-16 text-center">
-        <div className="bg-gray-50 rounded-lg p-8">
-          <h3 className="text-xl font-bold mb-4">Still Have Questions?</h3>
+      <div className="max-w-2xl mt-16">
+        <div className="rounded-2xl bg-accent-50 p-6 sm:p-8">
+          <h3 className="text-xl mb-4">Still Have Questions?</h3>
           <p className="text-gray-600 mb-6">
             Can't find the answer you're looking for? Our customer support team is here to help.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col gap-3 sm:flex-row">
             <a href="mailto:support@dreamlandgadgets.com" className="btn btn-primary">
               Email Support
             </a>

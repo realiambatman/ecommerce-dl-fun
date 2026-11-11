@@ -45,7 +45,6 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         id: product.id,
         name: product.name,
         price: product.price,
-        image: product.image,
         quantity
       }];
     });

@@ -70,7 +70,7 @@ const TrackOrderPage = () => {
       case 'payment confirmed':
         return <CheckCircle className="h-5 w-5 text-accent-600" />;
       case 'processing':
-        return <Package className="h-5 w-5 text-blue-500" />;
+        return <Package className="h-5 w-5 text-accent-600" />;
       case 'shipped':
       case 'out for delivery':
         return <Truck className="h-5 w-5 text-accent-600" />;
@@ -82,20 +82,20 @@ const TrackOrderPage = () => {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="text-center mb-12">
-        <h1 className="text-4xl font-bold mb-4">Track Your Order</h1>
-        <p className="text-gray-600 max-w-2xl mx-auto">
+    <div className="container pb-8">
+      <header className="page-header mb-10">
+        <h1 className="page-title">Track Your Order</h1>
+        <p className="page-lede">
           Enter your order number and email address to track your shipment and get real-time updates.
         </p>
-      </div>
+      </header>
 
       {/* Tracking Form */}
-      <div className="max-w-md mx-auto mb-12">
-        <div className="bg-white rounded-lg shadow-sm p-6">
+      <div className="max-w-md mb-12">
+        <div className="panel">
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label htmlFor="orderNumber" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="orderNumber" className="field-label">
                 Order Number *
               </label>
               <input
@@ -105,12 +105,12 @@ const TrackOrderPage = () => {
                 onChange={(e) => setOrderNumber(e.target.value)}
                 placeholder="e.g., DG12345"
                 required
-                className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-accent-600"
+                className="field"
               />
             </div>
 
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="email" className="field-label">
                 Email Address *
               </label>
               <input
@@ -120,7 +120,7 @@ const TrackOrderPage = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="your@email.com"
                 required
-                className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-accent-600"
+                className="field"
               />
             </div>
 
@@ -144,14 +144,14 @@ const TrackOrderPage = () => {
           </form>
 
           {notFound && (
-            <p className="mt-4 text-sm text-red-500 text-center" role="alert">
+            <p className="mt-4 text-sm text-red-700 text-center" role="alert">
               Order not found. Please check your order number and email.
             </p>
           )}
 
           <div className="mt-4 text-center">
             <p className="text-sm text-gray-600">
-              Try order number: <span className="font-mono bg-gray-100 px-2 py-1 rounded">DG12345</span>
+              Try order number: <span className="rounded-md bg-gray-100 px-2 py-1 font-medium text-ink-900">DG12345</span>
             </p>
           </div>
         </div>
@@ -159,23 +159,23 @@ const TrackOrderPage = () => {
 
       {/* Tracking Results */}
       {trackingData && (
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-3xl">
           {/* Order Summary */}
-          <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
+          <div className="panel mb-6">
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
               <div>
-                <h2 className="text-2xl font-bold mb-2">Order #{trackingData.orderNumber}</h2>
+                <h2 className="text-2xl mb-2">Order #{trackingData.orderNumber}</h2>
                 <p className="text-gray-600">
                   Estimated delivery: <span className="font-medium">{new Date(trackingData.estimatedDelivery).toLocaleDateString()}</span>
                 </p>
                 <p className="text-gray-600">
-                  Tracking number: <span className="font-mono bg-gray-100 px-2 py-1 rounded">{trackingData.trackingNumber}</span>
+                  Tracking number: <span className="rounded-md bg-gray-100 px-2 py-1 font-medium text-ink-900">{trackingData.trackingNumber}</span>
                 </p>
               </div>
               <div className="mt-4 md:mt-0">
                 <span className={`inline-block px-4 py-2 rounded-full text-sm font-medium ${
                   trackingData.status === 'delivered' ? 'bg-accent-100 text-accent-800' :
-                  trackingData.status === 'shipped' ? 'bg-blue-100 text-blue-800' :
+                  trackingData.status === 'shipped' ? 'bg-gray-200 text-ink-800' :
                   'bg-accent-100 text-accent-800'
                 }`}>
                   {trackingData.status.charAt(0).toUpperCase() + trackingData.status.slice(1)}
@@ -199,8 +199,8 @@ const TrackOrderPage = () => {
           </div>
 
           {/* Tracking Timeline */}
-          <div className="bg-white rounded-lg shadow-sm p-6">
-            <h3 className="text-xl font-bold mb-6">Tracking Timeline</h3>
+          <div className="panel">
+            <h3 className="text-xl mb-6">Tracking Timeline</h3>
             <div className="space-y-4">
               {trackingData.timeline.map((event, index) => (
                 <div key={index} className="relative flex items-start">
@@ -210,7 +210,7 @@ const TrackOrderPage = () => {
                   <div className="flex-grow">
                     <div className="flex justify-between items-start">
                       <div>
-                        <h4 className={`font-medium ${event.completed ? 'text-gray-900' : 'text-gray-500'}`}>
+                        <h4 className={`font-medium ${event.completed ? 'text-ink-900' : 'text-gray-500'}`}>
                           {event.status}
                         </h4>
                         <p className={`text-sm ${event.completed ? 'text-gray-600' : 'text-gray-400'}`}>
@@ -230,14 +230,14 @@ const TrackOrderPage = () => {
       )}
 
       {/* Help Section */}
-      <div className="max-w-2xl mx-auto mt-12 text-center">
-        <div className="bg-gray-50 rounded-lg p-6">
-          <h3 className="font-bold text-lg mb-2">Need Help?</h3>
+      <div className="max-w-2xl mt-12">
+        <div className="rounded-2xl bg-accent-50 p-6 sm:p-8">
+          <h3 className="text-lg mb-2">Need Help?</h3>
           <p className="text-gray-600 mb-4">
             If you're having trouble tracking your order or have questions about your shipment, 
             our customer support team is here to help.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col gap-3 sm:flex-row">
             <a href="mailto:support@dreamlandgadgets.com" className="btn btn-outline">
               Email Support
             </a>

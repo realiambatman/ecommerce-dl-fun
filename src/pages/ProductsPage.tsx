@@ -16,6 +16,7 @@ const ProductsPage = () => {
   const brandParam = searchParams.get('brand') || '';
   const conditionParam = searchParams.get('condition') || '';
   const priceRangeParam = searchParams.get('priceRange') || '';
+  const searchParam = (searchParams.get('search') || '').trim();
   
   // Load products
   useEffect(() => {
@@ -30,6 +31,15 @@ const ProductsPage = () => {
   // Filter products when filter parameters or products change
   useEffect(() => {
     let result = [...products];
+    
+    // Apply search query from the header search box
+    if (searchParam) {
+      const query = searchParam.toLowerCase();
+      result = result.filter(product =>
+        [product.name, product.brand, product.category, product.capacity ?? '']
+          .some(field => field.toLowerCase().includes(query))
+      );
+    }
     
     // Apply category filter
     if (categoryParam) {
@@ -60,17 +70,18 @@ const ProductsPage = () => {
     }
     
     setFilteredProducts(result);
-  }, [products, categoryParam, brandParam, conditionParam, priceRangeParam]);
+  }, [products, searchParam, categoryParam, brandParam, conditionParam, priceRangeParam]);
   
   // Update URL params when filters change
   const updateFilters = (filterName: string, value: string) => {
     setSearchParams(prevParams => {
+      const nextParams = new URLSearchParams(prevParams);
       if (value) {
-        prevParams.set(filterName, value);
+        nextParams.set(filterName, value);
       } else {
-        prevParams.delete(filterName);
+        nextParams.delete(filterName);
       }
-      return prevParams;
+      return nextParams;
     });
   };
   
@@ -104,9 +115,9 @@ const ProductsPage = () => {
   
   const priceRanges = [
     { value: '0-25000', label: 'Under ₹25,000' },
-    { value: '25000-40000', label: 'Under ₹40,000' },
-    { value: '40000-60000', label: 'Under ₹60,000' },
-    { value: '60000-100000', label: 'Under ₹1,00,000' },
+    { value: '25000-40000', label: '₹25,000 - ₹40,000' },
+    { value: '40000-60000', label: '₹40,000 - ₹60,000' },
+    { value: '60000-100000', label: '₹60,000 - ₹1,00,000' },
     { value: '100000-1000000', label: 'Over ₹1,00,000' },
   ];
   
@@ -138,13 +149,14 @@ const ProductsPage = () => {
             <button 
               onClick={() => setIsFilterOpen(false)}
               className="p-1 rounded-full hover:bg-gray-100"
+              aria-label="Close filters"
             >
               <X className="h-6 w-6" />
             </button>
           </div>
           
           {/* Active filters */}
-          {(categoryParam || brandParam || conditionParam || priceRangeParam) && (
+          {(searchParam || categoryParam || brandParam || conditionParam || priceRangeParam) && (
             <div className="mb-6">
               <div className="flex justify-between items-center mb-2">
                 <h3 className="font-medium">Active Filters</h3>
@@ -156,11 +168,24 @@ const ProductsPage = () => {
                 </button>
               </div>
               <div className="flex flex-wrap gap-2">
+                {searchParam && (
+                  <span className="inline-flex items-center px-3 py-1 bg-gray-100 rounded-full text-sm">
+                    &ldquo;{searchParam}&rdquo;
+                    <button 
+                      onClick={() => updateFilters('search', '')}
+                      aria-label="Remove search filter"
+                      className="ml-1 text-gray-500 hover:text-gray-700"
+                    >
+                      <X className="h-4 w-4" />
+                    </button>
+                  </span>
+                )}
                 {categoryParam && (
                   <span className="inline-flex items-center px-3 py-1 bg-gray-100 rounded-full text-sm">
                     {categories.find(c => c.value === categoryParam)?.label || categoryParam}
                     <button 
                       onClick={() => updateFilters('category', '')}
+                      aria-label="Remove category filter"
                       className="ml-1 text-gray-500 hover:text-gray-700"
                     >
                       <X className="h-4 w-4" />
@@ -172,6 +197,7 @@ const ProductsPage = () => {
                     {brands.find(b => b.value === brandParam)?.label || brandParam}
                     <button 
                       onClick={() => updateFilters('brand', '')}
+                      aria-label="Remove brand filter"
                       className="ml-1 text-gray-500 hover:text-gray-700"
                     >
                       <X className="h-4 w-4" />
@@ -183,6 +209,7 @@ const ProductsPage = () => {
                     {conditionParam}
                     <button 
                       onClick={() => updateFilters('condition', '')}
+                      aria-label="Remove condition filter"
                       className="ml-1 text-gray-500 hover:text-gray-700"
                     >
                       <X className="h-4 w-4" />
@@ -194,6 +221,7 @@ const ProductsPage = () => {
                     {priceRanges.find(p => p.value === priceRangeParam)?.label || `₹${priceRangeParam.replace('-', ' - ₹')}`}
                     <button 
                       onClick={() => updateFilters('priceRange', '')}
+                      aria-label="Remove price filter"
                       className="ml-1 text-gray-500 hover:text-gray-700"
                     >
                       <X className="h-4 w-4" />
@@ -317,7 +345,7 @@ const ProductsPage = () => {
             </div>
           ) : (
             <>
-              <p className="mb-4 text-gray-600">{filteredProducts.length} products found</p>
+              <p className="mb-4 text-gray-600">{filteredProducts.length} {filteredProducts.length === 1 ? 'product' : 'products'} found</p>
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {filteredProducts.map(product => (
                   <ProductCard key={product.id} product={product} />

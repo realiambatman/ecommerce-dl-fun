@@ -1,27 +1,29 @@
-import { useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { formatPrice } from '../utils/pricing';
 import { User, ShoppingBag, CreditCard, Heart, LogOut, Settings, Bell } from 'lucide-react';
 
+const ACCOUNT_TABS = ['profile', 'orders', 'wishlist', 'payment', 'notifications', 'settings'];
+
 const AccountPage = () => {
-  const [activeTab, setActiveTab] = useState('profile');
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  // The active tab lives in the URL (?tab=orders) so header links can deep-link to it
+  const tabParam = searchParams.get('tab') ?? '';
+  const activeTab = ACCOUNT_TABS.includes(tabParam) ? tabParam : 'profile';
+  const setActiveTab = (tab: string) => {
+    setSearchParams(tab === 'profile' ? {} : { tab }, { replace: true });
+  };
   
   // Mock data for demonstration
   const mockOrders = [
-    { id: '5721', date: '2023-09-15', status: 'Delivered', total: 799.99 },
-    { id: '5632', date: '2023-08-22', status: 'Shipped', total: 549.00 },
-    { id: '5498', date: '2023-07-10', status: 'Delivered', total: 1299.99 },
+    { id: '5721', date: '2023-09-15', status: 'Delivered', total: 64999 },
+    { id: '5632', date: '2023-08-22', status: 'Shipped', total: 37999 },
+    { id: '5498', date: '2023-07-10', status: 'Delivered', total: 86999 },
   ];
-  
-  // Format price with currency
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('en-US', { 
-      style: 'currency', 
-      currency: 'USD' 
-    }).format(price);
-  };
   
   // Format date
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
+    return new Date(dateString).toLocaleDateString('en-IN', {
       year: 'numeric',
       month: 'long',
       day: 'numeric'
@@ -294,7 +296,7 @@ const AccountPage = () => {
             {activeTab !== 'profile' && activeTab !== 'orders' && (
               <div className="text-center py-12">
                 <h2 className="text-xl font-bold mb-4">
-                  {activeTab.charAt(0).toUpperCase() + activeTab.slice(1)}
+                  {activeTab === 'payment' ? 'Payment Methods' : activeTab.charAt(0).toUpperCase() + activeTab.slice(1)}
                 </h2>
                 <p className="text-gray-600 mb-6">
                   This section is under construction. Check back soon!

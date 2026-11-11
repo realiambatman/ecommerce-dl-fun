@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   Smartphone, 
@@ -16,6 +17,15 @@ import {
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const [newsletterEmail, setNewsletterEmail] = useState('');
+  const [isSubscribed, setIsSubscribed] = useState(false);
+
+  // Demo only: there is no mailing list backend, so just acknowledge the signup
+  const handleNewsletterSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubscribed(true);
+    setNewsletterEmail('');
+  };
 
   return (
     <footer className="bg-navy-900 text-white">
@@ -30,16 +40,28 @@ const Footer = () => {
               </p>
             </div>
             <div>
-              <form className="flex gap-2">
+              <form className="flex gap-2" onSubmit={handleNewsletterSubmit}>
                 <input 
                   type="email" 
+                  required
+                  aria-label="Email address"
+                  value={newsletterEmail}
+                  onChange={(e) => {
+                    setNewsletterEmail(e.target.value);
+                    setIsSubscribed(false);
+                  }}
                   placeholder="Enter your email" 
                   className="flex-1 bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-500"
                 />
-                <button className="bg-yellow-500 hover:bg-yellow-600 text-navy-900 px-6 py-3 rounded-lg font-medium transition-colors">
+                <button type="submit" className="bg-yellow-500 hover:bg-yellow-600 text-navy-900 px-6 py-3 rounded-lg font-medium transition-colors">
                   Subscribe
                 </button>
               </form>
+              {isSubscribed && (
+                <p className="mt-2 text-sm text-yellow-500" role="status">
+                  Thanks for subscribing!
+                </p>
+              )}
             </div>
           </div>
         </div>
@@ -184,16 +206,16 @@ const Footer = () => {
               <h5 className="font-medium mb-3">Accepted Payments</h5>
               <div className="grid grid-cols-4 gap-2">
                 <div className="bg-white/10 rounded p-2 flex items-center justify-center">
-                  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/2560px-Visa_Inc._logo.svg.png" alt="Visa" className="h-6" />
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/320px-Visa_Inc._logo.svg.png" alt="Visa" className="h-6" />
                 </div>
                 <div className="bg-white/10 rounded p-2 flex items-center justify-center">
-                  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/1280px-Mastercard-logo.svg.png" alt="Mastercard" className="h-6" />
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/320px-Mastercard-logo.svg.png" alt="Mastercard" className="h-6" />
                 </div>
                 <div className="bg-white/10 rounded p-2 flex items-center justify-center">
-                  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/PayPal.svg/2560px-PayPal.svg.png" alt="PayPal" className="h-6" />
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/PayPal.svg/320px-PayPal.svg.png" alt="PayPal" className="h-6" />
                 </div>
                 <div className="bg-white/10 rounded p-2 flex items-center justify-center">
-                  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/PayPal-logo.svg/2560px-PayPal-logo.svg.png" alt="Apple Pay" className="h-6" />
+                  <span className="text-xs font-semibold text-white whitespace-nowrap leading-6">Apple Pay</span>
                 </div>
               </div>
             </div>
@@ -212,19 +234,19 @@ const Footer = () => {
 
             {/* Social Links */}
             <div className="flex space-x-4">
-              <a href="#" className="text-gray-400 hover:text-yellow-500 transition-colors">
+              <a href="#" aria-label="Facebook" className="text-gray-400 hover:text-yellow-500 transition-colors">
                 <Facebook className="h-5 w-5" />
               </a>
-              <a href="#" className="text-gray-400 hover:text-yellow-500 transition-colors">
+              <a href="#" aria-label="Instagram" className="text-gray-400 hover:text-yellow-500 transition-colors">
                 <Instagram className="h-5 w-5" />
               </a>
-              <a href="#" className="text-gray-400 hover:text-yellow-500 transition-colors">
+              <a href="#" aria-label="Twitter" className="text-gray-400 hover:text-yellow-500 transition-colors">
                 <Twitter className="h-5 w-5" />
               </a>
-              <a href="#" className="text-gray-400 hover:text-yellow-500 transition-colors">
+              <a href="#" aria-label="YouTube" className="text-gray-400 hover:text-yellow-500 transition-colors">
                 <Youtube className="h-5 w-5" />
               </a>
-              <a href="#" className="text-gray-400 hover:text-yellow-500 transition-colors">
+              <a href="#" aria-label="LinkedIn" className="text-gray-400 hover:text-yellow-500 transition-colors">
                 <Linkedin className="h-5 w-5" />
               </a>
             </div>

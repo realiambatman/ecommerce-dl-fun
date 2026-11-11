@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Apple, Smartphone } from 'lucide-react';
 
 const BrandLogos = () => {
@@ -16,8 +17,9 @@ const BrandLogos = () => {
   return (
     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-6">
       {brands.map((brand) => (
-        <div
+        <Link
           key={brand.id}
+          to={`/products?brand=${brand.id}`}
           className="flex flex-col items-center justify-center p-6 bg-white rounded-lg shadow-sm hover:shadow-md transition-all cursor-pointer"
           onMouseEnter={() => setHoveredBrand(brand.id)}
           onMouseLeave={() => setHoveredBrand(null)}
@@ -26,7 +28,7 @@ const BrandLogos = () => {
             {brand.icon}
           </div>
           <span className="mt-2 font-medium text-navy-900">{brand.name}</span>
-        </div>
+        </Link>
       ))}
     </div>
   );
